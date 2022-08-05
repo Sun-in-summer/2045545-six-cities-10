@@ -1,4 +1,4 @@
-import { Offers, City, Offer } from '../../types/offer';
+import { Offers, Location, Offer } from '../../types/offer';
 import {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import {LayerGroup} from 'leaflet';
@@ -7,15 +7,15 @@ import useMap from '../../hooks/useMap/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 
 type MapProps = {
-  city: City,
+  location: Location,
   offers: Offers,
   selectedOffer: Offer | undefined,
   width: number,
 }
 
-function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
+function Map({location, offers, selectedOffer, width}:MapProps) : JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, location);
 
 
   const defaultCustomIcon = leaflet.icon({

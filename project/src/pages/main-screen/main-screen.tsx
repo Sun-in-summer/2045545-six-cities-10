@@ -24,8 +24,8 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
   };
 
 
-  const chosenCity = DEFAULT_CITY.name;
-  const chosenCityOffers = offers.filter((offer) => offer.city.name === chosenCity);
+  const chosenCity = DEFAULT_CITY; //временно, пока не определяем какой город выбран
+  const chosenCityOffers = offers.filter((offer) => offer.city.name === chosenCity.name);
 
 
   return (
@@ -93,7 +93,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <PlaceCardsList offers = {chosenCityOffers} onListItemHover = {onListItemHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">< Map city ={DEFAULT_CITY} offers={offers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
+              <section className="cities__map map">< Map location ={chosenCity.location} offers={offers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
             </div>
           </div>
         </div>
