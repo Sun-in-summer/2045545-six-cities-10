@@ -93,7 +93,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <PlaceCardsList offers = {chosenCityOffers} onListItemHover = {onListItemHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">< Map location ={chosenCity.location} offers={offers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
+              <section className="cities__map map">< Map location ={chosenCity.location} offers={chosenCityOffers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
             </div>
           </div>
         </div>

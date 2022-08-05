@@ -10,10 +10,9 @@ function useMap(mapRef : MutableRefObject<HTMLElement | null>, location : Locati
   const [map, setMap] = useState< Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
-  console.log(isRenderedRef);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current !== null && !isRenderedRef.current ) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: latitude,
