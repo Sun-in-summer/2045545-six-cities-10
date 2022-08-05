@@ -10,30 +10,30 @@ import OfferGoods from '../../components/offer-goods/offer-goods';
 import { AppRoute, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
+import { useState } from 'react';
 
 
 type OfferScreenProps ={
   offers: Offers,
   reviews: Reviews;
-  onListItemHover: (listItemName: string) => void,
-  selectedOffer: Offer | undefined,
+
 }
 
 
-function OfferScreen({offers, reviews, onListItemHover, selectedOffer}: OfferScreenProps): JSX.Element {
+function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
 
 
-  // const onListItemHover = (listItemName: string) => {
-  //   const currentOffer = offers.find((offer) =>
-  //     offer.id.toString() === listItemName,
-  //   );
-  //   setSelectedOffer(currentOffer);
-  // };
+  const onListItemHover = (listItemName: string) => {
+    const currentOffer = offers.find((offer) =>
+      offer.id.toString() === listItemName,
+    );
+    setSelectedOffer(currentOffer);
+  };
 
   const {id} = useParams();
 
   const chosenOffer = offers.find((offer)=> offer.id.toString() === id);
-  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(chosenOffer);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(chosenOffer);
   if (chosenOffer === undefined) {
     return <Navigate to={AppRoute.NotFound} />;
   }
@@ -43,6 +43,8 @@ function OfferScreen({offers, reviews, onListItemHover, selectedOffer}: OfferScr
   const starWidth = ratingPercentage(rating);
   const firstLetterCapitalizedType = firstLetterToUpperCase(type);
   const mapWidth = MAP_WIDTH_IN_OFFER;
+
+  const nearOffers = offers.slice(0, NEAR_ITEMS_QUANTITY);
 
 
   return (
@@ -124,7 +126,7 @@ function OfferScreen({offers, reviews, onListItemHover, selectedOffer}: OfferScr
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceCardsList offers = {offers} onListItemHover = {onListItemHover} itemsQuantity = {NEAR_ITEMS_QUANTITY} />
+              <PlaceCardsList offers = {nearOffers} onListItemHover = {onListItemHover}/>
             </div>
           </section>
         </div>

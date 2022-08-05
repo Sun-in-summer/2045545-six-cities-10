@@ -23,7 +23,7 @@ function FavoritesBlock({offersByCity, city}: FavoritesBlockProps): JSX.Element 
               </div>
             </div>
             <div className="favorites__places">
-              <PlaceCard offer = {exactOffer} key= {`${exactOffer.id}`} isActive ={exactOffer.id === activeCardId} onHover = {()=>setActiveCardId(exactOffer.id)} isFlex onMouseEnter= {undefined}/>
+              <PlaceCard offer = {exactOffer} key= {exactOffer.id} isActive ={exactOffer.id === activeCardId} onHover = {()=>setActiveCardId(exactOffer.id)} isFlex />
             </div>
           </li>
 

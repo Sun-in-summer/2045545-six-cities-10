@@ -11,6 +11,7 @@ function useMap(mapRef : MutableRefObject<HTMLElement | null>, city : City ): Ma
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
+
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {

@@ -1,6 +1,7 @@
 import { Offers, City, Offer } from '../../types/offer';
 import {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
+import {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
@@ -16,6 +17,7 @@ function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
+
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
     iconSize: [40, 40],
@@ -29,7 +31,9 @@ function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
   });
 
   useEffect(() => {
+    let layer: LayerGroup;
     if (map) {
+      layer = new LayerGroup().addTo(map);
       offers.forEach((offer) => {
         leaflet.marker({
           lat: offer.location.latitude,
@@ -40,10 +44,14 @@ function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
             ? currentCustomIcon
             : defaultCustomIcon,
         })
-          .addTo(map);
+          .addTo(layer);
       });
 
     }
+
+    return () => {
+      layer?.clearLayers();
+    };
   }, [map, offers, defaultCustomIcon, currentCustomIcon, selectedOffer]);
 
 

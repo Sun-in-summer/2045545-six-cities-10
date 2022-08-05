@@ -11,9 +11,11 @@ const DEFAULT_CITY : City = {
   location: {
     latitude: 52.373057,
     longitude: 4.892557,
-    zoom:12
+    zoom:10
   }
 };
+
+const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 enum AppRoute {
   Main = '/',
@@ -35,4 +37,13 @@ export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensi
 
 export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
-export {MULTIPLIER_RATING_TO_PERCENTAGE, MAX_OFFER_IMAGE_QUANTITY, DEFAULT_CITY, MAP_WIDTH_IN_OFFER, DEFAULT_MAP_WIDTH, NEAR_ITEMS_QUANTITY, AppRoute, AuthorizationStatus};
+export {
+  MULTIPLIER_RATING_TO_PERCENTAGE,
+  MAX_OFFER_IMAGE_QUANTITY,
+  DEFAULT_CITY,
+  MAP_WIDTH_IN_OFFER,
+  DEFAULT_MAP_WIDTH,
+  NEAR_ITEMS_QUANTITY,
+  CITIES,
+  AppRoute,
+  AuthorizationStatus};

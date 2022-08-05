@@ -3,26 +3,30 @@ import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import {Offers, Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import {DEFAULT_CITY, DEFAULT_MAP_WIDTH} from '../../const';
+import { useState } from 'react';
 
 
 type MainScreenProps = {
 
   offers: Offers,
-  onListItemHover: (listItemName: string) => void,
-  selectedOffer: Offer | undefined,
 }
 
-function MainScreen({offers, onListItemHover, selectedOffer}: MainScreenProps): JSX.Element {
+function MainScreen({offers}: MainScreenProps): JSX.Element {
 
-  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
 
-  // const onListItemHover = (listItemName: string) => {
-  //   const currentOffer = offers.find((offer) =>
-  //     offer.id.toString() === listItemName,
-  //   );
-  //   setSelectedOffer(currentOffer);
-  // };
+  const onListItemHover = (listItemName: string) => {
+    const currentOffer = offers.find((offer) =>
+      offer.id.toString() === listItemName,
+    );
+    setSelectedOffer(currentOffer);
+  };
+
+
+  const chosenCity = DEFAULT_CITY.name;
+  const chosenCityOffers = offers.filter((offer) => offer.city.name === chosenCity);
+
 
   return (
     <div className="page page--gray page--main">
@@ -86,7 +90,7 @@ function MainScreen({offers, onListItemHover, selectedOffer}: MainScreenProps): 
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList offers = {offers} onListItemHover = {onListItemHover} itemsQuantity = {offers.length}/>
+              <PlaceCardsList offers = {chosenCityOffers} onListItemHover = {onListItemHover} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">< Map city ={DEFAULT_CITY} offers={offers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
