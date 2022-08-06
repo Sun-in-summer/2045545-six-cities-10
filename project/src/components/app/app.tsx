@@ -11,14 +11,12 @@ import {Reviews} from '../../types/reviews';
 
 
 type AppScreenProps = {
-  placeCardsCount: number;
   offers: Offers;
   reviews: Reviews;
 
 }
 
-
-function App({placeCardsCount, offers, reviews}: AppScreenProps): JSX.Element {
+function App({offers, reviews}: AppScreenProps): JSX.Element {
 
 
   return (
@@ -26,7 +24,7 @@ function App({placeCardsCount, offers, reviews}: AppScreenProps): JSX.Element {
       <Routes>
         <Route
           path = {AppRoute.Main}
-          element = {<MainScreen offers={offers}/>}
+          element = {<MainScreen offers={offers} />}
         >
         </Route>
         <Route

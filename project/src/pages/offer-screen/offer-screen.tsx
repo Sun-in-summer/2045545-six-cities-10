@@ -1,27 +1,39 @@
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/feedback-form/feedback-form';
 import {Navigate, useParams} from 'react-router-dom';
-import {Offers} from '../../types/offer';
+import {Offer, Offers} from '../../types/offer';
 import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
 import { Reviews } from '../../types/reviews';
 import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferGoods from '../../components/offer-goods/offer-goods';
-import { AppRoute } from '../../const';
+import { AppRoute, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
+import Map from '../../components/map/map';
+import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
+import { useState } from 'react';
+
 
 type OfferScreenProps ={
   offers: Offers,
-  reviews: Reviews,
+  reviews: Reviews;
+
 }
 
 
 function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
 
 
+  const onListItemHover = (listItemName: string) => {
+    const currentOffer = offers.find((offer) =>
+      offer.id.toString() === listItemName,
+    );
+    setSelectedOffer(currentOffer);
+  };
+
   const {id} = useParams();
 
   const chosenOffer = offers.find((offer)=> offer.id.toString() === id);
-
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(chosenOffer);
   if (chosenOffer === undefined) {
     return <Navigate to={AppRoute.NotFound} />;
   }
@@ -30,6 +42,9 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
   const {isPremium, images, title, rating, type, maxAdults, bedrooms, price, goods, host, description} = chosenOffer ;
   const starWidth = ratingPercentage(rating);
   const firstLetterCapitalizedType = firstLetterToUpperCase(type);
+  const mapWidth = MAP_WIDTH_IN_OFFER;
+
+  const nearOffers = offers.slice(0, NEAR_ITEMS_QUANTITY);
 
 
   return (
@@ -103,14 +118,15 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map location={chosenOffer.city.location} offers ={offers} selectedOffer ={selectedOffer === undefined ? chosenOffer : selectedOffer} width = {mapWidth}/>
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {/* <PlaceCard/>
-             */}
+              <PlaceCardsList offers = {nearOffers} onListItemHover = {onListItemHover}/>
             </div>
           </section>
         </div>

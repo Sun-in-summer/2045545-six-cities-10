@@ -10,7 +10,7 @@ type PlaceCardProps = {
   isActive: boolean,
   onHover: ()=>void,
   isFlex: boolean,
-  onMouseEnter : MouseEventHandler<HTMLHeadingElement> | undefined,
+  onMouseEnter?: MouseEventHandler<HTMLHeadingElement> | undefined,
 };
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
