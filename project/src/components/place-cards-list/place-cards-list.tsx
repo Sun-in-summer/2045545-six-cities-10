@@ -5,7 +5,7 @@ import { useState, MouseEvent } from 'react';
 
 type PlaceCardsListProps = {
   offers: Offers;
-  onListItemHover: (listItemName: string) => void ;
+  onListItemHover?: (listItemName: string) => void
 };
 
 
@@ -13,7 +13,9 @@ function PlaceCardsList({offers, onListItemHover}: PlaceCardsListProps): JSX.Ele
 
   const listItemHoverHandler = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    onListItemHover(evt.currentTarget.id);
+    if (onListItemHover) {
+      onListItemHover(evt.currentTarget.id);
+    }
   };
 
   const [activeCardId, setActiveCardId] = useState< number | null>(null);
