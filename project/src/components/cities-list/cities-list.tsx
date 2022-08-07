@@ -13,13 +13,6 @@ function CitiesList({cities, selectedCity}: CitiesListProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  // const cityNameClickHandler = (evt: MouseEvent<HTMLElement>) => {
-  //   evt.preventDefault();
-  //   onCityNameClick(evt.currentTarget.textContent);
-  // };
-
-  // const citiNames = cities.map((city) => city.name);
-
 
   return (
     <section className="locations container">

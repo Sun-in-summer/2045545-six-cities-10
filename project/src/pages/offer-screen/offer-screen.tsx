@@ -111,7 +111,12 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map location={selectedOffer.city.location} offers ={offers} selectedOffer ={selectedOffer } width = {mapWidth}/>
+            <Map
+              city={selectedOffer.city}
+              offers ={offers}
+              selectedOffer ={selectedOffer }
+              width = {mapWidth}
+            />
           </section>
         </section>
         <div className="container">

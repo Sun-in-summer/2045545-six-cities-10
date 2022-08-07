@@ -1,6 +1,9 @@
 import { useEffect, useState, MutableRefObject , useRef} from 'react';
 import {Map, TileLayer} from 'leaflet';
-import {Location} from '../../types/offer';
+import { Location } from '../../types/offer';
+
+const MAP_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 
 function useMap(mapRef : MutableRefObject<HTMLElement | null>, location : Location ): Map | null {
@@ -13,6 +16,7 @@ function useMap(mapRef : MutableRefObject<HTMLElement | null>, location : Locati
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current ) {
+
       const instance = new Map(mapRef.current, {
         center: {
           lat: latitude,
@@ -22,10 +26,10 @@ function useMap(mapRef : MutableRefObject<HTMLElement | null>, location : Locati
       });
 
       const layer = new TileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        MAP_LAYER,
         {
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        MAP_ATTRIBUTION,
         }
       );
 
@@ -34,7 +38,7 @@ function useMap(mapRef : MutableRefObject<HTMLElement | null>, location : Locati
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, map, latitude, longitude, zoom]);
+  }, [mapRef, latitude, longitude, zoom]);
 
   return map;
 }

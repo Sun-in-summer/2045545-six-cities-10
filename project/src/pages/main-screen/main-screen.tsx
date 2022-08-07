@@ -15,17 +15,7 @@ type MainScreenProps = {
 function MainScreen({offers}: MainScreenProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-  // const [selectedCity, setSelectedCity] = useState <City> (DEFAULT_CITY);
 
-  // const onCityNameClick = (cityName: string | null) => {
-  //   const currentCity = CITIES.find((city) =>
-  //     city.name === cityName,
-  //   );
-  //   if (currentCity) {
-  //     setSelectedCity(currentCity);
-  //   }
-
-  // };
 
   const selectedCity = useAppSelector((state) => state.city);
 
@@ -73,7 +63,14 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <PlaceCardsList offers = {selectedCityOffers} onListItemHover = {onListItemHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">< Map location ={selectedCity.location} offers={selectedCityOffers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
+              <section className="cities__map map">
+                < Map
+                  city ={selectedCity}
+                  offers={selectedCityOffers}
+                  selectedOffer ={selectedOffer}
+                  width={DEFAULT_MAP_WIDTH}
+                />
+              </section>
             </div>
           </div>
         </div>
