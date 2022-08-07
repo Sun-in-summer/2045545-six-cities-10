@@ -2,9 +2,10 @@ import Header from '../../components/header/header';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import {Offers, Offer} from '../../types/offer';
 import Map from '../../components/map/map';
-import {DEFAULT_CITY, DEFAULT_MAP_WIDTH, CITIES} from '../../const';
+import {DEFAULT_MAP_WIDTH, CITIES} from '../../const';
 import { useState } from 'react';
 import CitiesList from '../../components/cities-list/cities-list';
+import { useAppSelector } from '../../hooks';
 
 
 type MainScreenProps = {
@@ -14,23 +15,19 @@ type MainScreenProps = {
 function MainScreen({offers}: MainScreenProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-  const [selectedCityName, setSelectedCityName] = useState <string | undefined> (DEFAULT_CITY.name);
+  // const [selectedCity, setSelectedCity] = useState <City> (DEFAULT_CITY);
 
-  const onCityNameClick = (cityName: string | null) => {
-    const currentCityName = CITIES.find((city) =>
-      city === cityName,
-    );
-    setSelectedCityName(currentCityName);
-  };
+  // const onCityNameClick = (cityName: string | null) => {
+  //   const currentCity = CITIES.find((city) =>
+  //     city.name === cityName,
+  //   );
+  //   if (currentCity) {
+  //     setSelectedCity(currentCity);
+  //   }
 
-  const offerWithSelectedCity = offers.find((offer) => offer.city.name === selectedCityName);
+  // };
 
-  let selectedCity = DEFAULT_CITY;
-  if (offerWithSelectedCity !== undefined) {
-    selectedCity = offerWithSelectedCity.city;
-  }
-
-  console.log(selectedCity);
+  const selectedCity = useAppSelector((state) => state.city);
 
 
   const onListItemHover = (listItemName: string) => {
@@ -41,7 +38,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
   };
 
 
-  const chosenCityOffers = offers.filter((offer) => offer.city.name === selectedCityName);
+  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
 
 
   return (
@@ -51,13 +48,13 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          < CitiesList citiesNames = {CITIES} selectedCityName = {selectedCityName} onCityNameClick ={onCityNameClick}/>
+          < CitiesList cities = {CITIES} selectedCity = {selectedCity} />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in {selectedCityName}</b>
+              <b className="places__found">312 places to stay in {selectedCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex= {0}>
@@ -73,10 +70,10 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList offers = {chosenCityOffers} onListItemHover = {onListItemHover} />
+              <PlaceCardsList offers = {selectedCityOffers} onListItemHover = {onListItemHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">< Map location ={selectedCity.location} offers={chosenCityOffers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
+              <section className="cities__map map">< Map location ={selectedCity.location} offers={selectedCityOffers} selectedOffer ={selectedOffer} width={DEFAULT_MAP_WIDTH}/></section>
             </div>
           </div>
         </div>

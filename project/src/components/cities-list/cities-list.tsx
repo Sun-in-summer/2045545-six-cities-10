@@ -1,26 +1,33 @@
-import {MouseEvent} from 'react';
+import { City } from '../../types/offer';
+import {setCity} from '../../store/action';
+import {useAppDispatch} from '../../hooks';
+
 
 type CitiesListProps = {
- citiesNames: string[];
- selectedCityName: string | undefined;
- onCityNameClick: (cityName: string | null) => void;
+ cities: City[];
+ selectedCity: City | undefined;
+
 };
 
-function CitiesList({citiesNames, selectedCityName, onCityNameClick}: CitiesListProps): JSX.Element {
+function CitiesList({cities, selectedCity}: CitiesListProps): JSX.Element {
 
-  const cityNameClickHandler = (evt: MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
-    onCityNameClick(evt.currentTarget.textContent);
-  };
+  const dispatch = useAppDispatch();
+
+  // const cityNameClickHandler = (evt: MouseEvent<HTMLElement>) => {
+  //   evt.preventDefault();
+  //   onCityNameClick(evt.currentTarget.textContent);
+  // };
+
+  // const citiNames = cities.map((city) => city.name);
 
 
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {citiesNames.map((cityName) => (
-          <li className="locations__item" key = {cityName}>
-            <a className ={`locations__item-link tabs__item ${cityName === selectedCityName ? 'tabs__item--active' : ''}`} href="/#" >
-              <div onClick = {cityNameClickHandler}>{cityName}</div>
+        {cities.map((city) => (
+          <li className="locations__item" key = {city.name}>
+            <a className ={`locations__item-link tabs__item ${selectedCity && city.name === selectedCity.name ? 'tabs__item--active' : ''}`} href="/#" >
+              <div onClick = {()=>dispatch(setCity(city))}>{city.name}</div>
             </a>
           </li>))}
       </ul>

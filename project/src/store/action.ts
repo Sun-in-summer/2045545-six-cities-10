@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { City } from '../types/offer';
 
 
-export const changeCity = createAction('main/changeCity');
+export const setCity = createAction<City>('main/setCity');
