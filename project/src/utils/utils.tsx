@@ -1,5 +1,5 @@
-import { Offer} from '../types/offer';
-import {MULTIPLIER_RATING_TO_PERCENTAGE} from '../const';
+import { Offer, Offers} from '../types/offer';
+import {MULTIPLIER_RATING_TO_PERCENTAGE, SORT_OPTIONS} from '../const';
 
 
 const sortByCity = (offerA: Offer, offerB: Offer) : number =>{
@@ -36,4 +36,57 @@ const groupBy = <T extends Record<string, any>, K extends keyof T>(array: T[], k
   }, {} as Record<string, T[]>);};
 
 
-export {sortByCity, ratingPercentage, firstLetterToUpperCase, groupBy};
+const sortPriceLowToHigh = (offerA: Offer, offerB: Offer) : number => {
+  if (offerA.price >= offerB.price){
+    return 1;
+  }
+  else {
+    return -1;
+  }
+};
+
+const sortPriceHighToLow = (offerA: Offer, offerB: Offer) : number => {
+  if (offerA.price >= offerB.price){
+    return -1;
+  }
+  else {
+    return 1;
+  }
+};
+
+
+const sortByRating = (offerA: Offer, offerB: Offer) : number => {
+  if ((offerA.rating && offerB.rating) && (offerA.rating <= offerB.rating)){
+    return 1;
+  }
+  else {
+    return -1;
+  }
+};
+
+const getSortedOffers = (sortOption: string, offers: Offers): Offers => {
+  switch (sortOption) {
+    case SORT_OPTIONS.HIGH_TO_LOW:
+      return offers.sort(sortPriceHighToLow);
+    case SORT_OPTIONS.LOW_TO_HIGH:
+      return offers.sort(sortPriceLowToHigh);
+    case SORT_OPTIONS.TOP_RATED:
+      return offers.sort(sortByRating);
+    case SORT_OPTIONS.POPULAR:
+      return offers;
+    default:
+      return offers;
+  }
+};
+
+
+export {
+  sortByCity,
+  ratingPercentage,
+  firstLetterToUpperCase,
+  groupBy,
+  sortByRating,
+  sortPriceHighToLow,
+  sortPriceLowToHigh,
+  getSortedOffers
+};

@@ -66,6 +66,13 @@ const CITIES: City[] = [
   }
 ];
 
+const SORT_OPTIONS = {
+  HIGH_TO_LOW: 'Price: high to low',
+  LOW_TO_HIGH: 'Price: low to high',
+  TOP_RATED: 'Top rated first',
+  POPULAR: 'Popular',
+};
+
 enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -94,5 +101,6 @@ export {
   DEFAULT_MAP_WIDTH,
   NEAR_ITEMS_QUANTITY,
   CITIES,
+  SORT_OPTIONS,
   AppRoute,
   AuthorizationStatus};

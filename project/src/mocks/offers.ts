@@ -30,7 +30,7 @@ export const offers: Offers = [
     title:'Penthouse, 4-5 rooms + 5 balconies',
     isFavorite: true,
     isPremium: true,
-    rating:4.1,
+    rating: 0,
     type: 'hotel',
     bedrooms:2,
     maxAdults:5,
