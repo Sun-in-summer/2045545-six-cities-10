@@ -1,5 +1,4 @@
-import {Offers} from '../../types/offer';
-import {groupBy} from '../../utils/utils';
+import {Offers, GroupedOffersByOneCity} from '../../types/offer';
 import FavoritesBlock from '../favorites-block/favorites-block';
 
 type FavoritesProps ={
@@ -10,20 +9,24 @@ function Favorites({offers}: FavoritesProps) : JSX.Element {
 
 
   const favoriteOffers: Offers = offers.filter((offer)=> offer.isFavorite === true);
-  const offersToGroupByCity = favoriteOffers.slice();
+
+  const offersByCity = favoriteOffers.slice().reduce<GroupedOffersByOneCity>((acc, offer ) => {
+    if (!Object.hasOwn(acc, offer.city.name)) {
+      acc[offer.city.name] = [];
+    }
+    acc[offer.city.name].push(offer);
+    return acc;
+  }, {});
 
 
-  const offersGroupedByCity = groupBy(offersToGroupByCity, (offer) => offer.city.name);
-
-
-  const listOfFavoriteCities = Object.keys(offersGroupedByCity);
+  const listOfFavoriteCities = Object.keys(offersByCity);
 
 
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {listOfFavoriteCities.map((city) => ( < FavoritesBlock offersByCity ={offersGroupedByCity[city]} city = {city} key = {city}/>))}
+        {listOfFavoriteCities.map((city) => ( < FavoritesBlock offersByCity ={offersByCity[city]} city = {city} key = {city}/>))}
       </ul>
     </section>);
 

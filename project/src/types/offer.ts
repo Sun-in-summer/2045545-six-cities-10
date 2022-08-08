@@ -39,5 +39,9 @@ type Offer = {
 
 type Offers = Offer[];
 
+export type GroupedOffersByOneCity = {
+  [key: string]: Offers;
+}
+
 export type {Offer, Offers, City, Location};
 
