@@ -7,15 +7,71 @@ const DEFAULT_MAP_WIDTH = 100;
 const NEAR_ITEMS_QUANTITY = 3;
 
 const DEFAULT_CITY : City = {
-  name:'Amsterdam',
+  name: 'Paris',
   location: {
-    latitude: 52.373057,
-    longitude: 4.892557,
-    zoom:10
+    latitude: 48.85661,
+    longitude: 2.351499,
+    zoom: 12
   }
 };
 
-const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+const CITIES: City[] = [
+  {
+    name: 'Paris',
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499,
+      zoom: 12
+    }
+  },
+  {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.37454,
+      longitude: 4.897976,
+      zoom: 10
+    }
+  },
+  {
+    name: 'Cologne',
+    location: {
+      latitude: 50.938361,
+      longitude: 6.959974,
+      zoom: 10
+    }
+  },
+  {
+    name: 'Brussels',
+    location: {
+      latitude: 50.846557,
+      longitude: 4.351697,
+      zoom: 10
+    }
+  },
+  {
+    name: 'Hamburg',
+    location: {
+      latitude: 53.550341,
+      longitude: 10.000654,
+      zoom: 10
+    }
+  },
+  {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 51.225402,
+      longitude: 6.776314,
+      zoom: 10
+    }
+  }
+];
+
+const SORT_OPTIONS = {
+  HIGH_TO_LOW: 'Price: high to low',
+  LOW_TO_HIGH: 'Price: low to high',
+  TOP_RATED: 'Top rated first',
+  POPULAR: 'Popular',
+};
 
 enum AppRoute {
   Main = '/',
@@ -33,9 +89,9 @@ enum AuthorizationStatus {
 }
 
 
-export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT = 'img/pin.svg';
 
-export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
 export {
   MULTIPLIER_RATING_TO_PERCENTAGE,
@@ -45,5 +101,6 @@ export {
   DEFAULT_MAP_WIDTH,
   NEAR_ITEMS_QUANTITY,
   CITIES,
+  SORT_OPTIONS,
   AppRoute,
   AuthorizationStatus};

@@ -1,4 +1,4 @@
-import { Offers, Location, Offer } from '../../types/offer';
+import { Offers, Offer, City } from '../../types/offer';
 import {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import {LayerGroup} from 'leaflet';
@@ -7,28 +7,38 @@ import useMap from '../../hooks/useMap/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 
 type MapProps = {
-  location: Location,
+  city: City,
   offers: Offers,
   selectedOffer: Offer | undefined,
   width: number,
 }
 
-function Map({location, offers, selectedOffer, width}:MapProps) : JSX.Element {
+function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, location);
+  const map = useMap(mapRef, city.location);
 
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: [30, 40],
+    iconAnchor: [15, 40],
   });
 
   const currentCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: [30, 40],
+    iconAnchor: [15, 40],
   });
+
+  useEffect(()=> {
+    if (map) {
+      map.setView(
+        {
+          lat: city.location.latitude,
+          lng: city.location.longitude,
+        });
+    }
+  }, [map, city.location]);
 
   useEffect(() => {
     let layer: LayerGroup;
@@ -56,12 +66,11 @@ function Map({location, offers, selectedOffer, width}:MapProps) : JSX.Element {
 
 
   return (
-    <section className="cities__map"
+    <div
       style={{height: '100%', margin: '0 auto', width: `${width}%`, maxWidth:'1144px'}}
       ref = {mapRef}
     >
-
-    </section>);
+    </div>);
 
 }
 
