@@ -26,16 +26,6 @@ const firstLetterToUpperCase = ( word: string | null) : string | null => {
 };
 
 
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// const groupBy = <T extends Record<string, any>, K extends keyof T>(array: T[], key: K | { (obj: T): string }) => {
-//   const keyFn = key instanceof Function ? key : (obj: T) => obj[key];
-//   return array.reduce((objectsByKeyValue, obj) => {
-//     const value = keyFn(obj);
-//     objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
-//     return objectsByKeyValue;
-//   }, {} as Record<string, T[]>);};
-
-
 const groupByCity = (offers: Offers): GroupedOffersByOneCity =>
   offers.slice().reduce<GroupedOffersByOneCity>((acc, offer ) => {
     if (!Object.hasOwn(acc, offer.city.name)) {
