@@ -1,7 +1,6 @@
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/feedback-form/feedback-form';
 import {Navigate, useParams} from 'react-router-dom';
-import {Offers} from '../../types/offer';
 import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
 import { Reviews } from '../../types/reviews';
 import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
@@ -10,17 +9,19 @@ import OfferGoods from '../../components/offer-goods/offer-goods';
 import { AppRoute, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
+import { useAppSelector } from '../../hooks';
 
 
 type OfferScreenProps ={
-  offers: Offers,
+
   reviews: Reviews;
 
 }
 
 
-function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
+function OfferScreen({reviews}: OfferScreenProps): JSX.Element {
 
+  const {offers} = useAppSelector((state) => state);
 
   const {id} = useParams();
 

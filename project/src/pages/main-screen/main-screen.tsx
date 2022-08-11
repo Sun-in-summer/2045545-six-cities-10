@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
-import {Offers, Offer} from '../../types/offer';
+import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import {DEFAULT_MAP_WIDTH, CITIES} from '../../const';
 import {Fragment, useState } from 'react';
@@ -11,11 +11,9 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import {getSortedOffers} from '../../utils/utils';
 
 
-type MainScreenProps = {
-  offers: Offers,
-}
+function MainScreen(): JSX.Element {
 
-function MainScreen({offers}: MainScreenProps): JSX.Element {
+  const {offers} = useAppSelector((state) => state);
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
   const selectedCity = useAppSelector((state) => state.city);
