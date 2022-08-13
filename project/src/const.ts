@@ -96,7 +96,7 @@ enum AuthorizationStatus {
   Offers = '/hotels',
   Offer = 'hotels/{hotelId}',
   OffersNearBy = '/hotels/{hotelId}/nearby',
-  Reviews ='/comments',
+  Reviews ='/comments/:id',
   Favorite = '/favorite',
   Login = '/login',
   Logout ='/logout',

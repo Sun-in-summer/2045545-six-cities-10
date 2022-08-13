@@ -9,6 +9,9 @@ import { AppRoute, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchReviewsAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 
 function OfferScreen(): JSX.Element {
@@ -16,6 +19,12 @@ function OfferScreen(): JSX.Element {
   const {offers} = useAppSelector((state) => state);
 
   const {id} = useParams();
+
+  useEffect(() => {
+    if (id !== undefined) {
+      store.dispatch(fetchReviewsAction(id));
+    }
+  }, [id]);
 
   const selectedOffer = offers.find((offer)=> offer.id.toString() === id);
 
@@ -30,6 +39,10 @@ function OfferScreen(): JSX.Element {
   const mapWidth = MAP_WIDTH_IN_OFFER;
 
   const nearOffers = offers.slice(0, NEAR_ITEMS_QUANTITY);
+
+  // if (id !== undefined) {
+  //   store.dispatch(fetchReviewsAction(id));
+  // }
 
 
   return (

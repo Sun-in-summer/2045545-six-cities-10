@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import App from './components/app/app';
 import { AuthorizationStatus } from './const';
 import {store} from './store';
-import { fetchOffersAction, checkAuthAction, fetchReviewsAction } from './store/api-actions';
+import { fetchOffersAction, checkAuthAction } from './store/api-actions';
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;

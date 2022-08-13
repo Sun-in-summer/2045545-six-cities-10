@@ -10,7 +10,9 @@ export const setActiveSortOption = createAction<string>('main/setActiveSortOptio
 
 export const loadOffers = createAction<Offers>('data/loadOffers');
 export const loadReviews = createAction<Reviews>('data/loadReviews');
+
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
+export const setReviewsLoadedStatus = createAction<boolean>('reviews/setReviewsLoadedStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setError = createAction<string | null>('main/setError');
