@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { store } from '.';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Offers } from '../types/offer';
 import { Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
-import { loadOffers, loadReviews, requireAuthorization, setDataLoadedStatus, setError } from './action';
+import { loadOffers, requireAuthorization, setDataLoadedStatus, setError, redirectToRoute} from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'main/clearError',
@@ -33,16 +33,20 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<void, undefined, {
+export const fetchReviewsAction = createAsyncThunk<Reviews, string , {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
-}>('data/fetchReviews',
-  async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Reviews>(APIRoute.Reviews);
-    dispatch(loadReviews(data));
-  },
+}>(
+  'data/fetchReviews',
+  async (id, {extra: api}) => {
+
+    const {data} = await api.get<Reviews>(`${APIRoute.Reviews}/${id}`);
+    return data;
+
+  }
 );
+
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -68,6 +72,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));//
   },
 );
 
@@ -82,4 +87,5 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
+
 

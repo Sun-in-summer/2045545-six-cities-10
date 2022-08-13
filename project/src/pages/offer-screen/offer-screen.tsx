@@ -2,7 +2,6 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/feedback-form/feedback-form';
 import {Navigate, useParams} from 'react-router-dom';
 import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
-import { Reviews } from '../../types/reviews';
 import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferGoods from '../../components/offer-goods/offer-goods';
@@ -12,21 +11,14 @@ import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import { useAppSelector } from '../../hooks';
 
 
-type OfferScreenProps ={
-
-  reviews: Reviews;
-
-}
-
-
-function OfferScreen({reviews}: OfferScreenProps): JSX.Element {
+function OfferScreen(): JSX.Element {
 
   const {offers} = useAppSelector((state) => state);
 
   const {id} = useParams();
 
   const selectedOffer = offers.find((offer)=> offer.id.toString() === id);
-  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(chosenOffer);
+
   if (selectedOffer === undefined) {
     return <Navigate to={AppRoute.NotFound} />;
   }
@@ -106,7 +98,7 @@ function OfferScreen({reviews}: OfferScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <FeedbacksList reviews ={reviews}/>
+                <FeedbacksList offerId = {selectedOffer.id.toString()}/>
                 <ReviewForm />
               </section>
             </div>

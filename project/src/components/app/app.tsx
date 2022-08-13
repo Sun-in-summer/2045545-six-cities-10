@@ -1,6 +1,6 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
+import {Routes, Route} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import {useAppSelector } from '../../hooks';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
@@ -8,18 +8,12 @@ import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Reviews} from '../../types/reviews';
+import {isCheckedAuth} from '../../index';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
-import { isCheckedAuth } from '../..';
 
-
-type AppScreenProps = {
-
-  reviews: Reviews;
-
-}
-
-function App({reviews}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
 
   const {authorizationStatus, isDataLoaded} = useAppSelector((state)=> state);
 
@@ -31,7 +25,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
 
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history = {browserHistory}>
       <Routes>
         <Route
           path = {AppRoute.Main}
@@ -52,7 +46,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <OfferScreen reviews= {reviews}/>
+              <OfferScreen />
             </PrivateRoute>
           }
         />
@@ -65,7 +59,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
           element = {<NotFoundScreen/>}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

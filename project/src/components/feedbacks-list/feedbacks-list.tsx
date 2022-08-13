@@ -1,13 +1,22 @@
 import { Fragment } from 'react';
-import {Reviews} from '../../types/reviews';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchReviewsAction } from '../../store/api-actions';
 import Feedback from '../feedback/feedback';
 
-
 type FeedbacksListProps = {
-  reviews: Reviews;
-};
+  offerId: string
+}
 
-function FeedbacksList({reviews}: FeedbacksListProps): JSX.Element {
+function FeedbacksList({offerId}: FeedbacksListProps): JSX.Element {
+  const id = offerId;
+
+  store.dispatch(fetchReviewsAction(id));
+
+
+  const {reviews} = useAppSelector((state) => state);
+
+  console.log(reviews);
 
 
   return (

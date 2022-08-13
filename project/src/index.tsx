@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
 import { AuthorizationStatus } from './const';
-import { reviews } from './mocks/reviews';
 import {store} from './store';
-import { fetchOffersAction, checkAuthAction } from './store/api-actions';
+import { fetchOffersAction, checkAuthAction, fetchReviewsAction } from './store/api-actions';
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
@@ -21,10 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App
-
-        reviews = {reviews}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
 );
