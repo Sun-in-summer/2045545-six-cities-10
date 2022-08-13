@@ -5,7 +5,7 @@ const MULTIPLIER_RATING_TO_PERCENTAGE = 20;
 const MAP_WIDTH_IN_OFFER = 85;
 const DEFAULT_MAP_WIDTH = 100;
 const NEAR_ITEMS_QUANTITY = 3;
-const TIMEOUT_SHOW_ERROR = 2000;
+
 
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
@@ -94,7 +94,7 @@ enum AuthorizationStatus {
 
  enum APIRoute {
   Offers = '/hotels',
-  Offer = 'hotels/{hotelId}',
+  Offer = 'hotels/:id',
   OffersNearBy = '/hotels/{hotelId}/nearby',
   Reviews ='/comments/:id',
   Favorite = '/favorite',
@@ -104,7 +104,6 @@ enum AuthorizationStatus {
 
 
 export {
-  TIMEOUT_SHOW_ERROR,
   MULTIPLIER_RATING_TO_PERCENTAGE,
   MAX_OFFER_IMAGE_QUANTITY,
   DEFAULT_CITY,

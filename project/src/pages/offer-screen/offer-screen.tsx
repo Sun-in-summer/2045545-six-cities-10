@@ -5,28 +5,30 @@ import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
 import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferGoods from '../../components/offer-goods/offer-goods';
-import { AppRoute, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
+import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
-import { fetchReviewsAction } from '../../store/api-actions';
+import { fetchReviewsAction, fetchSelectedOffer } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 
 function OfferScreen(): JSX.Element {
 
   const {offers} = useAppSelector((state) => state);
-
+  const {authorizationStatus} = useAppSelector((state) => state);
   const {id} = useParams();
+  const {selectedOffer} = useAppSelector((state)=> state);
 
   useEffect(() => {
     if (id !== undefined) {
+      store.dispatch(fetchSelectedOffer(id));
       store.dispatch(fetchReviewsAction(id));
     }
   }, [id]);
 
-  const selectedOffer = offers.find((offer)=> offer.id.toString() === id);
+  // const selectedOffer = offers.find((offer)=> offer.id.toString() === id);
 
   if (selectedOffer === undefined) {
     return <Navigate to={AppRoute.NotFound} />;
@@ -40,17 +42,13 @@ function OfferScreen(): JSX.Element {
 
   const nearOffers = offers.slice(0, NEAR_ITEMS_QUANTITY);
 
-  // if (id !== undefined) {
-  //   store.dispatch(fetchReviewsAction(id));
-  // }
-
 
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
-          <OfferImages chosenOfferImages={images} />
+          <OfferImages selectedOfferImages={images} />
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium ?
@@ -112,7 +110,7 @@ function OfferScreen(): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <FeedbacksList offerId = {selectedOffer.id.toString()}/>
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
           </div>
