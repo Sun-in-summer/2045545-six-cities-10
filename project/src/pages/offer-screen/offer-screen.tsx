@@ -10,7 +10,7 @@ import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
-import { fetchReviewsAction, fetchSelectedOffer } from '../../store/api-actions';
+import { fetchReviewsAction, fetchSelectedOffer, fetchNearByOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 
@@ -20,15 +20,16 @@ function OfferScreen(): JSX.Element {
   const {authorizationStatus} = useAppSelector((state) => state);
   const {id} = useParams();
   const {selectedOffer} = useAppSelector((state)=> state);
+  const {nearByOffers} = useAppSelector((state) => state);
 
   useEffect(() => {
     if (id !== undefined) {
       store.dispatch(fetchSelectedOffer(id));
       store.dispatch(fetchReviewsAction(id));
+      store.dispatch(fetchNearByOffersAction(id));
     }
   }, [id]);
 
-  // const selectedOffer = offers.find((offer)=> offer.id.toString() === id);
 
   if (selectedOffer === undefined) {
     return <Navigate to={AppRoute.NotFound} />;
@@ -40,7 +41,7 @@ function OfferScreen(): JSX.Element {
   const firstLetterCapitalizedType = firstLetterToUpperCase(type);
   const mapWidth = MAP_WIDTH_IN_OFFER;
 
-  const nearOffers = offers.slice(0, NEAR_ITEMS_QUANTITY);
+  const nearOffers = nearByOffers.slice(0, NEAR_ITEMS_QUANTITY);
 
 
   return (

@@ -2,19 +2,35 @@ import { createReducer } from '@reduxjs/toolkit';
 import { DEFAULT_CITY, SORT_OPTIONS, AuthorizationStatus} from '../const';
 import { City, Offer, Offers } from '../types/offer';
 import { Reviews } from '../types/reviews';
-import { setCity, setActiveSortOption, loadOffers, requireAuthorization, setDataLoadedStatus, loadSelectedOffer, loadReviews, setReviewsLoadedStatus, setSelectedOfferLoadedStatus} from './action';
+import {
+  setCity,
+  setActiveSortOption,
+  requireAuthorization,
+  loadOffers,
+  loadSelectedOffer,
+  loadReviews,
+  loadNearByOffers,
+  setDataLoadedStatus,
+  setReviewsLoadedStatus,
+  setSelectedOfferLoadedStatus,
+  setNearByOffersLoadedStatus,
+  setUserEmail
+} from './action';
 
 type InitialState ={
   city: City;
   offers: Offers;
   selectedOffer: Offer | undefined;
   reviews: Reviews;
+  nearByOffers: Offers;
   activeSortOption: string;
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean;
   isSelectedOfferLoaded: boolean;
   isReviewsLoaded: boolean;
+  isNearByOffersLoaded: boolean;
   error: string | null;
+  userEmail: string | undefined;
 }
 
 const initialState: InitialState = {
@@ -22,12 +38,15 @@ const initialState: InitialState = {
   offers: [],
   selectedOffer: undefined,
   reviews: [],
+  nearByOffers: [],
   activeSortOption: SORT_OPTIONS.POPULAR,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   isSelectedOfferLoaded: false,
   isReviewsLoaded: false,
+  isNearByOffersLoaded: false,
   error: null,
+  userEmail: undefined
 };
 
 const reducer = createReducer (initialState, (builder) => {
@@ -47,6 +66,9 @@ const reducer = createReducer (initialState, (builder) => {
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
     })
+    .addCase(loadNearByOffers, (state, action)=>{
+      state.nearByOffers = action.payload;
+    })
     .addCase(requireAuthorization, (state, action) =>{
       state.authorizationStatus = action.payload;
     })
@@ -58,6 +80,12 @@ const reducer = createReducer (initialState, (builder) => {
     })
     .addCase(setReviewsLoadedStatus, (state, action) => {
       state.isReviewsLoaded = action.payload;
+    })
+    .addCase(setNearByOffersLoadedStatus, (state, action) =>{
+      state.isNearByOffersLoaded = action.payload;
+    })
+    .addCase(setUserEmail, (state, action) =>{
+      state.userEmail = action.payload;
     });
 
 });

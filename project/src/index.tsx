@@ -22,7 +22,17 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ToastContainer />
+      <ToastContainer
+        autoClose = {3000}
+        position="top-right"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <App />
     </Provider>
   </React.StrictMode>,

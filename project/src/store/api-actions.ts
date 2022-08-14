@@ -8,7 +8,19 @@ import { Offer, Offers } from '../types/offer';
 import { Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
-import { loadOffers, requireAuthorization, setDataLoadedStatus, setReviewsLoadedStatus, redirectToRoute, loadReviews, setSelectedOfferLoadedStatus, loadSelectedOffer} from './action';
+import {
+  requireAuthorization,
+  redirectToRoute,
+  loadOffers,
+  loadSelectedOffer,
+  loadReviews,
+  loadNearByOffers,
+  setDataLoadedStatus,
+  setReviewsLoadedStatus,
+  setSelectedOfferLoadedStatus,
+  setNearByOffersLoadedStatus,
+  setUserEmail
+} from './action';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -53,6 +65,20 @@ export const fetchReviewsAction = createAsyncThunk<void, string , {
   }
 );
 
+export const fetchNearByOffersAction = createAsyncThunk<void, string , {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchNearByOffers',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offers>(generatePath(APIRoute.OffersNearBy, {id}));
+    dispatch(setNearByOffersLoadedStatus(false));
+    dispatch(loadNearByOffers(data));
+    dispatch(setNearByOffersLoadedStatus(true));
+  }
+);
+
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -80,7 +106,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));//
+    dispatch(redirectToRoute(AppRoute.Main));
+    dispatch(setUserEmail(email));
   },
 );
 

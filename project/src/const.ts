@@ -95,7 +95,7 @@ enum AuthorizationStatus {
  enum APIRoute {
   Offers = '/hotels',
   Offer = 'hotels/:id',
-  OffersNearBy = '/hotels/{hotelId}/nearby',
+  OffersNearBy = '/hotels/:id/nearby',
   Reviews ='/comments/:id',
   Favorite = '/favorite',
   Login = '/login',
