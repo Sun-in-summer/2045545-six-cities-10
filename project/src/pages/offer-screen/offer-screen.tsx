@@ -8,27 +8,29 @@ import OfferGoods from '../../components/offer-goods/offer-goods';
 import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
-import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction, fetchSelectedOffer, fetchNearByOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 
 function OfferScreen(): JSX.Element {
 
-  const {offers} = useAppSelector((state) => state);
-  const {authorizationStatus} = useAppSelector((state) => state);
-  const {id} = useParams();
-  const {selectedOffer} = useAppSelector((state)=> state);
-  const {nearByOffers} = useAppSelector((state) => state);
+
+  const {id} = useParams() ;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id !== undefined) {
-      store.dispatch(fetchSelectedOffer(id));
-      store.dispatch(fetchReviewsAction(id));
-      store.dispatch(fetchNearByOffersAction(id));
+      dispatch(fetchSelectedOffer(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearByOffersAction(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
+
+  const {offers} = useAppSelector((state) => state);
+  const selectedOffer = offers.find((offer) => offer.id === Number(id));
+  const {authorizationStatus} = useAppSelector((state) => state);
+  const {nearByOffers} = useAppSelector((state) => state);
 
 
   if (selectedOffer === undefined) {
@@ -110,7 +112,7 @@ function OfferScreen(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <FeedbacksList offerId = {selectedOffer.id.toString()}/>
+                <FeedbacksList />
                 {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>

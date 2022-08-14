@@ -102,6 +102,14 @@ enum AuthorizationStatus {
   Logout ='/logout',
 }
 
+const RatingTitles = {
+  5: 'perfect',
+  4: 'good',
+  3:'not bad',
+  2: 'badly',
+  1: 'terribly'
+};
+
 
 export {
   MULTIPLIER_RATING_TO_PERCENTAGE,
@@ -114,6 +122,7 @@ export {
   SORT_OPTIONS,
   URL_MARKER_CURRENT,
   URL_MARKER_DEFAULT,
+  RatingTitles,
   APIRoute,
   AppRoute,
   AuthorizationStatus};

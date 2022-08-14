@@ -2,11 +2,8 @@ import { Fragment } from 'react';
 import { useAppSelector } from '../../hooks';
 import Feedback from '../feedback/feedback';
 
-type FeedbacksListProps = {
-  offerId: string
-}
 
-function FeedbacksList({offerId}: FeedbacksListProps): JSX.Element {
+function FeedbacksList(): JSX.Element {
 
 
   const {reviews} = useAppSelector((state) => state);

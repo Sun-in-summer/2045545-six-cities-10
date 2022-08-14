@@ -15,9 +15,9 @@ function Feedback({review}: FeedbackProps): JSX.Element {
     user
   } = review;
 
+
   const {
     avatarUrl,
-    // isPro,
     name} = user;
 
 

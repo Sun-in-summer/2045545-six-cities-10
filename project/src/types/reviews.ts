@@ -6,11 +6,18 @@ type User = {
 }
 
 export type Review = {
-  id: number,
+  id: string,
   comment: string,
-  date: string,
+  date?: string,
   rating: number,
   user: User,
+}
+
+export type feedbackReview = {
+  id: string | undefined,
+  comment: string,
+  date?: string,
+  rating: number,
 }
 
 export type Reviews = Review[];

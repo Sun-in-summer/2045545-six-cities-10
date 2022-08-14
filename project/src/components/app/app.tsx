@@ -39,17 +39,15 @@ function App(): JSX.Element {
         />
         <Route
           path ={AppRoute.Favorites}
-          element = {<FavoritesScreen />}
+          element = {
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <FavoritesScreen />
+            </PrivateRoute>
+          }
         />
         <Route
           path = {AppRoute.Room}
-          element = {
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <OfferScreen />
-            </PrivateRoute>
-          }
+          element = {<OfferScreen />}
         />
         <Route
           path = {AppRoute.NotFound}

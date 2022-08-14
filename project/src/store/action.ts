@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { City, Offer, Offers } from '../types/offer';
 import { AuthorizationStatus, AppRoute } from '../const';
-import { Reviews } from '../types/reviews';
+import { Review, Reviews } from '../types/reviews';
 
 
 export const setCity = createAction<City>('main/setCity');
@@ -18,6 +18,7 @@ export const setSelectedOfferLoadedStatus = createAction<boolean>('data/setSelec
 export const setReviewsLoadedStatus = createAction<boolean>('data/setReviewsLoadedStatus');
 export const setNearByOffersLoadedStatus = createAction<boolean>('data/setNearByOffersLoadedStatus');
 
+export const sendReview = createAction<Review>('data/sendReview');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setUserEmail = createAction<string> ('user/setUserEmail');

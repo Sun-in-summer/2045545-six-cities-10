@@ -5,7 +5,7 @@ import { APIRoute, AuthorizationStatus, AppRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Offer, Offers } from '../types/offer';
-import { Reviews } from '../types/reviews';
+import { feedbackReview, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
@@ -51,7 +51,7 @@ export const fetchSelectedOffer = createAsyncThunk<void, string, {
   }
 );
 
-export const fetchReviewsAction = createAsyncThunk<void, string , {
+export const fetchReviewsAction = createAsyncThunk<void, (string | undefined), {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -63,7 +63,7 @@ export const fetchReviewsAction = createAsyncThunk<void, string , {
     dispatch(loadReviews(data));
     dispatch(setReviewsLoadedStatus(true));
   }
-);
+  );
 
 export const fetchNearByOffersAction = createAsyncThunk<void, string , {
   dispatch: AppDispatch,
@@ -76,6 +76,18 @@ export const fetchNearByOffersAction = createAsyncThunk<void, string , {
     dispatch(setNearByOffersLoadedStatus(false));
     dispatch(loadNearByOffers(data));
     dispatch(setNearByOffersLoadedStatus(true));
+  }
+);
+
+export const sendReviewAction = createAsyncThunk<feedbackReview, feedbackReview, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/sendReview',
+  async ({id, comment, rating}, {extra: api}) => {
+    const {data} = await api.post<feedbackReview>(generatePath(APIRoute.Reviews, {id}), {comment, rating});
+    return data;
   }
 );
 
