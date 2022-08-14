@@ -17,6 +17,7 @@ function OfferScreen(): JSX.Element {
 
 
   const {id} = useParams() ;
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -31,9 +32,10 @@ function OfferScreen(): JSX.Element {
   const selectedOffer = offers.find((offer) => offer.id === Number(id));
   const {authorizationStatus} = useAppSelector((state) => state);
   const {nearByOffers} = useAppSelector((state) => state);
+  const {reviews} = useAppSelector((state) => state);
 
 
-  if (selectedOffer === undefined) {
+  if (!selectedOffer) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
@@ -112,7 +114,7 @@ function OfferScreen(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <FeedbacksList />
+                <FeedbacksList reviews ={reviews}/>
                 {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>

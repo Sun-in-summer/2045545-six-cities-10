@@ -1,6 +1,6 @@
 import {ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { sendReviewAction } from '../../store/api-actions';
+import { fetchReviewsAction, sendReviewAction } from '../../store/api-actions';
 import FeedbackRating from '../feedback-rating/feedback-rating';
 import {feedbackReview} from '../../types/reviews';
 import { useParams } from 'react-router-dom';
@@ -20,6 +20,7 @@ function FeedbackForm(): JSX.Element {
   const onSubmit = (reviewData: feedbackReview) => {
     dispatch(sendReviewAction(reviewData));
     setFormData({...formData, review: '', rating: '0'});
+    dispatch(fetchReviewsAction(id));
   };
 
 
@@ -36,7 +37,7 @@ function FeedbackForm(): JSX.Element {
     if ( review !== '' && rating !== '0') {
       onSubmit({
         id: hotelId,
-        rating: +rating,
+        rating: Number(rating),
         comment: review,
         date: new Date().toISOString(),
       });

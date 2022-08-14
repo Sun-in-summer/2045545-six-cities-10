@@ -9,7 +9,7 @@ type FeedbackRatingProps= {
 
 function FeedbackRating({onChange, ratingValue}: FeedbackRatingProps): JSX.Element {
 
-  const rating = Object.keys(RatingTitles);
+  const rating = Object.keys(RatingTitles).reverse();
   return (
     <Fragment>
       {rating.map((item) => {

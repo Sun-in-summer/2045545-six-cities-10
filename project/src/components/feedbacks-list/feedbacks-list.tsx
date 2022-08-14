@@ -1,12 +1,13 @@
 import { Fragment } from 'react';
-import { useAppSelector } from '../../hooks';
+import { Reviews } from '../../types/reviews';
 import Feedback from '../feedback/feedback';
 
+type FeedbackListProps = {
+  reviews: Reviews,
+}
 
-function FeedbacksList(): JSX.Element {
 
-
-  const {reviews} = useAppSelector((state) => state);
+function FeedbacksList({reviews} :FeedbackListProps): JSX.Element {
 
 
   return (
