@@ -1,4 +1,5 @@
-import {Offers, GroupedOffersByOneCity} from '../../types/offer';
+import {Offers} from '../../types/offer';
+import { groupByCity } from '../../utils/utils';
 import FavoritesBlock from '../favorites-block/favorites-block';
 
 type FavoritesProps ={
@@ -10,13 +11,15 @@ function Favorites({offers}: FavoritesProps) : JSX.Element {
 
   const favoriteOffers: Offers = offers.filter((offer)=> offer.isFavorite === true);
 
-  const offersByCity = favoriteOffers.slice().reduce<GroupedOffersByOneCity>((acc, offer ) => {
-    if (!Object.hasOwn(acc, offer.city.name)) {
-      acc[offer.city.name] = [];
-    }
-    acc[offer.city.name].push(offer);
-    return acc;
-  }, {});
+  // const offersByCity = favoriteOffers.slice().reduce<GroupedOffersByOneCity>((acc, offer ) => {
+  //   if (!Object.hasOwn(acc, offer.city.name)) {
+  //     acc[offer.city.name] = [];
+  //   }
+  //   acc[offer.city.name].push(offer);
+  //   return acc;
+  // }, {});
+
+  const offersByCity = groupByCity(favoriteOffers);
 
 
   const listOfFavoriteCities = Object.keys(offersByCity);

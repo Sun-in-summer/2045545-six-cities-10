@@ -1,32 +1,41 @@
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/feedback-form/feedback-form';
 import {Navigate, useParams} from 'react-router-dom';
-import {Offers} from '../../types/offer';
 import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
-import { Reviews } from '../../types/reviews';
 import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferGoods from '../../components/offer-goods/offer-goods';
-import { AppRoute, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
+import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchReviewsAction, fetchSelectedOffer, fetchNearByOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 
-type OfferScreenProps ={
-  offers: Offers,
-  reviews: Reviews;
-
-}
+function OfferScreen(): JSX.Element {
 
 
-function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
+  const {id} = useParams() ;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id !== undefined) {
+      dispatch(fetchSelectedOffer(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearByOffersAction(id));
+    }
+  }, [dispatch, id]);
+
+  const {offers} = useAppSelector((state) => state);
+  const selectedOffer = offers.find((offer) => offer.id === Number(id));
+  const {authorizationStatus} = useAppSelector((state) => state);
+  const {nearByOffers} = useAppSelector((state) => state);
+  const {reviews} = useAppSelector((state) => state);
 
 
-  const {id} = useParams();
-
-  const selectedOffer = offers.find((offer)=> offer.id.toString() === id);
-  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(chosenOffer);
-  if (selectedOffer === undefined) {
+  if (!selectedOffer) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
@@ -36,7 +45,7 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
   const firstLetterCapitalizedType = firstLetterToUpperCase(type);
   const mapWidth = MAP_WIDTH_IN_OFFER;
 
-  const nearOffers = offers.slice(0, NEAR_ITEMS_QUANTITY);
+  const nearOffers = nearByOffers.slice(0, NEAR_ITEMS_QUANTITY);
 
 
   return (
@@ -44,7 +53,7 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
-          <OfferImages chosenOfferImages={images} />
+          <OfferImages selectedOfferImages={images} />
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium ?
@@ -106,7 +115,7 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <FeedbacksList reviews ={reviews}/>
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
           </div>

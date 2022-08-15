@@ -6,6 +6,10 @@ const MAP_WIDTH_IN_OFFER = 85;
 const DEFAULT_MAP_WIDTH = 100;
 const NEAR_ITEMS_QUANTITY = 3;
 
+
+const URL_MARKER_DEFAULT = 'img/pin.svg';
+const URL_MARKER_CURRENT = 'img/pin-active.svg';
+
 const DEFAULT_CITY : City = {
   name: 'Paris',
   location: {
@@ -88,10 +92,24 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+ enum APIRoute {
+  Offers = '/hotels',
+  Offer = 'hotels/:id',
+  OffersNearBy = '/hotels/:id/nearby',
+  Reviews ='/comments/:id',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout ='/logout',
+}
 
-export const URL_MARKER_DEFAULT = 'img/pin.svg';
+const RatingTitles = {
+  5: 'perfect',
+  4: 'good',
+  3:'not bad',
+  2: 'badly',
+  1: 'terribly'
+};
 
-export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
 export {
   MULTIPLIER_RATING_TO_PERCENTAGE,
@@ -102,5 +120,9 @@ export {
   NEAR_ITEMS_QUANTITY,
   CITIES,
   SORT_OPTIONS,
+  URL_MARKER_CURRENT,
+  URL_MARKER_DEFAULT,
+  RatingTitles,
+  APIRoute,
   AppRoute,
   AuthorizationStatus};

@@ -34,7 +34,13 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
 
   return (
-    <article className= "cities__card place-card" onMouseOver = {onHover} style = {{display : `${isFlex ? 'flex' : 'block'}`, width: `${isFlex ? '421px' : '260px'}` }} id = {id.toString()} onMouseEnter ={onMouseEnter}>
+    <article
+      className= "cities__card place-card"
+      onMouseOver = {onHover}
+      style = {{display : `${isFlex ? 'flex' : 'block'}`, width: `${isFlex ? '421px' : '260px'}` }}
+      id = {id.toString()}
+      onMouseEnter ={onMouseEnter}
+    >
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
@@ -63,8 +69,14 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name" >
-          <NavLink to={AppRoute.Room.replace(':id',id.toString())}>{title}</NavLink>
+        <h2
+          className="place-card__name"
+        >
+          <NavLink
+            to={AppRoute.Room.replace(':id', id.toString())}
+          >
+            {title}
+          </NavLink>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

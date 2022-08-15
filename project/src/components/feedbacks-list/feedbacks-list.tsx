@@ -1,13 +1,13 @@
 import { Fragment } from 'react';
-import {Reviews} from '../../types/reviews';
+import { Reviews } from '../../types/reviews';
 import Feedback from '../feedback/feedback';
 
+type FeedbackListProps = {
+  reviews: Reviews,
+}
 
-type FeedbacksListProps = {
-  reviews: Reviews;
-};
 
-function FeedbacksList({reviews}: FeedbacksListProps): JSX.Element {
+function FeedbacksList({reviews} :FeedbackListProps): JSX.Element {
 
 
   return (
