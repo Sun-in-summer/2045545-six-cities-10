@@ -99,8 +99,9 @@ enum AuthorizationStatus {
   OffersNearBy = '/hotels/:id/nearby',
   Reviews ='/comments/:id',
   Favorite = '/favorite',
+  FavoriteStatus = '/favorite/:id/:status',
   Login = '/login',
-  Logout ='/logout',
+  Logout ='/logout'
 }
 
 const RatingTitles = {

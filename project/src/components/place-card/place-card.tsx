@@ -1,8 +1,10 @@
 import {Offer} from '../../types/offer';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {ratingPercentage} from '../../utils/utils';
 import {MouseEventHandler} from 'react';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addToFavoritesAction } from '../../store/api-actions';
 
 
 type PlaceCardProps = {
@@ -15,6 +17,7 @@ type PlaceCardProps = {
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
 
+  const {authorizationStatus} = useAppSelector((state)=> state);
 
   const {offer, isActive, onHover, isFlex, onMouseEnter} = props;
   const {
@@ -31,6 +34,21 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
 
   const starWidth: number = ratingPercentage(rating);
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+  const handleFavoriteButtonClick = () =>{
+    if ( authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+    }
+    else {
+      dispatch(addToFavoritesAction({
+        id: id,
+        status: Number(!isFavorite).toString(),
+        isFavorite: !isFavorite
+      }));
+    }
+  };
 
 
   return (
@@ -56,7 +74,11 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''}  button`} type="button">
+          <button
+            className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''}  button`}
+            type="button"
+            onClick = {handleFavoriteButtonClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

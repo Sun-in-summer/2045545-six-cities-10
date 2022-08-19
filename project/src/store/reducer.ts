@@ -14,7 +14,7 @@ import {
   setReviewsLoadedStatus,
   setSelectedOfferLoadedStatus,
   setNearByOffersLoadedStatus,
-  setUserEmail
+  setUserEmail,
 } from './action';
 
 type InitialState ={

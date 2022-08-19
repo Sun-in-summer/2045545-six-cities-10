@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/feedback-form/feedback-form';
-import {Navigate, useParams} from 'react-router-dom';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
 import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
 import OfferImages from '../../components/offer-images/offer-images';
@@ -9,7 +9,7 @@ import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY 
 import Map from '../../components/map/map';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewsAction, fetchSelectedOffer, fetchNearByOffersAction } from '../../store/api-actions';
+import { fetchReviewsAction, fetchSelectedOffer, fetchNearByOffersAction, addToFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 
@@ -34,13 +34,28 @@ function OfferScreen(): JSX.Element {
   const {nearByOffers} = useAppSelector((state) => state);
   const {reviews} = useAppSelector((state) => state);
 
+  const navigate = useNavigate();
+  const handleFavoriteButtonClick = () =>{
+    if ( authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+    }
+    else {
+      dispatch(addToFavoritesAction({
+        id: Number(id),
+        status: Number(!isFavorite).toString(),
+        isFavorite: !isFavorite
+      }));
+    }
+  };
+
 
   if (!selectedOffer) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
 
-  const {isPremium, images, title, rating, type, maxAdults, bedrooms, price, goods, host, description} = selectedOffer ;
+  const {isPremium, images, title, rating, type, maxAdults, bedrooms, price, goods, host, description, isFavorite} = selectedOffer ;
+
   const starWidth = ratingPercentage(rating);
   const firstLetterCapitalizedType = firstLetterToUpperCase(type);
   const mapWidth = MAP_WIDTH_IN_OFFER;
@@ -64,8 +79,12 @@ function OfferScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                <button
+                  className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active' : ''}  button`}
+                  type="button"
+                  onClick= {handleFavoriteButtonClick}
+                >
+                  <svg className={`property__bookmark-icon${isFavorite ? '--active' : ''}`}width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>

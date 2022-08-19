@@ -4,7 +4,7 @@ import { generatePath } from 'react-router-dom';
 import { APIRoute, AuthorizationStatus, AppRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Offer, Offers } from '../types/offer';
+import { Offer, Offers, OfferStatus } from '../types/offer';
 import { feedbackReview, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
@@ -87,6 +87,27 @@ export const sendReviewAction = createAsyncThunk<feedbackReview, feedbackReview,
   'data/sendReview',
   async ({id, comment, rating}, {extra: api}) => {
     const {data} = await api.post<feedbackReview>(generatePath(APIRoute.Reviews, {id}), {comment, rating});
+    return data;
+  }
+);
+
+export const addToFavoritesAction = createAsyncThunk<Offer, OfferStatus,
+ {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/addToFavorites',
+  async({id, status, isFavorite}, {dispatch, extra: api})=>{
+    const {data} = await api.post<Offer>(generatePath(APIRoute.FavoriteStatus,{
+      id: id.toString(),
+      status: status,
+    }));
+
+
+    dispatch(fetchOffersAction());
+
+
     return data;
   }
 );

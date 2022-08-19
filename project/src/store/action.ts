@@ -19,6 +19,7 @@ export const setReviewsLoadedStatus = createAction<boolean>('data/setReviewsLoad
 export const setNearByOffersLoadedStatus = createAction<boolean>('data/setNearByOffersLoadedStatus');
 
 export const sendReview = createAction<Review>('data/sendReview');
+export const setFavoriteStatus = createAction<boolean>('data/setFavoriteStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setUserEmail = createAction<string> ('user/setUserEmail');
