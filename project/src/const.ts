@@ -93,6 +93,7 @@ enum AuthorizationStatus {
 }
 
  enum APIRoute {
+  Main ='/',
   Offers = '/hotels',
   Offer = 'hotels/:id',
   OffersNearBy = '/hotels/:id/nearby',
