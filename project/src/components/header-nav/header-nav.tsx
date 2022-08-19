@@ -9,6 +9,7 @@ function HeaderNav(): JSX.Element {
 
 
   const {authorizationStatus} = useAppSelector((state) => state);
+  console.log(authorizationStatus);
 
 
   return (

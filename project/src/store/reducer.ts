@@ -49,6 +49,7 @@ const initialState: InitialState = {
   userEmail: undefined
 };
 
+
 const reducer = createReducer (initialState, (builder) => {
   builder
     .addCase(setCity, (state, action) =>{
