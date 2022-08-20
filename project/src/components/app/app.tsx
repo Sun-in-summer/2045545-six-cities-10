@@ -11,11 +11,16 @@ import PrivateRoute from '../private-route/private-route';
 import {isCheckedAuth} from '../../index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getOffersDataLoadingStatus } from '../../store/offers-data/selector';
 
 
 function App(): JSX.Element {
 
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state)=> state);
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const isDataLoaded = useAppSelector(getOffersDataLoadingStatus);
 
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {

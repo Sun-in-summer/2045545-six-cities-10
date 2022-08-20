@@ -1,33 +1,27 @@
 import {City} from '../../types/offer';
-import {setCity} from '../../store/action';
-import {useAppDispatch} from '../../hooks';
+import CitiesListItem from '../city-list-item/cities-list-item';
 
 
 type CitiesListProps = {
  cities: City[];
- selectedCity: City | undefined;
-
 };
 
-function CitiesList({cities, selectedCity}: CitiesListProps): JSX.Element {
-
-  const dispatch = useAppDispatch();
-
+function CitiesList({cities}: CitiesListProps): JSX.Element {
 
   return (
-    <section className="locations container">
-      <ul className="locations__list tabs__list">
-        {cities.map((city) => (
-          <li className="locations__item" key = {city.name}>
-            <a className ={`locations__item-link tabs__item ${selectedCity && city.name === selectedCity.name ? 'tabs__item--active' : ''}`} href="/#" >
-              <div onClick = {()=>dispatch(setCity(city))}>{city.name}</div>
-            </a>
-          </li>))}
-      </ul>
-    </section>
+    <div className="tabs">
+      <section className="locations container">
+        <ul className="locations__list tabs__list">
+          {cities.map((city) => (
+            <CitiesListItem
+              key ={city.name}
+              city ={city}
+            />))}
+        </ul>
+      </section>
+    </div>
   );
 
 }
-
 
 export default CitiesList;

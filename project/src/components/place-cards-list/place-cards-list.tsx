@@ -22,9 +22,18 @@ function PlaceCardsList({offers, onListItemHover}: PlaceCardsListProps): JSX.Ele
 
   return (
     <div className="cities__places-list places__list tabs__content" >
-      {offers.map((offer) => (<PlaceCard offer = {offer} key= {offer.id} isActive = {offer.id === activeCardId} onHover = {()=>setActiveCardId(offer.id)} isFlex ={false} onMouseEnter = {listItemHoverHandler}/> )//
+      {offers.map((offer) =>
+        (
+          <PlaceCard
+            offer = {offer}
+            key= {offer.id}
+            isActive = {offer.id === activeCardId}
+            onHover = {()=>setActiveCardId(offer.id)}
+            isFlex ={false}
+            onMouseEnter = {listItemHoverHandler}
+          />
+        )
       )}
-
     </div>
   );
 

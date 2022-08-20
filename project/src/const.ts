@@ -113,6 +113,17 @@ const RatingTitles = {
 };
 
 
+export enum NameSpace {
+  User = 'USER',
+  Offers = 'OFFERS',
+  NearByOffers = 'NEAR_BY_OFFERS',
+  Reviews = 'REVIEWS',
+  SelectedCity = 'SELECTED_CITY',
+  SelectedOffer = 'SELECTED_OFFER',
+  SortOption ='SORT_OPTION'
+}
+
+
 export {
   MULTIPLIER_RATING_TO_PERCENTAGE,
   MAX_OFFER_IMAGE_QUANTITY,

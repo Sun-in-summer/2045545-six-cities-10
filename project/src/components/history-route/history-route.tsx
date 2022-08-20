@@ -8,7 +8,11 @@ export interface HistoryRouterProps {
   children?: React.ReactNode
 }
 
-function HistoryRouter ({basename, history, children}: HistoryRouterProps) {
+function HistoryRouter ({
+  basename,
+  history,
+  children
+}: HistoryRouterProps) {
   const [state, setState] = useState({
     action: history.action,
     location: history.location

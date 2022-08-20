@@ -5,6 +5,7 @@ import {MouseEventHandler} from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addToFavoritesAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 
 
 type PlaceCardProps = {
@@ -17,7 +18,7 @@ type PlaceCardProps = {
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
 
-  const {authorizationStatus} = useAppSelector((state)=> state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const {offer, isActive, onHover, isFlex, onMouseEnter} = props;
   const {
@@ -63,9 +64,18 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : null }
-      <div className="cities__image-wrapper place-card__image-wrapper " style = {{minWidth: `${isFlex ? '150px' : ''}`, marginRight: `${isFlex ? '16px' : ''}` }} >
+      <div
+        className="cities__image-wrapper place-card__image-wrapper "
+        style = {{minWidth: `${isFlex ? '150px' : ''}`, marginRight: `${isFlex ? '16px' : ''}` }}
+      >
         <a href="/#">
-          <img className={`place-card__image ${ isActive ? 'place-card__image--active' : null}` } src={previewImage} width={isFlex ? '150px' : '260px'} height="200" alt={description} />
+          <img
+            className={`place-card__image ${ isActive ? 'place-card__image--active' : null}` }
+            src={previewImage}
+            width={isFlex ? '150px' : '260px'}
+            height="200"
+            alt={description}
+          />
         </a>
       </div>
       <div className="place-card__info">

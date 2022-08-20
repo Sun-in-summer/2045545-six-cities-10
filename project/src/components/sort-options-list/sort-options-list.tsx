@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import {SORT_OPTIONS} from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveSortOption } from '../../store/action';
+import { setActiveSortOption } from '../../store/select-sort-option-process/select-sort-option-process';
+import { getActiveSortOption } from '../../store/select-sort-option-process/selector';
 import SortOption from '../sort-option/sort-option';
 
 function SortOptionsList(): JSX.Element {
 
-  const activeSortOption = useAppSelector((state) => state.activeSortOption);
+  const activeSortOption = useAppSelector(getActiveSortOption);
 
   const [isOptionsListOpened, setIsOptionsListOpened] = useState<boolean>(false);
 
@@ -23,8 +24,20 @@ function SortOptionsList(): JSX.Element {
       </span>
       <ul className={`places__options places__options--custom${isOptionsListOpened ? 'open' : ''} places__options`} >
 
-        { Object.values(SORT_OPTIONS).map((sortOption)=>< SortOption sortOption ={sortOption} key={sortOption} activeSortOption ={activeSortOption} onSortOptionClick ={(option:string)=> dispatch(setActiveSortOption(option))}/>)}
-
+        { Object.values(SORT_OPTIONS).map(
+          (sortOption)=>
+            (
+              <SortOption
+                sortOption ={sortOption}
+                key={sortOption}
+                activeSortOption ={activeSortOption}
+                onSortOptionClick ={
+                  (option:string)=>
+                    dispatch(setActiveSortOption(option))
+                }
+              />
+            )
+        )}
       </ul>
     </form>
   );
