@@ -17,14 +17,17 @@ function FavoritesFilled({offers} : FavoritesFilledProps) : JSX.Element {
   const listOfFavoriteCities = Object.keys(offersByCity);
 
   return (
+    <main className= "page__main page__main--favorites ">
+      <div className="page__favorites-container container">
+        <section className ='favorites'>
+          <h1 className="favorites__title">Saved listing</h1>
+          <ul className="favorites__list">
+            {listOfFavoriteCities.map((city) => ( < FavoritesBlock offersByCity ={offersByCity[city]} city = {city} key = {city}/>))}
+          </ul>
+        </section>
+      </div>
+    </main>
 
-
-    <section className ='favorites'>
-      <h1 className="favorites__title">Saved listing</h1>
-      <ul className="favorites__list">
-        {listOfFavoriteCities.map((city) => ( < FavoritesBlock offersByCity ={offersByCity[city]} city = {city} key = {city}/>))}
-      </ul>
-    </section>
   );
 
 }

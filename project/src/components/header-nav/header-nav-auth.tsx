@@ -13,8 +13,6 @@ function HeaderNavAuth(): JSX.Element {
 
   const favoritesOffers = offers.filter((offer)=> offer.isFavorite === true);
 
-  console.log(userEmail);
-
 
   return (
     <nav className="header__nav">
