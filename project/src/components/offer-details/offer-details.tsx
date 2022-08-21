@@ -10,10 +10,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction, fetchSelectedOfferAction, fetchNearByOffersAction, addToFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-
-import { getReviewsData } from '../../store/reviews-data/selector';
+import { getOffersData } from '../../store/data-process/selector';
+import {getReviewsData} from '../../store/data-process/selector';
 import OfferHost from '../offer-host/offer-host';
-import { getSelectedOfferData } from '../../store/selected-offer-data/selector';
 
 
 function OfferDetails(): JSX.Element {
@@ -21,18 +20,18 @@ function OfferDetails(): JSX.Element {
 
   const {id} = useParams() ;
   const dispatch = useAppDispatch();
-  const selectedOffer = useAppSelector(getSelectedOfferData);
 
   useEffect(() => {
-    if ((selectedOffer === undefined || selectedOffer.id !== Number(id)) && id !== undefined) {
+    if (id !== undefined) {
       dispatch(fetchSelectedOfferAction(id));
       dispatch(fetchReviewsAction(id));
       dispatch(fetchNearByOffersAction(id));
       window.scrollTo(0,0);
     }
-  }, [dispatch, id, selectedOffer]);
+  }, [dispatch, id]);
 
-
+  const offers = useAppSelector(getOffersData);
+  const selectedOffer = offers.find((offer) => offer.id === Number(id));
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getReviewsData);
 
@@ -133,7 +132,6 @@ function OfferDetails(): JSX.Element {
       </div>
       <section className="property__map map">
         <Map
-          city={selectedOffer.city}
           selectedOffer ={selectedOffer }
           width = {mapWidth}
         />

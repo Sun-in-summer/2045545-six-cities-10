@@ -2,7 +2,7 @@ import FavoritesEmpty from '../../components/favorites/favorites-empty';
 import FavoritesFilled from '../../components/favorites/favorites-filled';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import { getOffersData } from '../../store/offers-data/selector';
+import { getOffersData } from '../../store/data-process/selector';
 import { Offers } from '../../types/offer';
 
 

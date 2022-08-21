@@ -1,4 +1,4 @@
-import { Offer, City } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import {LayerGroup} from 'leaflet';
@@ -6,21 +6,23 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getOffersData } from '../../store/offers-data/selector';
+import { getOffersData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 
 type MapProps = {
-  city: City,
   selectedOffer: Offer | undefined,
   width: number,
 }
 
-function Map({city, selectedOffer, width}:MapProps) : JSX.Element {
+function Map({selectedOffer, width}:MapProps) : JSX.Element {
+
+  const selectedCity = useAppSelector(getSelectedCity);
+  const city = selectedCity;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
   const offers = useAppSelector(getOffersData);
-  const selectedCity = useAppSelector(getSelectedCity);
+
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
 
 

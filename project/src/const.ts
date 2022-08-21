@@ -115,13 +115,10 @@ const RatingTitles = {
 
 export enum NameSpace {
   User = 'USER',
-  Offers = 'OFFERS',
-  NearByOffers = 'NEAR_BY_OFFERS',
-  Reviews = 'REVIEWS',
+  Data = 'DATA',
   SelectedCity = 'SELECTED_CITY',
   SelectedOffer = 'SELECTED_OFFER',
   SortOption ='SORT_OPTION',
-  Favorites = 'FAVORITES',
 }
 
 

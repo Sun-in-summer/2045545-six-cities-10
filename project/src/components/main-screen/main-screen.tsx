@@ -4,7 +4,7 @@ import {useAppSelector} from '../../hooks';
 import MainEmpty from '../../components/main-empty/main-empty';
 import MainFilled from '../../components/main-filled/main-filled';
 import { CITIES } from '../../const';
-import { getOffersData } from '../../store/offers-data/selector';
+import { getOffersData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 
 

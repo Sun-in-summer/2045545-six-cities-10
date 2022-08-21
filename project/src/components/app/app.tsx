@@ -12,7 +12,7 @@ import {isCheckedAuth} from '../../index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import { getOffersDataLoadingStatus } from '../../store/offers-data/selector';
+import { getOffersDataLoadingStatus } from '../../store/data-process/selector';
 
 
 function App(): JSX.Element {
@@ -20,10 +20,10 @@ function App(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const isDataLoaded = useAppSelector(getOffersDataLoadingStatus);
+  const isOffersLoading = useAppSelector(getOffersDataLoadingStatus);
 
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || isOffersLoading) {
     return (
       <LoadingScreen />
     );

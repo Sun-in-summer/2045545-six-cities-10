@@ -6,7 +6,7 @@ import {useAppSelector} from '../../hooks';
 import {getSortedOffers} from '../../utils/utils';
 import SortOptionsList from '../sort-options-list/sort-options-list';
 import PlaceCardsList from '../place-cards-list/place-cards-list';
-import { getOffersData } from '../../store/offers-data/selector';
+import { getOffersData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 import { getActiveSortOption } from '../../store/select-sort-option-process/selector';
 
@@ -48,7 +48,6 @@ function MainFilled(): JSX.Element {
           '' :
           <section className="cities__map map">
             < Map
-              city ={selectedCity}
               selectedOffer ={selectedOffer}
               width={DEFAULT_MAP_WIDTH}
             />

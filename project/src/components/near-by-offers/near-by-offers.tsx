@@ -1,7 +1,7 @@
 import { NEAR_ITEMS_QUANTITY } from '../../const';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
 import { useAppSelector } from '../../hooks';
-import { getNearByOffersData } from '../../store/near-by-offers-data/selector';
+import { getNearByOffersData } from '../../store/data-process/selector';
 
 
 function NearByOffers(): JSX.Element {
