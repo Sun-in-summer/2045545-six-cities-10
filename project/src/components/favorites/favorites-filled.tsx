@@ -1,20 +1,25 @@
 
 
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { getFavoriteOffersData, getFavoriteOffersLoadingStatus } from '../../store/data-process/selector';
 import {Offers} from '../../types/offer';
 import { groupByCity } from '../../utils/utils';
 import FavoritesBlock from '../favorites-block/favorites-block';
 
 
-type FavoritesFilledProps = {
-  offers: Offers;
-}
+function FavoritesFilled() : JSX.Element {
 
-function FavoritesFilled({offers} : FavoritesFilledProps) : JSX.Element {
-
-
-  const favoriteOffers: Offers = offers.filter((offer)=> offer.isFavorite === true);
+  const isFavoritesLoading = useAppSelector(getFavoriteOffersLoadingStatus);
+  const favoriteOffers: Offers = useAppSelector(getFavoriteOffersData);
   const offersByCity = groupByCity(favoriteOffers);
   const listOfFavoriteCities = Object.keys(offersByCity);
+
+  if ( isFavoritesLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <main className= "page__main page__main--favorites ">

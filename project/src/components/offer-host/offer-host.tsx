@@ -1,12 +1,13 @@
 
-import {Host} from '../../types/offer';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getSelectedOfferData } from '../../store/data-process/selector';
+import { Offer } from '../../types/offer';
 
-type OfferHostProps = {
-  host: Host,
-  description: string | undefined,
-}
 
-function OfferHost({host, description} : OfferHostProps): JSX.Element {
+function OfferHost( ): JSX.Element {
+
+  const {host, description}: Offer = useAppSelector(getSelectedOfferData) as Offer;
 
 
   return (

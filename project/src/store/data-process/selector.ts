@@ -9,6 +9,7 @@ export const getOffersDataLoadingStatus = (state: State): boolean => state[NameS
 export const getErrorInfo = (state: State) : string | null => state[NameSpace.Data].error;
 
 export const getFavoriteOffersData = (state: State): Offers => state[NameSpace.Data].favoriteOffers;
+export const getFavoriteOffersLoadingStatus = (state: State) :boolean => state[NameSpace.Data].isFavoriteOffersLoading;
 
 export const getReviewsData = (state: State): Reviews => state[NameSpace.Data].reviews;
 export const getNearByOffersData = (state: State): Offers => state[NameSpace.Data].nearByOffers;

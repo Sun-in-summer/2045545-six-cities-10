@@ -10,8 +10,7 @@ import { feedbackReview, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
-  redirectToRoute,
-} from './action';
+  redirectToRoute} from './action';
 
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
@@ -26,15 +25,14 @@ export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   },
 );
 
-export const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
+export const fetchFavoriteOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'data/fetchFavoriteOffers',
   async (_arg, { dispatch, extra: api }) => {
-    const { data } = await api.get<Offer[]>(APIRoute.Favorite);
-
+    const { data } = await api.get<Offers>(APIRoute.Favorite);
     return data;
   }
 );
@@ -71,6 +69,7 @@ export const fetchSelectedOfferAction = createAsyncThunk<Offer, string, {
 }> (
   'data/fetchSelectedOffer',
   async(id, {dispatch, extra: api}) => {
+    console.log('id=' + id);
     const {data} = await api.get<Offer>(generatePath(APIRoute.Offer, {id}));
     return data;
   }
@@ -89,22 +88,22 @@ export const sendReviewAction = createAsyncThunk<Reviews, feedbackReview, {
   }
 );
 
-export const addToFavoritesAction = createAsyncThunk<Offer, OfferStatus,
+export const changeFavoriteStatusAction = createAsyncThunk<Offer, OfferStatus,
  {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
-  'data/addToFavorites',
+  'data/changeFavoriteStatus',
   async({id, status, isFavorite}, {dispatch, extra: api})=>{
     const {data} = await api.post<Offer>(generatePath(APIRoute.FavoriteStatus,{
       id: id.toString(),
       status: status,
     }));
-
-    dispatch(fetchOffersAction());
-
-
+    dispatch(fetchFavoriteOffersAction());
+    // dispatch(updateSelectedOffer(data));
+    // dispatch(fetchSelectedOfferAction(id.toString()));
+    // dispatch(updateFavoriteOffers(data));
     return data;
   }
 );
@@ -117,6 +116,7 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
+    dispatch(fetchFavoriteOffersAction());
     const {data} = await api.get<UserData>(APIRoute.Login);
     return data;
   },

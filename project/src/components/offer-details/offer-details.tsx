@@ -7,10 +7,10 @@ import OfferGoods from '../../components/offer-goods/offer-goods';
 import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER } from '../../const';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewsAction, fetchSelectedOfferAction, fetchNearByOffersAction, addToFavoritesAction } from '../../store/api-actions';
+import { fetchReviewsAction, fetchSelectedOfferAction, fetchNearByOffersAction, changeFavoriteStatusAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import { getOffersData , getReviewsData, getSelectedOfferLoadingStatus} from '../../store/data-process/selector';
+import { getReviewsData, getSelectedOfferData, getSelectedOfferLoadingStatus} from '../../store/data-process/selector';
 import OfferHost from '../offer-host/offer-host';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
@@ -21,10 +21,23 @@ function OfferDetails(): JSX.Element {
   const {id} = useParams() ;
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (id !== undefined) {
+      console.log('+');
+      dispatch(fetchSelectedOfferAction(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearByOffersAction(id));
+      window.scrollTo(0,0);
+    }
+  }, [dispatch, id]);
   const isSelectedOfferLoading = useAppSelector(getSelectedOfferLoadingStatus);
+
+  const selectedOffer = useAppSelector(getSelectedOfferData);
+
 
   useEffect(() => {
     if (id !== undefined) {
+      console.log('+');
       dispatch(fetchSelectedOfferAction(id));
       dispatch(fetchReviewsAction(id));
       dispatch(fetchNearByOffersAction(id));
@@ -33,9 +46,11 @@ function OfferDetails(): JSX.Element {
   }, [dispatch, id]);
 
 
-  const offers = useAppSelector(getOffersData);
+  // const offers = useAppSelector(getOffersData);
 
-  const selectedOffer = offers.find((offer) => offer.id === Number(id));
+
+
+  // const selectedOffer = offers.find((offer) => offer.id === Number(id));
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getReviewsData);
 
@@ -45,7 +60,7 @@ function OfferDetails(): JSX.Element {
       navigate(AppRoute.Login);
     }
     else {
-      dispatch(addToFavoritesAction({
+      dispatch(changeFavoriteStatusAction({
         id: Number(id),
         status: Number(!isFavorite).toString(),
         isFavorite: !isFavorite
@@ -75,8 +90,6 @@ function OfferDetails(): JSX.Element {
     bedrooms,
     price,
     goods,
-    host,
-    description,
     isFavorite
   } = selectedOffer ;
 
@@ -133,7 +146,7 @@ function OfferDetails(): JSX.Element {
             <span className="property__price-text">&nbsp;night</span>
           </div>
           <OfferGoods goods= {goods}/>
-          <OfferHost host = {host} description ={description} />
+          <OfferHost />
           <section className="property__reviews reviews">
             <FeedbacksList reviews ={reviews}/>
             {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}

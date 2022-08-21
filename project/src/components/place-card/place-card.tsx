@@ -4,7 +4,7 @@ import {ratingPercentage} from '../../utils/utils';
 import {MouseEventHandler} from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addToFavoritesAction } from '../../store/api-actions';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 
 
@@ -43,7 +43,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       navigate(AppRoute.Login);
     }
     else {
-      dispatch(addToFavoritesAction({
+      dispatch(changeFavoriteStatusAction({
         id: id,
         status: Number(!isFavorite).toString(),
         isFavorite: !isFavorite

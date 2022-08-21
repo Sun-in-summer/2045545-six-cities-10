@@ -79,6 +79,18 @@ const getSortedOffers = (sortOption: string, offers: Offers): Offers => {
   }
 };
 
+const replaceOffer = (offers: Offers, selectedOffer: Offer) => {
+  const index = offers.findIndex((offer) => offer.id === selectedOffer.id);
+
+  const currentOffers = [
+    ...offers.slice(0, index),
+    selectedOffer,
+    ...offers.slice(index + 1),
+  ];
+
+  return currentOffers;
+};
+
 
 export {
   sortByCity,
@@ -88,5 +100,6 @@ export {
   sortPriceHighToLow,
   sortPriceLowToHigh,
   getSortedOffers,
-  groupByCity
+  groupByCity,
+  replaceOffer
 };

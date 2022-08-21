@@ -2,7 +2,9 @@ import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace } from '../../const';
 import { Offer, Offers } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
-import { fetchFavoriteOffersAction, fetchNearByOffersAction, fetchOffersAction, fetchReviewsAction, fetchSelectedOfferAction, sendReviewAction} from '../api-actions';
+import { changeFavoriteStatusAction, fetchFavoriteOffersAction, fetchNearByOffersAction, fetchOffersAction, fetchReviewsAction, fetchSelectedOfferAction, sendReviewAction} from '../api-actions';
+import {updateFavoriteOffers, updateSelectedOffer, updateOffers} from '../action';
+import {replaceOffer} from '../../utils/utils';
 
 
 type DataProcess = {
@@ -10,7 +12,7 @@ type DataProcess = {
   isOffersLoading: boolean,
   error: string | null,
   favoriteOffers: Offers,
-  isFavoriteOffersLoaded: boolean,
+  isFavoriteOffersLoading: boolean,
   reviews: Reviews,
   isReviewsLoaded: boolean,
   isReviewSent: boolean,
@@ -22,19 +24,17 @@ type DataProcess = {
 
 const initialState: DataProcess = {
   offers: [],
-  isOffersLoading: false,
-  error: null,
   favoriteOffers: [],
-  isFavoriteOffersLoaded: false,
   reviews: [],
+  nearByOffers: [],
+  selectedOffer : {} as Offer,
+  error: null,
+  isOffersLoading: false,
+  isFavoriteOffersLoading: false,
   isReviewsLoaded: false,
   isReviewSent: false,
-  nearByOffers: [],
   isNearByOffersLoaded: false,
-  selectedOffer : {} as Offer,
   isSelectedOfferLoading : false,
-
-
 };
 
 export const dataProcess = createSlice({
@@ -54,14 +54,14 @@ export const dataProcess = createSlice({
         state.isOffersLoading = false;
       })
       .addCase(fetchFavoriteOffersAction.pending, (state)=> {
-        state.isFavoriteOffersLoaded = true;
+        state.isFavoriteOffersLoading = true;
       })
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action)=> {
         state.favoriteOffers = action.payload;
-        state.isFavoriteOffersLoaded = false;
+        state.isFavoriteOffersLoading = false;
       })
       .addCase(fetchFavoriteOffersAction.rejected, (state, )=> {
-        state.isFavoriteOffersLoaded = false;
+        state.isFavoriteOffersLoading = false;
       })
       .addCase(fetchReviewsAction.pending, (state)=> {
         state.isReviewsLoaded = true;
@@ -97,13 +97,40 @@ export const dataProcess = createSlice({
         state.isSelectedOfferLoading = true;
       })
       .addCase(fetchSelectedOfferAction.fulfilled, (state, action)=> {
+        console.log(action.payload);
         state.selectedOffer = action.payload;
         state.isSelectedOfferLoading = false;
       })
       .addCase(fetchSelectedOfferAction.rejected, (state, )=> {
         state.isSelectedOfferLoading = false;
+      })
+      .addCase(updateSelectedOffer, (state, action) => {
+        console.log('+');
+        if (state.selectedOffer !== undefined && state.selectedOffer.id === action.payload.id) {
+          state.selectedOffer = action.payload;
+        }
+      })
+      .addCase(updateFavoriteOffers, (state, action) => {
+        if (state.isFavoriteOffersLoading) {
+          if (action.payload.isFavorite === true) {
+            state.favoriteOffers = [...state.favoriteOffers, action.payload];
+          } else {
+            state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
+          }
+        }
+      })
+      .addCase(updateOffers, (state, action) => {
+        if (state.offers !== undefined && state.isOffersLoading) {
+          state.offers = replaceOffer(state.offers, action.payload);
+        }
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+
+        if (action.payload.isFavorite === true) {
+          state.favoriteOffers = [...state.favoriteOffers, action.payload];
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
+        }
       });
+  }});
 
-
-  }
-});
