@@ -10,9 +10,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction, fetchSelectedOfferAction, fetchNearByOffersAction, addToFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import { getOffersData } from '../../store/offers-data/selector';
+
 import { getReviewsData } from '../../store/reviews-data/selector';
 import OfferHost from '../offer-host/offer-host';
+import { getSelectedOfferData } from '../../store/selected-offer-data/selector';
+import { getOffersData } from '../../store/offers-data/selector';
 
 
 function OfferDetails(): JSX.Element {
@@ -20,18 +22,19 @@ function OfferDetails(): JSX.Element {
 
   const {id} = useParams() ;
   const dispatch = useAppDispatch();
+  const selectedOffer = useAppSelector(getSelectedOfferData);
 
   useEffect(() => {
-    if (id !== undefined) {
+    if ((selectedOffer === undefined || selectedOffer.id !== Number(id)) && id !== undefined) {
       dispatch(fetchSelectedOfferAction(id));
       dispatch(fetchReviewsAction(id));
       dispatch(fetchNearByOffersAction(id));
       window.scrollTo(0,0);
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, selectedOffer]);
 
-  const offers = useAppSelector(getOffersData);
-  const selectedOffer = offers.find((offer) => offer.id === Number(id));
+  const offers = useAppSelector(getOffersData); //
+  // const selectedOffer = offers.find((offer) => offer.id === Number(id));
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getReviewsData);
 

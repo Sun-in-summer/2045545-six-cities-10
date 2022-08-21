@@ -56,7 +56,8 @@ function FeedbackForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         <FeedbackRating
           onChange ={fieldChangeHandle}
-          ratingValue ={rating}/>
+          ratingValue ={rating}
+        />
       </div>
 
 

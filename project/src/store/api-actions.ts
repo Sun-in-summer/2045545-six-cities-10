@@ -38,7 +38,7 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, (string | undefined)
   }
   );
 
-export const fetchNearByOffersAction = createAsyncThunk<Offers, string , {
+export const fetchNearByOffersAction = createAsyncThunk<Offers, string |undefined , {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
