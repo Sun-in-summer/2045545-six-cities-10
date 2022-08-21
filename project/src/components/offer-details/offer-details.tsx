@@ -14,7 +14,6 @@ import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getReviewsData } from '../../store/reviews-data/selector';
 import OfferHost from '../offer-host/offer-host';
 import { getSelectedOfferData } from '../../store/selected-offer-data/selector';
-import { getOffersData } from '../../store/offers-data/selector';
 
 
 function OfferDetails(): JSX.Element {
@@ -33,8 +32,7 @@ function OfferDetails(): JSX.Element {
     }
   }, [dispatch, id, selectedOffer]);
 
-  const offers = useAppSelector(getOffersData); //
-  // const selectedOffer = offers.find((offer) => offer.id === Number(id));
+
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getReviewsData);
 
@@ -136,7 +134,6 @@ function OfferDetails(): JSX.Element {
       <section className="property__map map">
         <Map
           city={selectedOffer.city}
-          offers ={offers}
           selectedOffer ={selectedOffer }
           width = {mapWidth}
         />

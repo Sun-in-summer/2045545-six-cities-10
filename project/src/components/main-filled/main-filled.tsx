@@ -27,6 +27,7 @@ function MainFilled(): JSX.Element {
     setSelectedOffer(currentOffer);
   };
 
+
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
   const sortedCityOffers = getSortedOffers(activeSortOption, selectedCityOffers);
 
@@ -48,7 +49,6 @@ function MainFilled(): JSX.Element {
           <section className="cities__map map">
             < Map
               city ={selectedCity}
-              offers={selectedCityOffers}
               selectedOffer ={selectedOffer}
               width={DEFAULT_MAP_WIDTH}
             />
