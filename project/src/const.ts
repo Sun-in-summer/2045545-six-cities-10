@@ -120,7 +120,8 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
   SelectedCity = 'SELECTED_CITY',
   SelectedOffer = 'SELECTED_OFFER',
-  SortOption ='SORT_OPTION'
+  SortOption ='SORT_OPTION',
+  Favorites = 'FAVORITES',
 }
 
 
