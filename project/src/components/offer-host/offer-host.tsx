@@ -1,28 +1,12 @@
 
+import {Host} from '../../types/offer';
 
-import { useAppSelector } from '../../hooks';
-import { getSelectedOfferData } from '../../store/selected-offer-data/selector';
+type OfferHostProps = {
+  host: Host,
+  description: string | undefined,
+}
 
-
-function OfferHost(): JSX.Element {
-
-
-  // const {id} = useParams() ;
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   if (id !== undefined) {
-  //     dispatch(fetchSelectedOfferAction(id));
-  //   }
-  // }, [dispatch, id]);
-  const selectedOffer = useAppSelector(getSelectedOfferData);
-  let host = null;
-  let description = null;
-
-  if (selectedOffer !== undefined) {
-    host = selectedOffer.host;
-    description = selectedOffer.description;
-  }
+function OfferHost({host, description} : OfferHostProps): JSX.Element {
 
 
   return (
@@ -37,7 +21,7 @@ function OfferHost(): JSX.Element {
           {host?.name}
         </span>
         <span className="property__user-status">
-          {host?.isPro ? 'Pro' : ''}
+          {host.isPro ? 'Pro' : ''}
         </span>
       </div>
       <div className="property__description">

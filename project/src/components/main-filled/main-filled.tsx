@@ -31,9 +31,6 @@ function MainFilled(): JSX.Element {
   const sortedCityOffers = getSortedOffers(activeSortOption, selectedCityOffers);
 
 
-  console.log(offers);
-
-
   return (
     <div className='cities__places-container container'>
       <section className='cities__places places'>

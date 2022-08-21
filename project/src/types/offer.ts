@@ -49,5 +49,5 @@ type OfferStatus = {
   isFavorite?: boolean,
 }
 
-export type {Offer, Offers, City, Location, OfferStatus};
+export type {Offer, Offers, City, Location, OfferStatus, Host};
 

@@ -26,6 +26,7 @@ function OfferDetails(): JSX.Element {
       dispatch(fetchSelectedOfferAction(id));
       dispatch(fetchReviewsAction(id));
       dispatch(fetchNearByOffersAction(id));
+      window.scrollTo(0,0);
     }
   }, [dispatch, id]);
 
@@ -122,26 +123,7 @@ function OfferDetails(): JSX.Element {
             <span className="property__price-text">&nbsp;night</span>
           </div>
           <OfferGoods goods= {goods}/>
-          <div className="property__host">
-            <h2 className="property__host-title">Meet the host</h2>
-            <div className="property__host-user user">
-              <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                <img className="property__avatar user__avatar" src={host?.avatarUrl} width="74" height="74" alt="Host avatar"/>
-              </div>
-              <span className="property__user-name">
-                {host?.name}
-              </span>
-              <span className="property__user-status">
-                {host.isPro ? 'Pro' : ''}
-              </span>
-            </div>
-            <div className="property__description">
-              <p className="property__text">
-                {description}
-              </p>
-            </div>
-          </div>
-
+          <OfferHost host = {host} description ={description} />
           <section className="property__reviews reviews">
             <FeedbacksList reviews ={reviews}/>
             {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
