@@ -10,9 +10,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction, fetchSelectedOfferAction, fetchNearByOffersAction, addToFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import { getOffersData } from '../../store/data-process/selector';
-import {getReviewsData} from '../../store/data-process/selector';
+import { getOffersData , getReviewsData, getSelectedOfferLoadingStatus} from '../../store/data-process/selector';
 import OfferHost from '../offer-host/offer-host';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 
 function OfferDetails(): JSX.Element {
@@ -20,6 +20,8 @@ function OfferDetails(): JSX.Element {
 
   const {id} = useParams() ;
   const dispatch = useAppDispatch();
+
+  const isSelectedOfferLoading = useAppSelector(getSelectedOfferLoadingStatus);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -30,7 +32,9 @@ function OfferDetails(): JSX.Element {
     }
   }, [dispatch, id]);
 
+
   const offers = useAppSelector(getOffersData);
+
   const selectedOffer = offers.find((offer) => offer.id === Number(id));
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getReviewsData);
@@ -48,6 +52,12 @@ function OfferDetails(): JSX.Element {
       }));
     }
   };
+
+  if ( isSelectedOfferLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
 
   if (!selectedOffer) {

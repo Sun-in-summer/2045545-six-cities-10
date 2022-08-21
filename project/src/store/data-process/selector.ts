@@ -14,5 +14,5 @@ export const getReviewsData = (state: State): Reviews => state[NameSpace.Data].r
 export const getNearByOffersData = (state: State): Offers => state[NameSpace.Data].nearByOffers;
 
 export const getSelectedOfferData = (state: State): Offer | undefined => state[NameSpace.Data].selectedOffer;
-export const getSelectedOfferLoadingStatus = (state: State): boolean => state[NameSpace.Data].isSelectedOfferLoaded;
+export const getSelectedOfferLoadingStatus = (state: State): boolean => state[NameSpace.Data].isSelectedOfferLoading;
 
