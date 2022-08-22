@@ -1,26 +1,24 @@
 import {Offer} from '../../types/offer';
 import {NavLink, useNavigate} from 'react-router-dom';
 import {ratingPercentage} from '../../utils/utils';
-import {MouseEventHandler} from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
+import {setActiveCardId} from '../../store/data-process/data-process';
 
 
 type PlaceCardProps = {
   offer: Offer;
-  isActive: boolean,
-  onHover: ()=>void,
+  isActive?: boolean,
   isFlex: boolean,
-  onMouseEnter?: MouseEventHandler<HTMLHeadingElement> | undefined,
+  isOfferScreen?: boolean
 };
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  const { offer, isActive, onHover, isFlex, onMouseEnter} = props;
+  const { offer, isActive, isFlex, isOfferScreen } = props;
   const id = offer.id;
 
 
@@ -44,14 +42,19 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     }
   };
 
+  const handleCardMouseOver = () => {
+    if(!isOfferScreen) {
+      dispatch(setActiveCardId(id));
+    }
+  };
+
 
   return (
     <article
       className= "cities__card place-card"
-      onMouseOver = {onHover}
+      onMouseOver = {handleCardMouseOver}
       style = {{display : `${isFlex ? 'flex' : 'block'}`, width: `${isFlex ? '421px' : '260px'}` }}
       id = {id.toString()}
-      onMouseEnter ={onMouseEnter}
     >
       {isPremium ?
         <div className="place-card__mark">
@@ -63,7 +66,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       >
         <a href="/#">
           <img
-            className={`place-card__image ${ isActive ? 'place-card__image--active' : null}` }
+            className={`place-card__image ${ isActive ? 'place-card__image--active' : ''}` }
             src={previewImage}
             width={isFlex ? '150px' : '260px'}
             height="200"

@@ -31,6 +31,7 @@ type DataProcess = {
   isReviewSent: boolean,
 
   isErrorLoading: boolean,
+  activeCardId: number | undefined,
 
 };
 
@@ -49,12 +50,17 @@ const initialState: DataProcess = {
   isSelectedOfferLoading : false,
   isErrorLoading: false,
 
+  activeCardId: undefined,
+
 };
 
 export const dataProcess = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
+    setActiveCardId: (state, action) => {
+      state.activeCardId = action.payload;
+    },
 
   },
   extraReducers(builder) {
@@ -163,5 +169,7 @@ export const dataProcess = createSlice({
 
   }
 });
+
+export const {setActiveCardId} = dataProcess.actions;
 
 

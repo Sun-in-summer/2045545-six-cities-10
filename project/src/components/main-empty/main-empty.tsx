@@ -1,11 +1,10 @@
-import { City } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
+import { getSelectedCity } from '../../store/select-city-process/selector';
 
 
-type MainEmptyProps = {
-  selectedCity: City;
-}
+function MainEmpty(): JSX.Element {
 
-function MainEmpty( {selectedCity} : MainEmptyProps): JSX.Element {
+  const selectedCity = useAppSelector(getSelectedCity);
 
 
   return (

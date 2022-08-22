@@ -23,7 +23,7 @@ function MainBlock(): JSX.Element {
       />
       <div className="cities">
         {selectedCityOffers.length === 0 ?
-          < MainEmpty selectedCity ={selectedCity}/> :
+          < MainEmpty /> :
           <MainFilled />}
       </div>
     </main>

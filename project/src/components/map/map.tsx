@@ -8,6 +8,7 @@ import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getOffersData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
+import {getActiveCardId } from '../../store/data-process/selector';
 
 type MapProps = {
   selectedOffer: Offer | undefined,
@@ -17,11 +18,14 @@ type MapProps = {
 function Map({selectedOffer, width}:MapProps) : JSX.Element {
 
   const selectedCity = useAppSelector(getSelectedCity);
+
   const city = selectedCity;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
   const offers = useAppSelector(getOffersData);
+  const activeCardId = useAppSelector(getActiveCardId);
+  const activeCard = selectedOffer ? selectedOffer : offers.find((value) => value.id === activeCardId);
 
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
 
@@ -58,7 +62,7 @@ function Map({selectedOffer, width}:MapProps) : JSX.Element {
           lng: offer.location.longitude,
         },
         {
-          icon: (selectedOffer !== undefined && offer.id === selectedOffer.id)
+          icon: (activeCard !== undefined && offer.id === activeCard.id)
             ? currentCustomIcon
             : defaultCustomIcon,
         })
@@ -70,7 +74,7 @@ function Map({selectedOffer, width}:MapProps) : JSX.Element {
     return () => {
       layer?.clearLayers();
     };
-  }, [map, selectedCityOffers, defaultCustomIcon, currentCustomIcon, selectedOffer]);
+  }, [map, selectedCityOffers, defaultCustomIcon, currentCustomIcon, activeCard]);
 
 
   return (

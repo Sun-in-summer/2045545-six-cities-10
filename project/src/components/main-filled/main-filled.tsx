@@ -1,14 +1,15 @@
-import {Offer} from '../../types/offer';
+// import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import {DEFAULT_MAP_WIDTH} from '../../const';
-import {useState } from 'react';
-import {useAppSelector} from '../../hooks';
+// import {useState } from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getSortedOffers} from '../../utils/utils';
 import SortOptionsList from '../sort-options-list/sort-options-list';
 import PlaceCardsList from '../place-cards-list/place-cards-list';
 import { getOffersData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 import { getActiveSortOption } from '../../store/select-sort-option-process/selector';
+import {setActiveCardId} from '../../store/data-process/data-process';
 
 
 function MainFilled(): JSX.Element {
@@ -17,14 +18,16 @@ function MainFilled(): JSX.Element {
   const selectedCity = useAppSelector(getSelectedCity);
   const activeSortOption = useAppSelector(getActiveSortOption);
 
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
+  const dispatch = useAppDispatch();
 
-  const onListItemHover = (listItemName: string) => {
+  const handleCardMouseOver = (listItemName: string) => {
     const currentOffer = offers.find((offer) =>
       offer.id.toString() === listItemName,
     );
-    setSelectedOffer(currentOffer);
+
+    dispatch(setActiveCardId(currentOffer?.id));
+
   };
 
 
@@ -40,7 +43,8 @@ function MainFilled(): JSX.Element {
         <SortOptionsList />
         <PlaceCardsList
           offers = {sortedCityOffers}
-          onListItemHover = {onListItemHover}
+          // onListItemHover = {onListItemHover}
+          onListItemHover= {handleCardMouseOver}
         />
       </section>
       <div className="cities__right-section">
@@ -48,7 +52,7 @@ function MainFilled(): JSX.Element {
           '' :
           <section className="cities__map map">
             < Map
-              selectedOffer ={selectedOffer}
+              selectedOffer ={undefined}
               width={DEFAULT_MAP_WIDTH}
             />
           </section>}
