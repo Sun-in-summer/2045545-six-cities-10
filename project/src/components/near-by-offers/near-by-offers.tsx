@@ -25,3 +25,5 @@ function NearByOffers(): JSX.Element {
 }
 
 export default NearByOffers;
+
+

@@ -14,20 +14,24 @@ import {updateSelectedOffer, updateOffers, updateFavoriteOffers, updateNearByOff
 
 
 type DataProcess = {
-  offers: Offers ,
-  isOffersLoading: boolean,
-  error: string | null,
-  favoriteOffers: Offers,
-  isFavoriteOffersLoading: boolean,
-  reviews: Reviews,
-  isReviewsLoaded: boolean,
-  isReviewSent: boolean,
-  nearByOffers: Offers,
-  isNearByOffersLoaded: boolean
   selectedOffer : Offer | undefined,
+  offers: Offers ,
+  favoriteOffers: Offers,
+  nearByOffers: Offers,
+  reviews: Reviews,
+
+  error: string | null,
+
   isSelectedOfferLoading : boolean,
+  isOffersLoading: boolean,
+  isFavoriteOffersLoading: boolean,
+  isReviewsLoaded: boolean,
+  isNearByOffersLoaded: boolean
+
+  isReviewSent: boolean,
+
   isErrorLoading: boolean,
-  exactOffer: Offer | undefined
+
 };
 
 const initialState: DataProcess = {
@@ -44,7 +48,7 @@ const initialState: DataProcess = {
   isNearByOffersLoaded: false,
   isSelectedOfferLoading : false,
   isErrorLoading: false,
-  exactOffer: undefined,
+
 };
 
 export const dataProcess = createSlice({
@@ -120,11 +124,13 @@ export const dataProcess = createSlice({
       })
       .addCase(updateSelectedOffer, (state, action) => {
 
+
         if (state.selectedOffer !== undefined && state.selectedOffer.id === action.payload.id) {
           state.selectedOffer = action.payload;
         }
       })
       .addCase(updateOffers, (state, action) => {
+
         const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
         const updatedOffers = [
           ...state.offers.slice(0, index),
@@ -134,6 +140,7 @@ export const dataProcess = createSlice({
         state.offers = updatedOffers;
       })
       .addCase(updateFavoriteOffers, (state, action)=> {
+
         const updatedFavoriteOffers = state.favoriteOffers.slice();
         const index = updatedFavoriteOffers.findIndex((offer) => offer.id === action.payload.id);
         if(index === -1) {
@@ -144,13 +151,14 @@ export const dataProcess = createSlice({
         state.favoriteOffers = updatedFavoriteOffers;
       })
       .addCase(updateNearByOffers, (state, action) => {
+
         const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
         const updatedOffers = [
           ...state.offers.slice(0, index),
           action.payload,
           ...state.offers.slice(index + 1)
         ];
-        state.offers = updatedOffers;
+        state.nearByOffers = updatedOffers;
       });
 
   }

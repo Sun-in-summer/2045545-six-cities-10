@@ -113,13 +113,10 @@ export const changeFavoriteStatusAction = createAsyncThunk<Offer, OfferStatus,
       id: id.toString(),
       status: status,
     }));
-    // dispatch(fetchFavoriteOffersAction());
     dispatch(updateOffers(data as Offer));
     dispatch(updateNearByOffers(data));
     dispatch(updateFavoriteOffers(data));
     dispatch(updateSelectedOffer(data));
-
-
     return data;
   }
 );
