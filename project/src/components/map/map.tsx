@@ -17,18 +17,17 @@ type MapProps = {
 
 function Map({selectedOffer, width}:MapProps) : JSX.Element {
 
+  const offers = useAppSelector(getOffersData);
   const selectedCity = useAppSelector(getSelectedCity);
+  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
 
   const city = selectedCity;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
-  const offers = useAppSelector(getOffersData);
+
   const activeCardId = useAppSelector(getActiveCardId);
   const activeCard = selectedOffer ? selectedOffer : offers.find((value) => value.id === activeCardId);
-
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
-
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,

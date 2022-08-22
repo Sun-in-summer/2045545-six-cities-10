@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFavoriteStatusAction, fetchNearByOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
 import OfferHost from '../../components/offer-host/offer-host';
 import { useEffect} from 'react';
-import { getErrorLoadingStatus, getReviewsData, getSelectedOfferData } from '../../store/data-process/selector';
+import { getErrorLoadingStatus, getOffersData, getReviewsData, getSelectedOfferData } from '../../store/data-process/selector';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -20,6 +20,9 @@ import { Offer } from '../../types/offer';
 
 
 function OfferScreen(): JSX.Element {
+
+  const offers =useAppSelector(getOffersData);
+  console.log(offers);
 
 
   const {id} = useParams() ;
@@ -36,7 +39,7 @@ function OfferScreen(): JSX.Element {
   }, [dispatch, id, selectedOffer]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const reviews = useAppSelector(getReviewsData);
+  // const reviews = useAppSelector(getReviewsData);
 
   const navigate = useNavigate();
   const handleFavoriteButtonClick = () =>{
@@ -132,7 +135,8 @@ function OfferScreen(): JSX.Element {
               <OfferGoods goods= {goods}/>
               <OfferHost />
               <section className="property__reviews reviews">
-                <FeedbacksList reviews ={reviews}/>
+                {/* <FeedbacksList reviews ={reviews}/> */}
+                <FeedbacksList />
                 {authorizationStatus === AuthorizationStatus.Auth && <FeedbackForm />}
               </section>
             </div>
@@ -141,6 +145,7 @@ function OfferScreen(): JSX.Element {
             <Map
               selectedOffer ={selectedOffer }
               width = {mapWidth}
+
             />
           </section>
         </section>

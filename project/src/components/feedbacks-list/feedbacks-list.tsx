@@ -1,13 +1,31 @@
-import { Fragment } from 'react';
-import { Reviews } from '../../types/reviews';
+import { Fragment, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchReviewsAction } from '../../store/api-actions';
+import { getReviewsData } from '../../store/data-process/selector';
+// import { Reviews } from '../../types/reviews';
 import Feedback from '../feedback/feedback';
 
-type FeedbackListProps = {
-  reviews: Reviews,
-}
+// type FeedbackListProps = {
+//   reviews: Reviews,
+// }
 
 
-function FeedbacksList({reviews} :FeedbackListProps): JSX.Element {
+function FeedbacksList(): JSX.Element {
+
+  const reviews = useAppSelector(getReviewsData);
+  console.log(reviews);
+  const {id} = useParams();
+   console.log(id);
+  const dispatch = useAppDispatch();
+
+ //добавить флаг загрузки!!
+  useEffect(() => {
+    if (reviews.length=== 0 ) {
+      console.log('dispatch');
+      dispatch(fetchReviewsAction(id as string));
+    }
+  }, [dispatch, id, reviews]);
 
 
   return (
