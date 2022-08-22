@@ -69,7 +69,7 @@ export const fetchSelectedOfferAction = createAsyncThunk<Offer, string, {
 }> (
   'data/fetchSelectedOffer',
   async(id, {dispatch, extra: api}) => {
-    console.log('id=' + id);
+    console.log('fetchSelectedOfferAction id' + id);
     const {data} = await api.get<Offer>(generatePath(APIRoute.Offer, {id}));
     return data;
   }
