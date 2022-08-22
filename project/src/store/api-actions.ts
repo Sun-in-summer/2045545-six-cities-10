@@ -11,6 +11,7 @@ import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
   redirectToRoute} from './action';
+import { updateOffers, updateSelectedOffer, updateNearByOffers, updateFavoriteOffers } from '../store/action';
 
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
@@ -69,7 +70,19 @@ export const fetchSelectedOfferAction = createAsyncThunk<Offer, string, {
 }> (
   'data/fetchSelectedOffer',
   async(id, {dispatch, extra: api}) => {
-    console.log('fetchSelectedOfferAction id' + id);
+    const {data} = await api.get<Offer>(generatePath(APIRoute.Offer, {id}));
+    return data;
+  }
+);
+
+export const fetchExactOfferAction = createAsyncThunk<Offer, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}> (
+  'data/fetchExactOffer',
+  async(id, {dispatch, extra: api}) => {
+
     const {data} = await api.get<Offer>(generatePath(APIRoute.Offer, {id}));
     return data;
   }
@@ -100,10 +113,13 @@ export const changeFavoriteStatusAction = createAsyncThunk<Offer, OfferStatus,
       id: id.toString(),
       status: status,
     }));
-    dispatch(fetchFavoriteOffersAction());
-    // dispatch(updateSelectedOffer(data));
-    // dispatch(fetchSelectedOfferAction(id.toString()));
-    // dispatch(updateFavoriteOffers(data));
+    // dispatch(fetchFavoriteOffersAction());
+    dispatch(updateOffers(data as Offer));
+    dispatch(updateNearByOffers(data));
+    dispatch(updateFavoriteOffers(data));
+    dispatch(updateSelectedOffer(data));
+
+
     return data;
   }
 );

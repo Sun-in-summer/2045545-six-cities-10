@@ -4,8 +4,11 @@ import {ratingPercentage} from '../../utils/utils';
 import {MouseEventHandler} from 'react';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { changeFavoriteStatusAction, fetchExactOfferAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getExactOfferData } from '../../store/data-process/selector';
+import {useEffect} from 'react';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 
 type PlaceCardProps = {
@@ -20,23 +23,16 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const {offer, isActive, onHover, isFlex, onMouseEnter} = props;
-  const {
-    id,
-    previewImage,
-    title,
-    isFavorite,
-    isPremium,
-    rating,
-    type,
-    price,
-    description,
-  } = offer;
+  const { offer, isActive, onHover, isFlex, onMouseEnter} = props;
+  const id = offer.id;
 
 
-  const starWidth: number = ratingPercentage(rating);
   const dispatch = useAppDispatch();
 
+
+  const {rating, isFavorite, isPremium, previewImage, description,price, title, type } = offer;
+
+  const starWidth: number = ratingPercentage(rating);
   const navigate = useNavigate();
   const handleFavoriteButtonClick = () =>{
     if ( authorizationStatus !== AuthorizationStatus.Auth) {
@@ -48,8 +44,14 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         status: Number(!isFavorite).toString(),
         isFavorite: !isFavorite
       }));
+      dispatch(fetchExactOfferAction(id.toString()));
+      // dispatch(changeFavoriteStatusAction());
     }
   };
+
+  // if (!exactOffer) {
+  //   return <LoadingScreen />;
+  // }
 
 
   return (

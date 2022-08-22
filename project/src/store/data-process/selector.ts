@@ -18,3 +18,6 @@ export const getSelectedOfferData = (state: State): Offer | undefined => state[N
 export const getSelectedOfferLoadingStatus = (state: State): boolean => state[NameSpace.Data].isSelectedOfferLoading;
 export const getErrorLoadingStatus = (state: State): boolean => state[NameSpace.Data].isErrorLoading;
 
+export const getExactOfferData = (state: State): Offer | undefined => state[NameSpace.Data].exactOffer;
+
+

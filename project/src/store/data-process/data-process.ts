@@ -2,7 +2,15 @@ import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace } from '../../const';
 import { Offer, Offers } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
-import { changeFavoriteStatusAction, fetchFavoriteOffersAction, fetchNearByOffersAction, fetchOffersAction, fetchReviewsAction, fetchSelectedOfferAction, sendReviewAction} from '../api-actions';
+import {
+  fetchFavoriteOffersAction,
+  fetchNearByOffersAction,
+  fetchOffersAction,
+  fetchReviewsAction,
+  fetchSelectedOfferAction,
+  sendReviewAction
+} from '../api-actions';
+import {updateSelectedOffer, updateOffers, updateFavoriteOffers, updateNearByOffers } from '../action';
 
 
 type DataProcess = {
@@ -19,6 +27,7 @@ type DataProcess = {
   selectedOffer : Offer | undefined,
   isSelectedOfferLoading : boolean,
   isErrorLoading: boolean,
+  exactOffer: Offer | undefined
 };
 
 const initialState: DataProcess = {
@@ -35,15 +44,13 @@ const initialState: DataProcess = {
   isNearByOffersLoaded: false,
   isSelectedOfferLoading : false,
   isErrorLoading: false,
+  exactOffer: undefined,
 };
 
 export const dataProcess = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
-    updateSelectedOffer: (state, action) => {
-      state.selectedOffer = action.payload;
-    },
 
   },
   extraReducers(builder) {
@@ -103,7 +110,7 @@ export const dataProcess = createSlice({
         state.isErrorLoading = false;
       })
       .addCase(fetchSelectedOfferAction.fulfilled, (state, action)=> {
-        console.log(action.payload);
+
         state.selectedOffer = action.payload;
         state.isSelectedOfferLoading = false;
       })
@@ -112,33 +119,41 @@ export const dataProcess = createSlice({
         state.isErrorLoading = true;
       })
       .addCase(updateSelectedOffer, (state, action) => {
-        console.log('+');
+
         if (state.selectedOffer !== undefined && state.selectedOffer.id === action.payload.id) {
           state.selectedOffer = action.payload;
         }
       })
-      // .addCase(updateFavoriteOffers, (state, action) => {
-      //   if (state.isFavoriteOffersLoading) {
-      //     if (action.payload.isFavorite === true) {
-      //       state.favoriteOffers = [...state.favoriteOffers, action.payload];
-      //     } else {
-      //       state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
-      //     }
-      //   }
-      // })
-      // .addCase(updateOffers, (state, action) => {
-      //   if (state.offers !== undefined && state.isOffersLoading) {
-      //     state.offers = replaceOffer(state.offers, action.payload);
-      //   }
-      // })
-      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
-
-        if (action.payload.isFavorite === true) {
-          state.favoriteOffers = [...state.favoriteOffers, action.payload];
+      .addCase(updateOffers, (state, action) => {
+        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        const updatedOffers = [
+          ...state.offers.slice(0, index),
+          action.payload,
+          ...state.offers.slice(index + 1)
+        ];
+        state.offers = updatedOffers;
+      })
+      .addCase(updateFavoriteOffers, (state, action)=> {
+        const updatedFavoriteOffers = state.favoriteOffers.slice();
+        const index = updatedFavoriteOffers.findIndex((offer) => offer.id === action.payload.id);
+        if(index === -1) {
+          updatedFavoriteOffers.push(action.payload);
         } else {
-          state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
+          updatedFavoriteOffers.splice(index, 1);
         }
+        state.favoriteOffers = updatedFavoriteOffers;
+      })
+      .addCase(updateNearByOffers, (state, action) => {
+        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        const updatedOffers = [
+          ...state.offers.slice(0, index),
+          action.payload,
+          ...state.offers.slice(index + 1)
+        ];
+        state.offers = updatedOffers;
       });
-  }});
 
-export const {updateSelectedOffer} = dataProcess.actions;
+  }
+});
+
+

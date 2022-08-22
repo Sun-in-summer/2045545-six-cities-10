@@ -18,13 +18,7 @@ function HeaderUserInfo(): JSX.Element {
     userEmail = userInfo.email;
   }
 
-  // const favoritesOffers = offers.filter((offer)=> offer.isFavorite === true);
-  // const offers = useAppSelector(getOffersData);
-
-  let secondOffers: number | string = useAppSelector(getFavoriteOffersData).length;
-
-
-  secondOffers = useAppSelector(getFavoriteOffersData).length;
+  const favoriteOffers: number | string = useAppSelector(getFavoriteOffersData).length;
 
 
   if (isFavoritesOffersLoading) {
@@ -41,8 +35,7 @@ function HeaderUserInfo(): JSX.Element {
         <div className="header__avatar-wrapper user__avatar-wrapper">
         </div>
         <span className="header__user-name user__name">{userEmail}</span>
-        {/* <span className="header__favorite-count">{favoritesOffers.length}</span> */}
-        <span className="header__favorite-count">{secondOffers}</span>
+        <span className="header__favorite-count">{favoriteOffers}</span>
       </Link>
     </li>
 

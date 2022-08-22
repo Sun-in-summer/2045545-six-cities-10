@@ -1,10 +1,8 @@
 
-import { useEffect, useState } from 'react';
 import FavoritesEmpty from '../../components/favorites/favorites-empty';
 import FavoritesFilled from '../../components/favorites/favorites-filled';
 import Header from '../../components/header/header';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchFavoriteOffersAction } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
 import { getFavoriteOffersData, getFavoriteOffersLoadingStatus } from '../../store/data-process/selector';
 
 import { Offers } from '../../types/offer';
@@ -12,21 +10,10 @@ import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function FavoritesScreen(): JSX.Element {
-  const [isFavoritesLoaded, setFavoritesLoaded] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const isFavoritesOffersLoading = useAppSelector(getFavoriteOffersLoadingStatus);
 
+  const isFavoritesOffersLoading = useAppSelector(getFavoriteOffersLoadingStatus);
   const favoriteOffers: Offers = useAppSelector(getFavoriteOffersData);
 
-
-  useEffect(() => {
-    if (isFavoritesLoaded) {
-      return;
-    }
-    dispatch(fetchFavoriteOffersAction());
-    setFavoritesLoaded(true);
-  }, [dispatch, isFavoritesLoaded]
-  );
 
   if (isFavoritesOffersLoading) {
     return (
