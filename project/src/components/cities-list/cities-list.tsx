@@ -1,12 +1,10 @@
-import {City} from '../../types/offer';
 import CitiesListItem from '../city-list-item/cities-list-item';
+import { CITIES } from '../../const';
 
 
-type CitiesListProps = {
- cities: City[];
-};
+function CitiesList(): JSX.Element {
 
-function CitiesList({cities}: CitiesListProps): JSX.Element {
+  const cities = CITIES;
 
   return (
     <div className="tabs">

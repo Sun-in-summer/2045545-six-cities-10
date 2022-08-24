@@ -141,7 +141,7 @@ function OfferScreen(): JSX.Element {
           </div>
           <section className="property__map map">
             <Map
-              selectedOffer ={selectedOffer }
+              // selectedOffer ={selectedOffer }
               width = {mapWidth}
               isOfferScreen
             />

@@ -3,9 +3,7 @@ import { City } from './types/offer';
 const MAX_OFFER_IMAGE_QUANTITY = 6;
 const MULTIPLIER_RATING_TO_PERCENTAGE = 20;
 const MAP_WIDTH_IN_OFFER = 85;
-const DEFAULT_MAP_WIDTH = 100;
 const NEAR_ITEMS_QUANTITY = 4;
-
 
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
@@ -128,7 +126,6 @@ export {
   MAX_OFFER_IMAGE_QUANTITY,
   DEFAULT_CITY,
   MAP_WIDTH_IN_OFFER,
-  DEFAULT_MAP_WIDTH,
   NEAR_ITEMS_QUANTITY,
   CITIES,
   SORT_OPTIONS,

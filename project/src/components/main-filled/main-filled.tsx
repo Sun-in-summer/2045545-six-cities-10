@@ -1,7 +1,4 @@
-// import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
-import {DEFAULT_MAP_WIDTH} from '../../const';
-// import {useState } from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getSortedOffers} from '../../utils/utils';
 import SortOptionsList from '../sort-options-list/sort-options-list';
@@ -43,7 +40,6 @@ function MainFilled(): JSX.Element {
         <SortOptionsList />
         <PlaceCardsList
           offers = {sortedCityOffers}
-          // onListItemHover = {onListItemHover}
           onListItemHover= {handleCardMouseOver}
         />
       </section>
@@ -51,10 +47,7 @@ function MainFilled(): JSX.Element {
         {selectedCityOffers.length === 0 ?
           '' :
           <section className="cities__map map">
-            < Map
-              selectedOffer ={undefined}
-              width={DEFAULT_MAP_WIDTH}
-            />
+            < Map />
           </section>}
       </div>
     </div>
