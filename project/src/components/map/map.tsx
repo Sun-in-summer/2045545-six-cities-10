@@ -4,7 +4,7 @@ import leaflet from 'leaflet';
 import {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, NEAR_ITEMS_QUANTITY} from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getOffersData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
@@ -13,21 +13,26 @@ import {getActiveCardId } from '../../store/data-process/selector';
 type MapProps = {
   selectedOffer: Offer | undefined,
   width: number,
+  isOfferScreen?: boolean,
 }
 
-function Map({selectedOffer, width}:MapProps) : JSX.Element {
+function Map({selectedOffer, width, isOfferScreen}:MapProps) : JSX.Element {
 
   const offers = useAppSelector(getOffersData);
   const selectedCity = useAppSelector(getSelectedCity);
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
+  const offersToShowOnMap = isOfferScreen ? selectedCityOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
 
   const city = selectedCity;
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
 
   const activeCardId = useAppSelector(getActiveCardId);
+
   const activeCard = selectedOffer ? selectedOffer : offers.find((value) => value.id === activeCardId);
+
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -55,7 +60,7 @@ function Map({selectedOffer, width}:MapProps) : JSX.Element {
     let layer: LayerGroup;
     if (map) {
       layer = new LayerGroup().addTo(map);
-      selectedCityOffers.forEach((offer) => {
+      offersToShowOnMap.forEach((offer) => {
         leaflet.marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude,
@@ -73,7 +78,7 @@ function Map({selectedOffer, width}:MapProps) : JSX.Element {
     return () => {
       layer?.clearLayers();
     };
-  }, [map, selectedCityOffers, defaultCustomIcon, currentCustomIcon, activeCard]);
+  }, [map, defaultCustomIcon, currentCustomIcon, activeCard, offersToShowOnMap]);
 
 
   return (

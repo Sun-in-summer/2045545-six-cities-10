@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFavoriteStatusAction, fetchNearByOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
 import OfferHost from '../../components/offer-host/offer-host';
 import { useEffect} from 'react';
-import { getErrorLoadingStatus, getOffersData, getReviewsData, getSelectedOfferData } from '../../store/data-process/selector';
+import { getErrorLoadingStatus, getSelectedOfferData } from '../../store/data-process/selector';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -17,12 +17,10 @@ import FeedbackForm from '../../components/feedback-form/feedback-form';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { Offer } from '../../types/offer';
+import { setActiveCardId } from '../../store/data-process/data-process';
 
 
 function OfferScreen(): JSX.Element {
-
-  const offers =useAppSelector(getOffersData);
-  console.log(offers);
 
 
   const {id} = useParams() ;
@@ -36,10 +34,11 @@ function OfferScreen(): JSX.Element {
       dispatch(fetchSelectedOfferAction(id as string));
       dispatch(fetchNearByOffersAction(id as string));
     }
+    dispatch(setActiveCardId(id));
   }, [dispatch, id, selectedOffer]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  // const reviews = useAppSelector(getReviewsData);
+
 
   const navigate = useNavigate();
   const handleFavoriteButtonClick = () =>{
@@ -135,7 +134,6 @@ function OfferScreen(): JSX.Element {
               <OfferGoods goods= {goods}/>
               <OfferHost />
               <section className="property__reviews reviews">
-                {/* <FeedbacksList reviews ={reviews}/> */}
                 <FeedbacksList />
                 {authorizationStatus === AuthorizationStatus.Auth && <FeedbackForm />}
               </section>
@@ -145,12 +143,10 @@ function OfferScreen(): JSX.Element {
             <Map
               selectedOffer ={selectedOffer }
               width = {mapWidth}
-
+              isOfferScreen
             />
           </section>
         </section>
-
-
         <NearByOffers />
       </main>
     </div>

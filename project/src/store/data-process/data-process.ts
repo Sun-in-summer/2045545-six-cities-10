@@ -90,7 +90,7 @@ export const dataProcess = createSlice({
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action)=> {
         state.reviews = action.payload;
-        state.isReviewsLoaded = false;
+        state.isReviewsLoaded = true;
       })
       .addCase(fetchReviewsAction.rejected, (state, )=> {
         state.isReviewsLoaded = false;

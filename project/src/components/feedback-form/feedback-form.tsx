@@ -17,6 +17,7 @@ function FeedbackForm(): JSX.Element {
   const {id} = useParams();
   const hotelId = id;
 
+
   const onSubmit = (reviewData: feedbackReview) => {
     dispatch(sendReviewAction(reviewData));
     setFormData({...formData, review: '', rating: '0'});

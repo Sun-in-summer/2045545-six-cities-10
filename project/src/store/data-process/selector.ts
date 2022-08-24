@@ -12,6 +12,7 @@ export const getFavoriteOffersData = (state: State): Offers => state[NameSpace.D
 export const getFavoriteOffersLoadingStatus = (state: State) :boolean => state[NameSpace.Data].isFavoriteOffersLoading;
 
 export const getReviewsData = (state: State): Reviews => state[NameSpace.Data].reviews;
+export const getReviewsLoadingStatus = (state: State) : boolean => state[NameSpace.Data].isReviewsLoaded;
 export const getNearByOffersData = (state: State): Offers => state[NameSpace.Data].nearByOffers;
 
 export const getSelectedOfferData = (state: State): Offer | undefined => state[NameSpace.Data].selectedOffer;

@@ -2,30 +2,22 @@ import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction } from '../../store/api-actions';
-import { getReviewsData } from '../../store/data-process/selector';
-// import { Reviews } from '../../types/reviews';
+import { getReviewsData, getReviewsLoadingStatus } from '../../store/data-process/selector';
 import Feedback from '../feedback/feedback';
-
-// type FeedbackListProps = {
-//   reviews: Reviews,
-// }
 
 
 function FeedbacksList(): JSX.Element {
 
   const reviews = useAppSelector(getReviewsData);
-  console.log(reviews);
+  const isReviewsLoaded = useAppSelector(getReviewsLoadingStatus);
   const {id} = useParams();
-   console.log(id);
   const dispatch = useAppDispatch();
 
- //добавить флаг загрузки!!
   useEffect(() => {
-    if (reviews.length=== 0 ) {
-      console.log('dispatch');
+    if ( reviews.length === 0 && !isReviewsLoaded ) {
       dispatch(fetchReviewsAction(id as string));
     }
-  }, [dispatch, id, reviews]);
+  }, [dispatch, id, isReviewsLoaded, reviews.length]);
 
 
   return (
