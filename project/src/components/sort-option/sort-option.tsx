@@ -1,3 +1,4 @@
+import { memo } from 'react';
 
 type SortOptionProps = {
   sortOption: string;
@@ -14,4 +15,4 @@ function SortOption({sortOption, activeSortOption, onSortOptionClick}:SortOption
 }
 
 
-export default SortOption;
+export default memo(SortOption);

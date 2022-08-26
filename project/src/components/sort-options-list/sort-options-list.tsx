@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {SORT_OPTIONS} from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActiveSortOption } from '../../store/select-sort-option-process/select-sort-option-process';
@@ -13,8 +13,15 @@ function SortOptionsList(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
+  const handleSortOptionClick = useCallback((option:string) =>dispatch(setActiveSortOption(option)), [dispatch]);
+
   return (
-    <form className="places__sorting" action="#" method="get" onClick ={()=>setIsOptionsListOpened(!isOptionsListOpened)}>
+    <form
+      className="places__sorting"
+      action="#"
+      method="get"
+      onClick ={()=>setIsOptionsListOpened(!isOptionsListOpened)}
+    >
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex= {0} >
         {activeSortOption}
@@ -31,10 +38,7 @@ function SortOptionsList(): JSX.Element {
                 sortOption ={sortOption}
                 key={sortOption}
                 activeSortOption ={activeSortOption}
-                onSortOptionClick ={
-                  (option:string)=>
-                    dispatch(setActiveSortOption(option))
-                }
+                onSortOptionClick ={handleSortOptionClick}
               />
             )
         )}

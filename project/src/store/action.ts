@@ -4,6 +4,7 @@ import {Offer} from '../types/offer';
 
 
 export const redirectToRoute = createAction <AppRoute>('main/redirectToRoute');
+export const redirectBack = createAction('main/redirectBack');
 
 export const updateOffers = createAction<Offer>('main/updateOffers');
 export const updateSelectedOffer = createAction<Offer>('main/updateSelectedOffer');

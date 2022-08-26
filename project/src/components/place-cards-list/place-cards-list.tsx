@@ -1,3 +1,4 @@
+
 import {Offers} from '../../types/offer';
 import PlaceCard from '../place-card/place-card';
 
@@ -17,9 +18,6 @@ function PlaceCardsList({offers, onListItemHover}: PlaceCardsListProps): JSX.Ele
           <PlaceCard
             offer = {offer}
             key= {offer.id}
-            // isActive = {offer.id === activeCardId}
-            isFlex ={false}
-
           />
         )
       )}

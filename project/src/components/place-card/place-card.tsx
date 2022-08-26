@@ -11,7 +11,7 @@ import {setActiveCardId} from '../../store/data-process/data-process';
 type PlaceCardProps = {
   offer: Offer;
   isActive?: boolean,
-  isFlex: boolean,
+  isFlex?: boolean,
   isOfferScreen?: boolean
 };
 
@@ -46,6 +46,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     if(!isOfferScreen) {
       dispatch(setActiveCardId(id));
     }
+
   };
 
 
