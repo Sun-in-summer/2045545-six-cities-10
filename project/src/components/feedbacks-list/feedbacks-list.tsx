@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction } from '../../store/api-actions';
 import { getReviewsData, getReviewsLoadingStatus } from '../../store/data-process/selector';
 import Feedback from '../feedback/feedback';
+import {sortReviews} from '../../utils/utils';
 
 
 function FeedbacksList(): JSX.Element {
@@ -12,19 +13,21 @@ function FeedbacksList(): JSX.Element {
   const isReviewsLoaded = useAppSelector(getReviewsLoadingStatus);
   const {id} = useParams();
   const dispatch = useAppDispatch();
+  const sortedReviews = sortReviews(reviews);
+
 
   useEffect(() => {
-    if ( reviews.length === 0 && !isReviewsLoaded ) {
+    if ((reviews.length === 0 || reviews[0].id ) && !isReviewsLoaded) {
       dispatch(fetchReviewsAction(id as string));
     }
-  }, [dispatch, id, isReviewsLoaded, reviews.length]);
+  }, [dispatch, id, isReviewsLoaded, reviews, reviews.length]);
 
 
   return (
     <Fragment>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review) => <Feedback review={review} key= {review.id}/>)}
+        {sortedReviews.map((review) => <Feedback review={review} key= {review.id}/>)}
       </ul>
     </Fragment>
 

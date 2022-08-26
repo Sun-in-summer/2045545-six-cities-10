@@ -8,6 +8,8 @@ const NEAR_ITEMS_QUANTITY = 4;
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
+const MAX_COMMENTS_QUANTITY = 10;
+
 
 const DEFAULT_CITY : City = {
   name: 'Paris',
@@ -131,6 +133,7 @@ export {
   SORT_OPTIONS,
   URL_MARKER_CURRENT,
   URL_MARKER_DEFAULT,
+  MAX_COMMENTS_QUANTITY,
   RatingTitles,
   APIRoute,
   AppRoute,
