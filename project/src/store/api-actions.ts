@@ -128,13 +128,16 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(fetchFavoriteOffersAction());
+
     const {data} = await api.get<UserData>(APIRoute.Login);
+    if (data) {
+      dispatch(fetchFavoriteOffersAction());
+    }
     return data;
   },
 );
 
-export const loginAction = createAsyncThunk<UserData, AuthData, {
+export const loginAction = createAsyncThunk<UserData | null, AuthData, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -146,8 +149,6 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
     saveToken(data.token);
     dispatch(redirectBack());
     return data;
-
-
   },
 );
 

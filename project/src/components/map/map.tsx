@@ -8,7 +8,7 @@ import { useAppSelector } from '../../hooks';
 import { getNearByOffersData, getOffersData, getSelectedOfferData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 import {getActiveCardId } from '../../store/data-process/selector';
-import useSelectedCityOffers from '../../hooks/useSelectedCityOffers/useSelectedCityOffers';
+
 
 type MapProps = {
   width?: number,
@@ -21,8 +21,7 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
   const selectedCity = useAppSelector(getSelectedCity);
   const selectedOffer = useAppSelector(getSelectedOfferData);
   const nearByOffers = useAppSelector(getNearByOffersData);
-  // const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
-  const selectedCityOffers = useSelectedCityOffers();
+  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
   let offersToShowOnMap = isOfferScreen ? nearByOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
   if (selectedOffer !== undefined){
     offersToShowOnMap = offersToShowOnMap.concat(selectedOffer);
