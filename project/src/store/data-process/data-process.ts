@@ -26,7 +26,7 @@ type DataProcess = {
   isOffersLoading: boolean,
   isFavoriteOffersLoading: boolean,
   isReviewsLoaded: boolean,
-  isNearByOffersLoaded: boolean
+  isNearByOffersLoading: boolean
 
   isReviewSent: boolean,
 
@@ -46,7 +46,7 @@ const initialState: DataProcess = {
   isFavoriteOffersLoading: false,
   isReviewsLoaded: false,
   isReviewSent: false,
-  isNearByOffersLoaded: false,
+  isNearByOffersLoading: false,
   isSelectedOfferLoading : false,
   isErrorLoading: false,
 
@@ -106,14 +106,14 @@ export const dataProcess = createSlice({
         state.isReviewSent = false;
       })
       .addCase(fetchNearByOffersAction.pending, (state)=> {
-        state.isNearByOffersLoaded = true;
+        state.isNearByOffersLoading = true;
       })
       .addCase(fetchNearByOffersAction.fulfilled, (state, action)=> {
         state.nearByOffers = action.payload;
-        state.isNearByOffersLoaded = false;
+        state.isNearByOffersLoading = false;
       })
       .addCase(fetchNearByOffersAction.rejected, (state, )=> {
-        state.isNearByOffersLoaded = false;
+        state.isNearByOffersLoading = false;
       })
       .addCase(fetchSelectedOfferAction.pending, (state)=> {
         state.isSelectedOfferLoading = true;

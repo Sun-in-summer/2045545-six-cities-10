@@ -5,11 +5,12 @@ import PlaceCard from '../place-card/place-card';
 
 type PlaceCardsListProps = {
   offers: Offers;
-  onListItemHover?: (listItemName: string) => void
+  isOfferScreen?: boolean
 };
 
 
-function PlaceCardsList({offers, onListItemHover}: PlaceCardsListProps): JSX.Element {
+function PlaceCardsList({offers, isOfferScreen}: PlaceCardsListProps): JSX.Element {
+
 
   return (
     <div className="cities__places-list places__list tabs__content" >
@@ -18,6 +19,7 @@ function PlaceCardsList({offers, onListItemHover}: PlaceCardsListProps): JSX.Ele
           <PlaceCard
             offer = {offer}
             key= {offer.id}
+            isOfferScreen= {isOfferScreen}
           />
         )
       )}

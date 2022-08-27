@@ -5,9 +5,10 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, NEAR_ITEMS_QUANTITY} from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getOffersData } from '../../store/data-process/selector';
+import { getNearByOffersData, getOffersData, getSelectedOfferData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 import {getActiveCardId } from '../../store/data-process/selector';
+import useSelectedCityOffers from '../../hooks/useSelectedCityOffers/useSelectedCityOffers';
 
 type MapProps = {
   width?: number,
@@ -18,10 +19,17 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
 
   const offers = useAppSelector(getOffersData);
   const selectedCity = useAppSelector(getSelectedCity);
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
-  const offersToShowOnMap = isOfferScreen ? selectedCityOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
+  const selectedOffer = useAppSelector(getSelectedOfferData);
+  const nearByOffers = useAppSelector(getNearByOffersData);
+  // const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
+  const selectedCityOffers = useSelectedCityOffers();
+  let offersToShowOnMap = isOfferScreen ? nearByOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
+  if (selectedOffer !== undefined){
+    offersToShowOnMap = offersToShowOnMap.concat(selectedOffer);
+  }
 
-  const city = selectedCity;
+
+  const city = (isOfferScreen && selectedOffer) ? selectedOffer.city : selectedCity;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
@@ -29,7 +37,11 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
 
   const activeCardId = useAppSelector(getActiveCardId);
 
-  const activeCard = offers.find((value) => value.id === activeCardId);
+
+  let activeCard = offers.find((value) => value.id === activeCardId);
+  if (isOfferScreen) {
+    activeCard = selectedOffer;
+  }
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,

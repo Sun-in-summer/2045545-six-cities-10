@@ -42,11 +42,11 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     }
   };
 
+
   const handleCardMouseOver = () => {
     if(!isOfferScreen) {
       dispatch(setActiveCardId(id));
     }
-
   };
 
 
