@@ -1,5 +1,6 @@
 import CitiesListItem from '../city-list-item/cities-list-item';
 import { CITIES } from '../../const';
+import { memo } from 'react';
 
 
 function CitiesList(): JSX.Element {
@@ -22,4 +23,4 @@ function CitiesList(): JSX.Element {
 
 }
 
-export default CitiesList;
+export default memo(CitiesList);

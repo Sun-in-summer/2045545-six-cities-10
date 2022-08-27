@@ -107,7 +107,7 @@ export const changeFavoriteStatusAction = createAsyncThunk<Offer, OfferStatus,
   extra: AxiosInstance
 }>(
   'data/changeFavoriteStatus',
-  async({id, status, isFavorite}, {dispatch, extra: api})=>{
+  async({id, status}, {dispatch, extra: api})=>{
     const {data} = await api.post<Offer>(generatePath(APIRoute.FavoriteStatus,{
       id: id.toString(),
       status: status,

@@ -6,6 +6,7 @@ import { getActiveSortOption } from '../../store/select-sort-option-process/sele
 import { getSortedOffers } from '../../utils/utils';
 import PlaceCard from '../place-card/place-card';
 import { NEAR_ITEMS_QUANTITY } from '../../const';
+import { useMemo } from 'react';
 
 
 type PlaceCardsListProps = {
@@ -18,7 +19,7 @@ function PlaceCardsList({isOfferScreen}: PlaceCardsListProps): JSX.Element {
 
   const activeSortOption = useAppSelector(getActiveSortOption);
   const selectedCityOffers = useSelectedCityOffers();
-  const sortedCityOffers = getSortedOffers(activeSortOption, selectedCityOffers);
+  const sortedCityOffers = useMemo(()=>getSortedOffers(activeSortOption, selectedCityOffers), [activeSortOption, selectedCityOffers]);
   const nearByOffers = useAppSelector(getNearByOffersData);
   const nearOffers = nearByOffers.slice(0, NEAR_ITEMS_QUANTITY);
   const finalOffers = isOfferScreen ? nearOffers : sortedCityOffers;

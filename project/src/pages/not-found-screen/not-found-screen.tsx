@@ -1,5 +1,6 @@
 import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 
 function NotFoundScreen(): JSX.Element {
@@ -11,7 +12,7 @@ function NotFoundScreen(): JSX.Element {
         <div className="not found__status-wrapper tabs__content">
           <img className ="not-found__picture" src='img/not-found.png' alt="error 404"/>
           <p className="not-found__status">Page not found</p>
-          <Link to='/' className="not-found__status-description">Return to the homepage</Link>
+          <Link to={AppRoute.Main} className="not-found__status-description">Return to the homepage</Link>
         </div>
       </section>
     </div>

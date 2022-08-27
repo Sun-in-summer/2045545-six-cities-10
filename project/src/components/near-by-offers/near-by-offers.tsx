@@ -15,6 +15,7 @@ function NearByOffers(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
 
+
   useEffect(() => {
     if (nearByOffers.length === 0 && !isNearByOfferLoading) {
       dispatch(fetchNearByOffersAction(id as string));

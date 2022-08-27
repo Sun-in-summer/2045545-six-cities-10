@@ -1,5 +1,6 @@
 import Logo from '../logo/logo';
 import HeaderNav from '../header-nav/header-nav';
+import { memo } from 'react';
 
 type HeaderProps ={
   isLoginPage?: boolean
@@ -22,4 +23,4 @@ function Header({isLoginPage}: HeaderProps): JSX.Element {
     </header>);
 }
 
-export default Header;
+export default memo(Header);

@@ -13,6 +13,7 @@ import {getActiveCardId } from '../../store/data-process/selector';
 type MapProps = {
   width?: number,
   isOfferScreen?: boolean,
+
 }
 
 function Map({width, isOfferScreen}:MapProps) : JSX.Element {
@@ -23,7 +24,9 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
   const nearByOffers = useAppSelector(getNearByOffersData);
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
   let offersToShowOnMap = isOfferScreen ? nearByOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
-  if (selectedOffer !== undefined){
+
+
+  if (selectedOffer !== undefined && isOfferScreen){
     offersToShowOnMap = offersToShowOnMap.concat(selectedOffer);
   }
 

@@ -1,6 +1,7 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { memo } from 'react';
+import { useAppSelector } from '../../hooks';
 import { getSelectedOfferData } from '../../store/data-process/selector';
 import { Offer } from '../../types/offer';
 
@@ -35,4 +36,4 @@ function OfferHost( ): JSX.Element {
   );
 }
 
-export default OfferHost;
+export default memo(OfferHost);

@@ -37,7 +37,6 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       dispatch(changeFavoriteStatusAction({
         id: id,
         status: Number(!isFavorite).toString(),
-        isFavorite: !isFavorite
       }));
     }
   };

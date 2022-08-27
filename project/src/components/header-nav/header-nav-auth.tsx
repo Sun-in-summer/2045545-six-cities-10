@@ -1,5 +1,7 @@
 
+import { memo, useCallback } from 'react';
 import {Link} from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { useAppDispatch} from '../../hooks';
 import {logoutAction} from '../../store/api-actions';
 import HeaderUserInfo from '../header-user-info/header-user-info';
@@ -8,6 +10,10 @@ import HeaderUserInfo from '../header-user-info/header-user-info';
 function HeaderNavAuth(): JSX.Element {
 
   const dispatch = useAppDispatch();
+  const handleHeaderNavLinkClick = useCallback((evt: { preventDefault: () => void; })=>{
+    evt.preventDefault();
+    dispatch(logoutAction());
+  }, [dispatch]);
 
   return (
     <nav className="header__nav">
@@ -16,11 +22,8 @@ function HeaderNavAuth(): JSX.Element {
         <li className="header__nav-item">
           <Link
             className="header__nav-link"
-            onClick = {(evt)=>{
-              evt.preventDefault();
-              dispatch(logoutAction());
-            }}
-            to = '/'
+            onClick = {handleHeaderNavLinkClick}
+            to = {AppRoute.Main}
           >
             <span className="header__signout">Sign out</span>
           </Link>
@@ -30,4 +33,4 @@ function HeaderNavAuth(): JSX.Element {
   );
 }
 
-export default HeaderNavAuth;
+export default memo(HeaderNavAuth);

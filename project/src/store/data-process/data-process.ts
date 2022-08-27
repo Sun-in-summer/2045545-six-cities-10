@@ -158,11 +158,11 @@ export const dataProcess = createSlice({
       })
       .addCase(updateNearByOffers, (state, action) => {
 
-        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        const index = state.nearByOffers.findIndex((offer) => offer.id === action.payload.id);
         const updatedOffers = [
-          ...state.offers.slice(0, index),
+          ...state.nearByOffers.slice(0, index),
           action.payload,
-          ...state.offers.slice(index + 1)
+          ...state.nearByOffers.slice(index + 1)
         ];
         state.nearByOffers = updatedOffers;
       });
