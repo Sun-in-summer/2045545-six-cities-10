@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import { NameSpace, SORT_OPTIONS } from '../../const';
 
 
-type SelectSortOptionProcess = {
+export type SelectSortOptionProcess = {
   activeSortOption: string
 };
 

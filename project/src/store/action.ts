@@ -10,4 +10,5 @@ export const updateOffers = createAction<Offer>('main/updateOffers');
 export const updateSelectedOffer = createAction<Offer>('main/updateSelectedOffer');
 export const updateFavoriteOffers = createAction<Offer>('main/updateFavoriteOffers');
 export const updateNearByOffers = createAction<Offer>('main/updateNearByOffers');
+export const setActiveCardId = createAction<number | undefined>('main/setActiveCardId');
 

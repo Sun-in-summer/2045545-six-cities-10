@@ -1,5 +1,6 @@
 import faker from 'faker';
 import { City, Host, Location, Offer } from './types/offer';
+import { FeedbackReview, Review, User } from './types/reviews';
 
 
 const createMockLocation = () : Location =>({
@@ -8,7 +9,7 @@ const createMockLocation = () : Location =>({
   zoom: faker.datatype.number()
 });
 
-const creatMockCity = (): City =>({
+export const createMockCity = (): City =>({
   name: faker.address.cityName(),
   location: createMockLocation(),
 });
@@ -22,7 +23,7 @@ const createMockHost = () : Host =>({
 
 
 export const createMockOffer = () : Offer => ({
-  city: creatMockCity(),
+  city: createMockCity(),
   previewImage: faker.internet.url(),
   images:[faker.internet.url()],
   title: faker.datatype.string(),
@@ -39,3 +40,27 @@ export const createMockOffer = () : Offer => ({
   location: createMockLocation(),
   id: faker.datatype.number(),
 });
+
+const createMockUser = (): User=> ({
+  avatarUrl: faker.internet.url(),
+  id: faker.datatype.number(),
+  isPro: faker.datatype.boolean(),
+  name: faker.internet.userName(),
+});
+
+
+export const createMockReview = (): Review => ({
+  id: faker.datatype.string(),
+  comment: faker.datatype.string(),
+  date: faker.datatype.string(),
+  rating: faker.datatype.number(),
+  user: createMockUser(),
+});
+
+export const createMockFeedbackReview = () : FeedbackReview=> ({
+  id: faker.datatype.string(),
+  comment: faker.datatype.string(),
+  date: faker.datatype.string(),
+  rating: faker.datatype.number(),
+});
+

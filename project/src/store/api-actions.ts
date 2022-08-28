@@ -5,7 +5,7 @@ import { APIRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Offer, Offers, OfferStatus } from '../types/offer';
-import { feedbackReview, Reviews } from '../types/reviews';
+import { FeedbackReview, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
@@ -88,7 +88,7 @@ export const fetchExactOfferAction = createAsyncThunk<Offer, string, {
 );
 
 
-export const sendReviewAction = createAsyncThunk<Reviews, feedbackReview, {
+export const sendReviewAction = createAsyncThunk<Reviews, FeedbackReview, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance

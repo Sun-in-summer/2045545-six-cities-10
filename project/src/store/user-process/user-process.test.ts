@@ -39,7 +39,7 @@ describe('Reducer: user-process', () => {
       },
     };
 
-    it ('should set authorizationStatus NoAuth if logoutAction is fulfilles', ()=>
+    it ('should set authorizationStatus NoAuth if logoutAction is fulfilled', ()=>
       expect(userProcess.reducer(state, {type: logoutAction.fulfilled.type}))
         .toEqual({authorizationStatus: AuthorizationStatus.NoAuth, userInfo: null}));
   });

@@ -17,8 +17,9 @@ import FeedbackForm from '../../components/feedback-form/feedback-form';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { Offer } from '../../types/offer';
-import { setActiveCardId } from '../../store/data-process/data-process';
+// import { setActiveCardId } from '../../store/data-process/data-process';
 import FavoriteButton from '../../components/favorite-button/favortite-button';
+import {setActiveCardId} from '../../store/action';
 
 
 function OfferScreen(): JSX.Element {
@@ -37,7 +38,7 @@ function OfferScreen(): JSX.Element {
       dispatch(fetchSelectedOfferAction(id as string));
       dispatch(fetchNearByOffersAction(id as string));
     }
-    dispatch(setActiveCardId(id));
+    dispatch(setActiveCardId(Number(id)));
   }, [dispatch, id, selectedOffer]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

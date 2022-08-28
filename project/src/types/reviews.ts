@@ -13,7 +13,7 @@ export type Review = {
   user: User,
 }
 
-export type feedbackReview = {
+export type FeedbackReview = {
   id: string | undefined,
   comment: string,
   date?: string,

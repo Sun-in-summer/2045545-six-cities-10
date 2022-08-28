@@ -10,7 +10,7 @@ import {
   fetchSelectedOfferAction,
   sendReviewAction
 } from '../api-actions';
-import {updateSelectedOffer, updateOffers, updateFavoriteOffers, updateNearByOffers } from '../action';
+import {updateSelectedOffer, updateOffers, updateFavoriteOffers, updateNearByOffers, setActiveCardId } from '../action';
 
 
 export type DataProcess = {
@@ -54,10 +54,6 @@ export const dataProcess = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
-    setActiveCardId: (state, action) => {
-      state.activeCardId = action.payload;
-    },
-
   },
   extraReducers(builder) {
     builder
@@ -125,14 +121,11 @@ export const dataProcess = createSlice({
         state.isErrorLoading = true;
       })
       .addCase(updateSelectedOffer, (state, action) => {
-
-
         if (state.selectedOffer !== undefined && state.selectedOffer.id === action.payload.id) {
           state.selectedOffer = action.payload;
         }
       })
       .addCase(updateOffers, (state, action) => {
-
         const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
         const updatedOffers = [
           ...state.offers.slice(0, index),
@@ -163,11 +156,13 @@ export const dataProcess = createSlice({
           ];
           state.nearByOffers = updatedOffers;
         }
+      })
+      .addCase(setActiveCardId, (state, action) =>{
+        state.activeCardId = action.payload;
       });
+
 
   }
 });
-
-export const {setActiveCardId} = dataProcess.actions;
 
 

@@ -81,15 +81,43 @@ const getSortedOffers = (sortOption: string, offers: Offers): Offers => {
 };
 
 
-function compareDates (reviewA: Review, reviewB: Review) {
+const compareDates = (reviewA: Review, reviewB: Review) => {
   const rankA = reviewA.date ? + new Date(reviewA.date) : 0;
   const rankB = reviewB.date ? + new Date(reviewB?.date) : 0 ;
   return rankB - rankA;
-}
+};
 
 const sortReviews = (reviews : Reviews): Reviews=> {
   const sortedReviews = reviews.slice().sort(compareDates).slice(0, MAX_COMMENTS_QUANTITY);
   return sortedReviews;
+};
+
+const changeMockOfferFavoriteStatus = (offer : Offer ) : Offer=> {
+  const value = offer.isFavorite;
+  return ({...offer, isFavorite: !value});
+};
+const updateFavoriteStatusValue = (offer: Offer, changedFavoriteStatusMockOffer: Offer) : Offer =>{
+  if ( offer.id === changedFavoriteStatusMockOffer.id) {
+    return changedFavoriteStatusMockOffer;
+  }
+  return offer;
+};
+
+
+const changeOneItem = ( mockOffers: Offers, changedFavoriteStatusMockOffer: Offer): Offers => {
+  const updatedMockOffers = mockOffers.map((offer) => updateFavoriteStatusValue(offer, changedFavoriteStatusMockOffer));
+  return updatedMockOffers;
+};
+
+const updateFavorites = ( mockOffers: Offers, changedFavoriteStatusMockOffer: Offer): Offers => {
+  const updatedFavoriteOffers = mockOffers.slice();
+  const index = updatedFavoriteOffers.findIndex((offer) => offer.id === changedFavoriteStatusMockOffer.id);
+  if(index === -1) {
+    updatedFavoriteOffers.push(changedFavoriteStatusMockOffer);
+  } else {
+    updatedFavoriteOffers.splice(index, 1);
+  }
+  return updatedFavoriteOffers;
 };
 
 
@@ -102,5 +130,8 @@ export {
   sortPriceLowToHigh,
   getSortedOffers,
   groupByCity,
-  sortReviews
+  sortReviews,
+  changeMockOfferFavoriteStatus,
+  changeOneItem,
+  updateFavorites
 };

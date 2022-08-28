@@ -3,7 +3,7 @@ import {DEFAULT_CITY, NameSpace } from '../../const';
 import {City} from '../../types/offer';
 
 
-type SelectCityProcess = {
+export type SelectCityProcess = {
   selectedCity: City;
 };
 

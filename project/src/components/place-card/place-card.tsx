@@ -5,8 +5,9 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import {setActiveCardId} from '../../store/data-process/data-process';
+// import {setActiveCardId} from '../../store/data-process/data-process';
 import { memo, useCallback } from 'react';
+import {setActiveCardId} from '../../store/action';
 
 
 type PlaceCardProps = {

@@ -9,7 +9,7 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import {isCheckedAuth} from '../../index';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getOffersDataLoadingStatus } from '../../store/data-process/selector';
@@ -23,7 +23,7 @@ function App(): JSX.Element {
   const isOffersLoading = useAppSelector(getOffersDataLoadingStatus);
 
 
-  if (isCheckedAuth(authorizationStatus) || isOffersLoading) {
+  if (isOffersLoading || isCheckedAuth(authorizationStatus) ) {
     return (
       <LoadingScreen />
     );
