@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, NEAR_ITEMS_QUANTITY} from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getNearByOffersData, getOffersData, getSelectedOfferData } from '../../store/data-process/selector';
+import { getNearByOffersData, getSelectedOfferData } from '../../store/data-process/selector';
 import { getSelectedCity } from '../../store/select-city-process/selector';
 import {getActiveCardId } from '../../store/data-process/selector';
 import useSelectedCityOffers from '../../hooks/useSelectedCityOffers/useSelectedCityOffers';
@@ -19,11 +19,12 @@ type MapProps = {
 
 function Map({width, isOfferScreen}:MapProps) : JSX.Element {
 
-  const offers = useAppSelector(getOffersData);
   const selectedCity = useAppSelector(getSelectedCity);
   const selectedOffer = useAppSelector(getSelectedOfferData);
   const nearByOffers = useAppSelector(getNearByOffersData);
   const selectedCityOffers = useSelectedCityOffers();
+  let activeCardId = useAppSelector(getActiveCardId);
+
   let offersToShowOnMap = isOfferScreen ? nearByOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
 
 
@@ -38,12 +39,8 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
   const map = useMap(mapRef, city.location);
 
 
-  const activeCardId = useAppSelector(getActiveCardId);
-
-
-  let activeCard = offers.find((value) => value.id === activeCardId);
   if (isOfferScreen) {
-    activeCard = selectedOffer;
+    activeCardId = selectedOffer?.id;
   }
 
   const defaultCustomIcon = leaflet.icon({
@@ -78,7 +75,7 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
           lng: offer.location.longitude,
         },
         {
-          icon: (activeCard !== undefined && offer.id === activeCard.id)
+          icon: (activeCardId !== undefined && offer.id === activeCardId)
             ? currentCustomIcon
             : defaultCustomIcon,
         })
@@ -90,7 +87,7 @@ function Map({width, isOfferScreen}:MapProps) : JSX.Element {
     return () => {
       layer?.clearLayers();
     };
-  }, [map, defaultCustomIcon, currentCustomIcon, activeCard, offersToShowOnMap]);
+  }, [map, defaultCustomIcon, currentCustomIcon, activeCardId, offersToShowOnMap]);
 
 
   return (
