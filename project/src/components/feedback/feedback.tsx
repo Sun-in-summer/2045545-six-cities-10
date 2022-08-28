@@ -1,5 +1,6 @@
 import {Review} from '../../types/reviews';
 import {ratingPercentage} from '../../utils/utils';
+import dayjs from 'dayjs';
 
 
 type FeedbackProps = {
@@ -14,6 +15,8 @@ function Feedback({review}: FeedbackProps): JSX.Element {
     date,
     user
   } = review;
+
+  const huminizedDate = dayjs(date).format('MMMM YYYY');
 
 
   const {
@@ -44,7 +47,7 @@ function Feedback({review}: FeedbackProps): JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{date}</time>
+        <time className="reviews__time" dateTime={date}>{huminizedDate}</time>
       </div>
     </li>
   );

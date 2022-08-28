@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Offer} from '../../types/offer';
 import PlaceCard from '../place-card/place-card';
 
@@ -9,7 +9,6 @@ type FavoritesBlockProps = {
 
 function FavoritesBlock({offersByCity, city}: FavoritesBlockProps): JSX.Element {
 
-  const [activeCardId, setActiveCardId] = useState< number | null>(null);
 
   return (
     <Fragment>
@@ -23,7 +22,12 @@ function FavoritesBlock({offersByCity, city}: FavoritesBlockProps): JSX.Element 
               </div>
             </div>
             <div className="favorites__places">
-              <PlaceCard offer = {exactOffer} key= {exactOffer.id} isActive ={exactOffer.id === activeCardId} onHover = {()=>setActiveCardId(exactOffer.id)} isFlex />
+              <PlaceCard
+                offer = {exactOffer}
+                key= {exactOffer.id}
+                // isActive ={exactOffer.id === activeCardId}
+                isFlex
+              />
             </div>
           </li>
 

@@ -1,51 +1,74 @@
 import Header from '../../components/header/header';
-import ReviewForm from '../../components/feedback-form/feedback-form';
-import {Navigate, useParams} from 'react-router-dom';
-import {ratingPercentage, firstLetterToUpperCase} from '../../utils/utils';
-import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
+import NearByOffers from '../../components/near-by-offers/near-by-offers';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchNearByOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
+import OfferHost from '../../components/offer-host/offer-host';
+import { memo, useEffect} from 'react';
+import { getErrorLoadingStatus, getSelectedOfferData } from '../../store/data-process/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { AuthorizationStatus, MAP_WIDTH_IN_OFFER } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { firstLetterToUpperCase, ratingPercentage } from '../../utils/utils';
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferGoods from '../../components/offer-goods/offer-goods';
-import { AppRoute, AuthorizationStatus, MAP_WIDTH_IN_OFFER, NEAR_ITEMS_QUANTITY } from '../../const';
+import FeedbacksList from '../../components/feedbacks-list/feedbacks-list';
+import FeedbackForm from '../../components/feedback-form/feedback-form';
 import Map from '../../components/map/map';
-import PlaceCardsList from '../../components/place-cards-list/place-cards-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewsAction, fetchSelectedOffer, fetchNearByOffersAction } from '../../store/api-actions';
-import { useEffect } from 'react';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { Offer } from '../../types/offer';
+import { setActiveCardId } from '../../store/data-process/data-process';
+import FavoriteButton from '../../components/favorite-button/favortite-button';
 
 
 function OfferScreen(): JSX.Element {
 
 
   const {id} = useParams() ;
+  const isErrorLoading = useAppSelector(getErrorLoadingStatus);
+  const selectedOffer = useAppSelector(getSelectedOfferData);
+
 
   const dispatch = useAppDispatch();
 
+
   useEffect(() => {
-    if (id !== undefined) {
-      dispatch(fetchSelectedOffer(id));
-      dispatch(fetchReviewsAction(id));
-      dispatch(fetchNearByOffersAction(id));
+    if(!selectedOffer || selectedOffer.id !== Number(id)) {
+      dispatch(fetchSelectedOfferAction(id as string));
+      dispatch(fetchNearByOffersAction(id as string));
     }
-  }, [dispatch, id]);
+    dispatch(setActiveCardId(id));
+  }, [dispatch, id, selectedOffer]);
 
-  const {offers} = useAppSelector((state) => state);
-  const selectedOffer = offers.find((offer) => offer.id === Number(id));
-  const {authorizationStatus} = useAppSelector((state) => state);
-  const {nearByOffers} = useAppSelector((state) => state);
-  const {reviews} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
 
-  if (!selectedOffer) {
-    return <Navigate to={AppRoute.NotFound} />;
+  if (!selectedOffer && !isErrorLoading) {
+    return <LoadingScreen />;
   }
 
+  if (!selectedOffer && isErrorLoading) {
+    return (
+      <NotFoundScreen />
+    );
+  }
 
-  const {isPremium, images, title, rating, type, maxAdults, bedrooms, price, goods, host, description} = selectedOffer ;
+  const {
+    isPremium,
+    title,
+    rating,
+    type,
+    maxAdults,
+    bedrooms,
+    price,
+    goods,
+    isFavorite
+  } = selectedOffer as Offer ;
+
+
   const starWidth = ratingPercentage(rating);
   const firstLetterCapitalizedType = firstLetterToUpperCase(type);
   const mapWidth = MAP_WIDTH_IN_OFFER;
-
-  const nearOffers = nearByOffers.slice(0, NEAR_ITEMS_QUANTITY);
 
 
   return (
@@ -53,7 +76,7 @@ function OfferScreen(): JSX.Element {
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
-          <OfferImages selectedOfferImages={images} />
+          <OfferImages />
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium ?
@@ -64,12 +87,7 @@ function OfferScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton id ={id} isFavorite ={isFavorite} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -94,51 +112,24 @@ function OfferScreen(): JSX.Element {
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <OfferGoods goods= {goods}/>
-              <div className="property__host">
-                <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={host?.avatarUrl} width="74" height="74" alt="Host avatar"/>
-                  </div>
-                  <span className="property__user-name">
-                    {host?.name}
-                  </span>
-                  <span className="property__user-status">
-                    {host.isPro ? 'Pro' : ''}
-                  </span>
-                </div>
-                <div className="property__description">
-                  <p className="property__text">
-                    {description}
-                  </p>
-                </div>
-              </div>
+              <OfferHost />
               <section className="property__reviews reviews">
-                <FeedbacksList reviews ={reviews}/>
-                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
+                <FeedbacksList />
+                {authorizationStatus === AuthorizationStatus.Auth && <FeedbackForm />}
               </section>
             </div>
           </div>
           <section className="property__map map">
             <Map
-              city={selectedOffer.city}
-              offers ={offers}
-              selectedOffer ={selectedOffer }
               width = {mapWidth}
+              isOfferScreen
             />
           </section>
         </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <PlaceCardsList offers = {nearOffers} />
-            </div>
-          </section>
-        </div>
+        <NearByOffers/>
       </main>
     </div>
   );
 }
 
-export default OfferScreen;
+export default memo(OfferScreen);

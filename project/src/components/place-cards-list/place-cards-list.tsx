@@ -1,30 +1,41 @@
-import {Offers} from '../../types/offer';
+
+import { useAppSelector } from '../../hooks';
+import useSelectedCityOffers from '../../hooks/useSelectedCityOffers/useSelectedCityOffers';
+import { getNearByOffersData } from '../../store/data-process/selector';
+import { getActiveSortOption } from '../../store/select-sort-option-process/selector';
+import { getSortedOffers } from '../../utils/utils';
 import PlaceCard from '../place-card/place-card';
-import { useState, MouseEvent } from 'react';
+import { NEAR_ITEMS_QUANTITY } from '../../const';
+import { useMemo } from 'react';
 
 
 type PlaceCardsListProps = {
-  offers: Offers;
-  onListItemHover?: (listItemName: string) => void
+  isOfferScreen?: boolean
 };
 
 
-function PlaceCardsList({offers, onListItemHover}: PlaceCardsListProps): JSX.Element {
+function PlaceCardsList({isOfferScreen}: PlaceCardsListProps): JSX.Element {
 
-  const listItemHoverHandler = (evt: MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
-    if (onListItemHover) {
-      onListItemHover(evt.currentTarget.id);
-    }
-  };
 
-  const [activeCardId, setActiveCardId] = useState< number | null>(null);
+  const activeSortOption = useAppSelector(getActiveSortOption);
+  const selectedCityOffers = useSelectedCityOffers();
+  const sortedCityOffers = useMemo(()=>getSortedOffers(activeSortOption, selectedCityOffers), [activeSortOption, selectedCityOffers]);
+  const nearByOffers = useAppSelector(getNearByOffersData);
+  const nearOffers = nearByOffers.slice(0, NEAR_ITEMS_QUANTITY);
+  const finalOffers = isOfferScreen ? nearOffers : sortedCityOffers;
+
 
   return (
     <div className="cities__places-list places__list tabs__content" >
-      {offers.map((offer) => (<PlaceCard offer = {offer} key= {offer.id} isActive = {offer.id === activeCardId} onHover = {()=>setActiveCardId(offer.id)} isFlex ={false} onMouseEnter = {listItemHoverHandler}/> )//
+      {finalOffers.map((offer) =>
+        (
+          <PlaceCard
+            offer = {offer}
+            key= {offer.id}
+            isOfferScreen= {isOfferScreen}
+          />
+        )
       )}
-
     </div>
   );
 

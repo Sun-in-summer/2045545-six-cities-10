@@ -1,26 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City, Offer, Offers } from '../types/offer';
-import { AuthorizationStatus, AppRoute } from '../const';
-import { Review, Reviews } from '../types/reviews';
+import { AppRoute } from '../const';
+import {Offer} from '../types/offer';
 
 
-export const setCity = createAction<City>('main/setCity');
-
-export const setActiveSortOption = createAction<string>('main/setActiveSortOption');
-
-export const loadOffers = createAction<Offers>('data/loadOffers');
-export const loadSelectedOffer = createAction<Offer>('data/loadSelectedOffer');
-export const loadReviews = createAction<Reviews>('data/loadReviews');
-export const loadNearByOffers = createAction<Offers>('data/loadNearByOffers');
-
-export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
-export const setSelectedOfferLoadedStatus = createAction<boolean>('data/setSelectedOfferLoadedStatus');
-export const setReviewsLoadedStatus = createAction<boolean>('data/setReviewsLoadedStatus');
-export const setNearByOffersLoadedStatus = createAction<boolean>('data/setNearByOffersLoadedStatus');
-
-export const sendReview = createAction<Review>('data/sendReview');
-
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
-export const setUserEmail = createAction<string> ('user/setUserEmail');
 export const redirectToRoute = createAction <AppRoute>('main/redirectToRoute');
+export const redirectBack = createAction('main/redirectBack');
+
+export const updateOffers = createAction<Offer>('main/updateOffers');
+export const updateSelectedOffer = createAction<Offer>('main/updateSelectedOffer');
+export const updateFavoriteOffers = createAction<Offer>('main/updateFavoriteOffers');
+export const updateNearByOffers = createAction<Offer>('main/updateNearByOffers');
 

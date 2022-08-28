@@ -1,22 +1,32 @@
+
+import FavoritesEmpty from '../../components/favorites/favorites-empty';
+import FavoritesFilled from '../../components/favorites/favorites-filled';
 import Header from '../../components/header/header';
-import Favorites from '../../components/favorites/favorites';
 import { useAppSelector } from '../../hooks';
+import { getFavoriteOffersData, getFavoriteOffersLoadingStatus } from '../../store/data-process/selector';
+
+import { Offers } from '../../types/offer';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function FavoritesScreen(): JSX.Element {
 
-  const {offers} = useAppSelector((state) => state);
+  const isFavoritesOffersLoading = useAppSelector(getFavoriteOffersLoadingStatus);
+  const favoriteOffers: Offers = useAppSelector(getFavoriteOffersData);
 
+
+  if (isFavoritesOffersLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  const empty = favoriteOffers.length === 0;
 
   return (
-    <div className="page">
+    <div className= {`page ${empty ? 'page--favorites-empty' : ''}`}>
       <Header />
-
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <Favorites offers ={offers} />
-        </div>
-      </main>
+      { empty ? <FavoritesEmpty /> : <FavoritesFilled /> }
       <footer className="footer container">
         <a className="footer__logo-link" href="main.html">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />

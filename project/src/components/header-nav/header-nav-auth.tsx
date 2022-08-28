@@ -1,34 +1,29 @@
 
+import { memo, useCallback } from 'react';
 import {Link} from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
+import { useAppDispatch} from '../../hooks';
 import {logoutAction} from '../../store/api-actions';
+import HeaderUserInfo from '../header-user-info/header-user-info';
 
 
 function HeaderNavAuth(): JSX.Element {
 
-  const {userEmail} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-
+  const handleHeaderNavLinkClick = useCallback((evt: { preventDefault: () => void; })=>{
+    evt.preventDefault();
+    dispatch(logoutAction());
+  }, [dispatch]);
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
-        <li className="header__nav-item user">
-          <Link to = '/favorite' className="header__nav-link header__nav-link--profile" >
-            <div className="header__avatar-wrapper user__avatar-wrapper">
-            </div>
-            <span className="header__user-name user__name">{userEmail}</span>
-            <span className="header__favorite-count">3</span>
-          </Link>
-        </li>
+        <HeaderUserInfo />
         <li className="header__nav-item">
           <Link
             className="header__nav-link"
-            onClick = {(evt)=>{
-              evt.preventDefault();
-              dispatch(logoutAction());
-            }}
-            to = '/'
+            onClick = {handleHeaderNavLinkClick}
+            to = {AppRoute.Main}
           >
             <span className="header__signout">Sign out</span>
           </Link>
@@ -38,4 +33,4 @@ function HeaderNavAuth(): JSX.Element {
   );
 }
 
-export default HeaderNavAuth;
+export default memo(HeaderNavAuth);

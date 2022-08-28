@@ -1,22 +1,47 @@
-import { Offers, Offer, City } from '../../types/offer';
 import {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, NEAR_ITEMS_QUANTITY} from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getNearByOffersData, getSelectedOfferData } from '../../store/data-process/selector';
+import { getSelectedCity } from '../../store/select-city-process/selector';
+import {getActiveCardId } from '../../store/data-process/selector';
+import useSelectedCityOffers from '../../hooks/useSelectedCityOffers/useSelectedCityOffers';
+
 
 type MapProps = {
-  city: City,
-  offers: Offers,
-  selectedOffer: Offer | undefined,
-  width: number,
+  width?: number,
+  isOfferScreen?: boolean,
+
 }
 
-function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
+function Map({width, isOfferScreen}:MapProps) : JSX.Element {
+
+  const selectedCity = useAppSelector(getSelectedCity);
+  const selectedOffer = useAppSelector(getSelectedOfferData);
+  const nearByOffers = useAppSelector(getNearByOffersData);
+  const selectedCityOffers = useSelectedCityOffers();
+  let activeCardId = useAppSelector(getActiveCardId);
+
+  let offersToShowOnMap = isOfferScreen ? nearByOffers.slice(0, NEAR_ITEMS_QUANTITY) : selectedCityOffers;
+
+
+  if (isOfferScreen && selectedOffer !== undefined ){
+    offersToShowOnMap = offersToShowOnMap.concat(selectedOffer);
+  }
+
+
+  const city = (isOfferScreen && selectedOffer) ? selectedOffer.city : selectedCity;
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
+
+  if (isOfferScreen) {
+    activeCardId = selectedOffer?.id;
+  }
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -44,13 +69,13 @@ function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
     let layer: LayerGroup;
     if (map) {
       layer = new LayerGroup().addTo(map);
-      offers.forEach((offer) => {
+      offersToShowOnMap.forEach((offer) => {
         leaflet.marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         },
         {
-          icon: (selectedOffer !== undefined && offer.id === selectedOffer.id)
+          icon: (activeCardId !== undefined && offer.id === activeCardId)
             ? currentCustomIcon
             : defaultCustomIcon,
         })
@@ -62,7 +87,7 @@ function Map({city, offers, selectedOffer, width}:MapProps) : JSX.Element {
     return () => {
       layer?.clearLayers();
     };
-  }, [map, offers, defaultCustomIcon, currentCustomIcon, selectedOffer]);
+  }, [map, defaultCustomIcon, currentCustomIcon, activeCardId, offersToShowOnMap]);
 
 
   return (

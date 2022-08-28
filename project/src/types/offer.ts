@@ -43,5 +43,11 @@ export type GroupedOffersByOneCity = {
   [key: string]: Offers;
 }
 
-export type {Offer, Offers, City, Location};
+type OfferStatus = {
+  id: number,
+  status: boolean,
+  isFavorite?: boolean,
+}
+
+export type {Offer, Offers, City, Location, OfferStatus, Host};
 

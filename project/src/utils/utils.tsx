@@ -1,5 +1,6 @@
 import { GroupedOffersByOneCity, Offer, Offers} from '../types/offer';
-import {MULTIPLIER_RATING_TO_PERCENTAGE, SORT_OPTIONS} from '../const';
+import {MAX_COMMENTS_QUANTITY, MULTIPLIER_RATING_TO_PERCENTAGE, SORT_OPTIONS} from '../const';
+import { Review, Reviews } from '../types/reviews';
 
 
 const sortByCity = (offerA: Offer, offerB: Offer) : number =>{
@@ -80,6 +81,18 @@ const getSortedOffers = (sortOption: string, offers: Offers): Offers => {
 };
 
 
+function compareDates (reviewA: Review, reviewB: Review) {
+  const rankA = reviewA.date ? + new Date(reviewA.date) : 0;
+  const rankB = reviewB.date ? + new Date(reviewB?.date) : 0 ;
+  return rankB - rankA;
+}
+
+const sortReviews = (reviews : Reviews): Reviews=> {
+  const sortedReviews = reviews.slice().sort(compareDates).slice(0, MAX_COMMENTS_QUANTITY);
+  return sortedReviews;
+};
+
+
 export {
   sortByCity,
   ratingPercentage,
@@ -88,5 +101,6 @@ export {
   sortPriceHighToLow,
   sortPriceLowToHigh,
   getSortedOffers,
-  groupByCity
+  groupByCity,
+  sortReviews
 };
