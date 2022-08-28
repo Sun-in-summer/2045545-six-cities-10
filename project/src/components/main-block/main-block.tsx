@@ -1,17 +1,13 @@
 import CitiesList from '../cities-list/cities-list';
-import {useAppSelector} from '../../hooks';
 import MainEmpty from '../main-empty/main-empty';
 import MainFilled from '../main-filled/main-filled';
-import { getOffersData } from '../../store/data-process/selector';
-import { getSelectedCity } from '../../store/select-city-process/selector';
+import useSelectedCityOffers from '../../hooks/useSelectedCityOffers/useSelectedCityOffers';
 
 
 function MainBlock(): JSX.Element {
 
 
-  const offers = useAppSelector(getOffersData);
-  const selectedCity = useAppSelector(getSelectedCity);
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
+  const selectedCityOffers = useSelectedCityOffers();
 
   return (
 

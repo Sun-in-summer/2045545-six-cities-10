@@ -45,7 +45,7 @@ export type GroupedOffersByOneCity = {
 
 type OfferStatus = {
   id: number,
-  status: string,
+  status: boolean,
   isFavorite?: boolean,
 }
 

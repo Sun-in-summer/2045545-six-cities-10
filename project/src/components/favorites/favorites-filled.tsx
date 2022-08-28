@@ -12,14 +12,15 @@ function FavoritesFilled() : JSX.Element {
 
   const isFavoritesLoading = useAppSelector(getFavoriteOffersLoadingStatus);
   const favoriteOffers: Offers = useAppSelector(getFavoriteOffersData);
-  const offersByCity = groupByCity(favoriteOffers);
-  const listOfFavoriteCities = Object.keys(offersByCity);
 
   if ( isFavoritesLoading) {
     return (
       <LoadingScreen />
     );
   }
+
+  const offersByCity = groupByCity(favoriteOffers);
+  const listOfFavoriteCities = Object.keys(offersByCity);
 
   return (
     <main className= "page__main page__main--favorites ">

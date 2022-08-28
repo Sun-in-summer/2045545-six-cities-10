@@ -13,23 +13,19 @@ import {
 import {updateSelectedOffer, updateOffers, updateFavoriteOffers, updateNearByOffers } from '../action';
 
 
-type DataProcess = {
+export type DataProcess = {
   selectedOffer : Offer | undefined,
   offers: Offers ,
   favoriteOffers: Offers,
   nearByOffers: Offers,
   reviews: Reviews,
-
   error: string | null,
-
   isSelectedOfferLoading : boolean,
   isOffersLoading: boolean,
   isFavoriteOffersLoading: boolean,
   isReviewsLoaded: boolean,
   isNearByOffersLoading: boolean
-
   isReviewSent: boolean,
-
   isErrorLoading: boolean,
   activeCardId: number | undefined,
 
@@ -159,12 +155,14 @@ export const dataProcess = createSlice({
       .addCase(updateNearByOffers, (state, action) => {
 
         const index = state.nearByOffers.findIndex((offer) => offer.id === action.payload.id);
-        const updatedOffers = [
-          ...state.nearByOffers.slice(0, index),
-          action.payload,
-          ...state.nearByOffers.slice(index + 1)
-        ];
-        state.nearByOffers = updatedOffers;
+        if (index !== -1) {
+          const updatedOffers = [
+            ...state.nearByOffers.slice(0, index),
+            action.payload,
+            ...state.nearByOffers.slice(index + 1)
+          ];
+          state.nearByOffers = updatedOffers;
+        }
       });
 
   }

@@ -17,7 +17,7 @@ function NearByOffers(): JSX.Element {
 
 
   useEffect(() => {
-    if (nearByOffers.length === 0 && !isNearByOfferLoading) {
+    if (!isNearByOfferLoading && nearByOffers.length === 0 ) {
       dispatch(fetchNearByOffersAction(id as string));
     }
   }, [dispatch, id, isNearByOfferLoading, nearByOffers]);

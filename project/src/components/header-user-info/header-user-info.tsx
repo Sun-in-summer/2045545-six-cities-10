@@ -1,10 +1,9 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
-
 import { getFavoriteOffersData, getFavoriteOffersLoadingStatus, } from '../../store/data-process/selector';
 import { getUserInfo } from '../../store/user-process/selector';
+import SmallLoader from '../small-loader/small-loader';
 
 
 function HeaderUserInfo(): JSX.Element {
@@ -24,7 +23,7 @@ function HeaderUserInfo(): JSX.Element {
 
   if (isFavoritesOffersLoading) {
     return (
-      <LoadingScreen />
+      <SmallLoader />
     );
   }
 

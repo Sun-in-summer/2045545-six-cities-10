@@ -17,7 +17,7 @@ function FeedbacksList(): JSX.Element {
 
 
   useEffect(() => {
-    if ((reviews.length === 0 || reviews[0].id ) && !isReviewsLoaded) {
+    if (!isReviewsLoaded && (reviews.length === 0 || reviews[0].id )) {
       dispatch(fetchReviewsAction(id as string));
     }
   }, [dispatch, id, isReviewsLoaded, reviews, reviews.length]);

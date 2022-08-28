@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import {setActiveCardId} from '../../store/data-process/data-process';
+import { memo, useCallback } from 'react';
 
 
 type PlaceCardProps = {
@@ -29,30 +30,37 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
   const starWidth: number = ratingPercentage(rating);
   const navigate = useNavigate();
-  const handleFavoriteButtonClick = () =>{
+  const handleFavoriteButtonClick = useCallback(() =>{
     if ( authorizationStatus !== AuthorizationStatus.Auth) {
       navigate(AppRoute.Login);
     }
     else {
       dispatch(changeFavoriteStatusAction({
         id: id,
-        status: Number(!isFavorite).toString(),
+        status: !isFavorite,
       }));
     }
-  };
+  }, [authorizationStatus, dispatch, id, isFavorite, navigate]);
 
 
-  const handleCardMouseOver = () => {
+  const handleCardMouseOver = useCallback(() => {
     if(!isOfferScreen) {
       dispatch(setActiveCardId(id));
     }
-  };
+  },[dispatch, id, isOfferScreen]);
+
+  const handleCardMouseLeave = useCallback(() => {
+    if(!isOfferScreen) {
+      dispatch(setActiveCardId(undefined));
+    }
+  },[dispatch, isOfferScreen]);
 
 
   return (
     <article
       className= "cities__card place-card"
       onMouseOver = {handleCardMouseOver}
+      onMouseLeave ={handleCardMouseLeave}
       style = {{display : `${isFlex ? 'flex' : 'block'}`, width: `${isFlex ? '421px' : '260px'}` }}
       id = {id.toString()}
     >
@@ -112,4 +120,4 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default memo(PlaceCard);

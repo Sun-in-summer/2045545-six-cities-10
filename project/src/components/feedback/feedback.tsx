@@ -16,7 +16,7 @@ function Feedback({review}: FeedbackProps): JSX.Element {
     user
   } = review;
 
-  const huminizedDate = dayjs(date).format('MMM DD');
+  const huminizedDate = dayjs(date).format('MMMM YYYY');
 
 
   const {

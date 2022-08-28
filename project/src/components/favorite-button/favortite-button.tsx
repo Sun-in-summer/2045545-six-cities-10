@@ -1,29 +1,27 @@
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeFavoriteStatusAction, fetchSelectedOfferAction} from '../../store/api-actions';
+import { changeFavoriteStatusAction} from '../../store/api-actions';
 
-import { useCallback, useEffect} from 'react';
-import { getSelectedOfferData } from '../../store/data-process/selector';
+import { useCallback} from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { AppRoute, AuthorizationStatus} from '../../const';
-import { Offer } from '../../types/offer';
-import { setActiveCardId } from '../../store/data-process/data-process';
+
+type FavoriteButtonProps = {
+  id: string | undefined,
+  isFavorite: boolean,
+}
 
 
-function FavoriteButton(): JSX.Element {
+function FavoriteButton( {id, isFavorite}: FavoriteButtonProps): JSX.Element {
 
-  const {id} = useParams() ;
-  const selectedOffer = useAppSelector(getSelectedOfferData);
+
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const {
-    isFavorite
-  } = selectedOffer as Offer ;
 
   const handleFavoriteButtonClick = useCallback(() =>{
     if ( authorizationStatus !== AuthorizationStatus.Auth) {
@@ -32,18 +30,11 @@ function FavoriteButton(): JSX.Element {
     else {
       dispatch(changeFavoriteStatusAction({
         id: Number(id),
-        status: Number(!isFavorite).toString(),
+        status: !isFavorite,
       }));
 
     }
   }, [authorizationStatus, dispatch, id, isFavorite, navigate]);
-
-  useEffect(() => {
-    if(!selectedOffer || selectedOffer.id !== Number(id)) {
-      dispatch(fetchSelectedOfferAction(id as string));
-    }
-    dispatch(setActiveCardId(id));
-  }, [dispatch, id, selectedOffer]);
 
 
   return (
