@@ -125,6 +125,9 @@ export enum NameSpace {
   SortOption ='SORT_OPTION',
 }
 
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
+
 
 export {
   MULTIPLIER_RATING_TO_PERCENTAGE,

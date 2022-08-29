@@ -28,7 +28,7 @@ const firstLetterToUpperCase = ( word: string | null) : string | null => {
 
 
 const groupByCity = (offers: Offers): GroupedOffersByOneCity =>
-  offers.slice().reduce<GroupedOffersByOneCity>((acc, offer ) => {
+  offers?.slice().reduce<GroupedOffersByOneCity>((acc, offer ) => {
     if (!Object.hasOwn(acc, offer.city.name)) {
       acc[offer.city.name] = [];
     }

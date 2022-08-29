@@ -8,7 +8,7 @@ function useSelectedCityOffers (): Offers {
 
   const offers = useAppSelector(getOffersData);
   const selectedCity = useAppSelector(getSelectedCity);
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity.name);
+  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity?.name);
 
   return selectedCityOffers;
 }

@@ -21,7 +21,7 @@ function FavoritesScreen(): JSX.Element {
     );
   }
 
-  const empty = favoriteOffers.length === 0;
+  const empty = favoriteOffers?.length === 0;
 
   return (
     <div className= {`page ${empty ? 'page--favorites-empty' : ''}`}>

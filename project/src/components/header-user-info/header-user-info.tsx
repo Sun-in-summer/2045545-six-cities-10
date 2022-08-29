@@ -18,7 +18,7 @@ function HeaderUserInfo(): JSX.Element {
     userEmail = userInfo.email;
   }
 
-  const favoriteOffers: number | string = useAppSelector(getFavoriteOffersData).length;
+  const favoriteOffers: number | string = useAppSelector(getFavoriteOffersData)?.length;
 
 
   if (isFavoritesOffersLoading) {

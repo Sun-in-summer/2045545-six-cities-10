@@ -8,8 +8,7 @@ import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
-import {isCheckedAuth} from '../../index';
-
+import {isCheckedAuth} from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getOffersDataLoadingStatus } from '../../store/data-process/selector';
 
@@ -18,7 +17,6 @@ function App(): JSX.Element {
 
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
   const isOffersLoading = useAppSelector(getOffersDataLoadingStatus);
 
 

@@ -1,25 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {Provider} from 'react-redux';
+import App from './components/app/app';
+import browserHistory from './browser-history';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import App from './components/app/app';
-import HistoryRouter from './components/history-router/history-router';
-import { AuthorizationStatus } from './const';
+import {Provider} from 'react-redux';
 import {store} from './store';
 import { fetchOffersAction, checkAuthAction } from './store/api-actions';
-import browserHistory from './browser-history';
+import HistoryRouter from './components/history-router/history-router';
 
-
-export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
 
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
+  document.getElementById('root') as HTMLElement ,
 );
 
 root.render(
