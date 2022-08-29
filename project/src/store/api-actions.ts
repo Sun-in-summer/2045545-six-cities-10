@@ -74,19 +74,6 @@ export const fetchSelectedOfferAction = createAsyncThunk<Offer, string, {
   }
 );
 
-export const fetchExactOfferAction = createAsyncThunk<Offer, string, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}> (
-  'data/fetchExactOffer',
-  async(id, {dispatch, extra: api}) => {
-
-    const {data} = await api.get<Offer>(generatePath(APIRoute.Offer, {id}));
-    return data;
-  }
-);
-
 
 export const sendReviewAction = createAsyncThunk<Reviews, FeedbackReview, {
   dispatch: AppDispatch,

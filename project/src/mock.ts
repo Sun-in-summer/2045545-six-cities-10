@@ -1,5 +1,6 @@
 import faker from 'faker';
-import { City, Host, Location, Offer } from './types/offer';
+import { AuthData } from './types/auth-data';
+import { City, Host, Location, Offer, OfferStatus } from './types/offer';
 import { FeedbackReview, Review, User } from './types/reviews';
 
 
@@ -63,4 +64,16 @@ export const createMockFeedbackReview = () : FeedbackReview=> ({
   date: faker.datatype.string(),
   rating: faker.datatype.number(),
 });
+
+export const createMockOfferStatus = () : OfferStatus => ({
+  id: faker.datatype.number(),
+  status: faker.datatype.boolean(),
+});
+
+export const createMockAuthData = () :AuthData => ({
+  login: faker.internet.email(),
+  password: faker.internet.password()
+});
+
+export const createMockToken = () :string => faker.datatype.string();
 

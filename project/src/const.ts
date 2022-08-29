@@ -10,6 +10,8 @@ const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
 const MAX_COMMENTS_QUANTITY = 10;
 const TEST_ELEMENTS_QUANTITY = 3;
+const MIN_TEST_NUMBER = 1;
+const MAX_TEST_NUMBER = 10;
 
 
 const DEFAULT_CITY : City = {
@@ -136,6 +138,8 @@ export {
   URL_MARKER_DEFAULT,
   MAX_COMMENTS_QUANTITY,
   TEST_ELEMENTS_QUANTITY,
+  MIN_TEST_NUMBER,
+  MAX_TEST_NUMBER,
   RatingTitles,
   APIRoute,
   AppRoute,

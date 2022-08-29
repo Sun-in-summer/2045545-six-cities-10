@@ -120,6 +120,12 @@ const updateFavorites = ( mockOffers: Offers, changedFavoriteStatusMockOffer: Of
   return updatedFavoriteOffers;
 };
 
+const getRandomId = (min: number, max: number): string => {
+
+  const randomId = Math.floor((Math.random() * (max - min) + min)).toString();
+  return randomId;
+};
+
 
 export {
   sortByCity,
@@ -133,5 +139,6 @@ export {
   sortReviews,
   changeMockOfferFavoriteStatus,
   changeOneItem,
-  updateFavorites
+  updateFavorites,
+  getRandomId
 };

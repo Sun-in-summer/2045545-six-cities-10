@@ -9,8 +9,7 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import {isCheckedAuth} from '../../index';
-import HistoryRouter from '../history-router/history-router';
-import browserHistory from '../../browser-history';
+
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getOffersDataLoadingStatus } from '../../store/data-process/selector';
 
@@ -31,39 +30,39 @@ function App(): JSX.Element {
 
 
   return (
-    <HistoryRouter history = {browserHistory}>
-      <Routes>
-        <Route
-          path = {AppRoute.Main}
-          element = {<MainScreen />}
-        >
-        </Route>
-        <Route
-          path ={AppRoute.Login}
-          element = {<LoginScreen />}
-        />
-        <Route
-          path ={AppRoute.Favorites}
-          element = {
-            <PrivateRoute >
-              <FavoritesScreen />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path = {AppRoute.Room}
-          element = {<OfferScreen />}
-        />
-        <Route
-          path = {AppRoute.NotFound}
-          element = {<NotFoundScreen/>}
-        />
-        <Route
-          path = '*'
-          element = {<NotFoundScreen/>}
-        />
-      </Routes>
-    </HistoryRouter>
+
+    <Routes>
+      <Route
+        path = {AppRoute.Main}
+        element = {<MainScreen />}
+      >
+      </Route>
+      <Route
+        path ={AppRoute.Login}
+        element = {<LoginScreen />}
+      />
+      <Route
+        path ={AppRoute.Favorites}
+        element = {
+          <PrivateRoute >
+            <FavoritesScreen />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path = {AppRoute.Room}
+        element = {<OfferScreen />}
+      />
+      <Route
+        path = {AppRoute.NotFound}
+        element = {<NotFoundScreen/>}
+      />
+      <Route
+        path = '*'
+        element = {<NotFoundScreen/>}
+      />
+    </Routes>
+
   );
 }
 
