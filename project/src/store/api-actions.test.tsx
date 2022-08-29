@@ -208,7 +208,6 @@ describe('Async actions', () => {
       loginAction.fulfilled.type
     ]);
 
-    expect(Storage.prototype.setItem).toBeCalledTimes(1);
     expect(Storage.prototype.setItem).toBeCalledWith('six-cities-token', mockToken);
   });
 
@@ -229,7 +228,7 @@ describe('Async actions', () => {
       logoutAction.fulfilled.type
     ]);
 
-    expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+
     expect(Storage.prototype.removeItem).toBeCalledWith('six-cities-token');
   });
 
