@@ -38,7 +38,11 @@ export const createAPI = ():AxiosInstance =>{
     (error: AxiosError) => {
       if (error.response && shouldDisplayError (error.response)) {
         toast.warn(error.response.data.error);
+        if(error.response.status !== StatusCodes.UNAUTHORIZED) {
+          toast.warn(error.response.data.error);
+        }
       }
+
       throw error;
     }
   );
