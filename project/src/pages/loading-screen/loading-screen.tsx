@@ -5,7 +5,7 @@ import { RingLoader } from 'react-spinners';
 function LoadingScreen(): JSX.Element {
   return (
     <div className={styles.loaderContainer}>
-      <h1 > Loading....</h1>
+      <h1 > Loading...</h1>
       <RingLoader
         size = {80}
         color = {'#4481c3'}

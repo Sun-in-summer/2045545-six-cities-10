@@ -1,6 +1,6 @@
 
-import FavoritesEmpty from '../../components/favorites/favorites-empty';
-import FavoritesFilled from '../../components/favorites/favorites-filled';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import FavoritesFilled from '../../components/favorites-filled/favorites-filled';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import { getFavoriteOffersData, getFavoriteOffersLoadingStatus } from '../../store/data-process/selector';
