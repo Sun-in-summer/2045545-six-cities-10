@@ -1,7 +1,10 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useCallback, useRef } from 'react';
 import Header from '../../components/header/header';
-import { useAppDispatch } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { AuthData } from '../../types/auth-data';
 
 
@@ -9,14 +12,15 @@ function LoginScreen(): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const authorization = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (authData: AuthData) => {
+  const onSubmit = useCallback((authData: AuthData) => {
     dispatch(loginAction(authData));
-  };
+  },[dispatch]);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -25,7 +29,11 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
-  };
+  },[onSubmit]);
+
+  if (authorization === AuthorizationStatus.Auth) {
+    dispatch(redirectToRoute(AppRoute.Main));
+  }
 
   return (
     <div className="page page--gray page--login">

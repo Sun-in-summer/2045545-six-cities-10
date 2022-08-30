@@ -86,7 +86,8 @@ enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Room = '/offer/:id',
-  NotFound = '/not-found'
+  NotFound = '/not-found',
+  Other = '*'
 }
 
 
@@ -127,6 +128,10 @@ export enum NameSpace {
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
+
+
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
 
 
 export {

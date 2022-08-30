@@ -1,7 +1,9 @@
 
+import { Link } from 'react-router-dom';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import FavoritesFilled from '../../components/favorites-filled/favorites-filled';
 import Header from '../../components/header/header';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getFavoriteOffersData, getFavoriteOffersLoadingStatus } from '../../store/data-process/selector';
 
@@ -28,9 +30,9 @@ function FavoritesScreen(): JSX.Element {
       <Header />
       { empty ? <FavoritesEmpty /> : <FavoritesFilled /> }
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link to={AppRoute.Main} className="footer__logo-link" >
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
+        </Link>
       </footer>
     </div>
   );

@@ -25,7 +25,7 @@ type Offer = {
   title?: string,
   isFavorite: boolean,
   isPremium: boolean,
-  rating?: number,
+  rating: number,
   type: string,
   bedrooms: number,
   maxAdults: number,

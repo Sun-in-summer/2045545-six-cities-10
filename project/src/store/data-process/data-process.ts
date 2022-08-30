@@ -28,6 +28,7 @@ export type DataProcess = {
   isReviewSent: boolean,
   isErrorLoading: boolean,
   activeCardId: number | undefined,
+  isSendingReviewError: boolean,
 
 };
 
@@ -45,7 +46,7 @@ const initialState: DataProcess = {
   isNearByOffersLoading: false,
   isSelectedOfferLoading : false,
   isErrorLoading: false,
-
+  isSendingReviewError: false,
   activeCardId: undefined,
 
 };
@@ -96,6 +97,7 @@ export const dataProcess = createSlice({
       })
       .addCase(sendReviewAction.rejected, (state, )=> {
         state.isReviewSent = false;
+        state.isSendingReviewError = true;
       })
       .addCase(fetchNearByOffersAction.pending, (state)=> {
         state.isNearByOffersLoading = true;

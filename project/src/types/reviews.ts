@@ -9,7 +9,7 @@ export type Review = {
   id: string,
   comment: string,
   date?: string,
-  rating: number,
+  rating: number ,
   user: User,
 }
 

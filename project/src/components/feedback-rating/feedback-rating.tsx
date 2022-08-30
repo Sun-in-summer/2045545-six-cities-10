@@ -3,7 +3,7 @@ import { RatingTitles } from '../../const';
 
 type FeedbackRatingProps= {
   onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
-  ratingValue: string,
+  ratingValue: string | null,
 }
 
 

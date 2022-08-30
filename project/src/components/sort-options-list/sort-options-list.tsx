@@ -29,7 +29,7 @@ function SortOptionsList(): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom${isOptionsListOpened ? 'open' : ''} places__options`} >
+      <ul className={`places__options places__options--custom places__options${isOptionsListOpened ? '--opened' : ''}`} >
 
         { Object.values(SORT_OPTIONS).map(
           (sortOption)=>

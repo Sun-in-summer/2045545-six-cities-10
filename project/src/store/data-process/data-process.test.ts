@@ -29,6 +29,7 @@ describe('Reducer: data-process', () => {
       isSelectedOfferLoading : false,
       isErrorLoading: false,
       activeCardId: undefined,
+      isSendingReviewError: false
     };
   });
 
@@ -49,6 +50,7 @@ describe('Reducer: data-process', () => {
       isSelectedOfferLoading : false,
       isErrorLoading: false,
       activeCardId: undefined,
+      isSendingReviewError: false,
     };
   });
 

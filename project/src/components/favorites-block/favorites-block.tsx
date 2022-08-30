@@ -25,7 +25,6 @@ function FavoritesBlock({offersByCity, city}: FavoritesBlockProps): JSX.Element 
               <PlaceCard
                 offer = {exactOffer}
                 key= {exactOffer.id}
-                // isActive ={exactOffer.id === activeCardId}
                 isFlex
               />
             </div>

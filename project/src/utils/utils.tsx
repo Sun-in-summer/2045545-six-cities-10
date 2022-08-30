@@ -7,9 +7,7 @@ const sortByCity = (offerA: Offer, offerB: Offer) : number =>{
   if (offerA.city.name >= offerB.city.name){
     return 1;
   }
-  else {
-    return -1;
-  }
+  return -1;
 };
 
 const ratingPercentage = (ratingInStars: number | undefined | null) : number =>{
@@ -37,33 +35,13 @@ const groupByCity = (offers: Offers): GroupedOffersByOneCity =>
   }, {});
 
 
-const sortPriceLowToHigh = (offerA: Offer, offerB: Offer) : number => {
-  if (offerA.price >= offerB.price){
-    return 1;
-  }
-  else {
-    return -1;
-  }
-};
+const sortPriceLowToHigh = (offerA: Offer, offerB: Offer) : number => offerA.price - offerB.price;
 
-const sortPriceHighToLow = (offerA: Offer, offerB: Offer) : number => {
-  if (offerA.price >= offerB.price){
-    return -1;
-  }
-  else {
-    return 1;
-  }
-};
+const sortPriceHighToLow = (offerA: Offer, offerB: Offer) : number => offerB.price - offerA.price;
 
 
-const sortByRating = (offerA: Offer, offerB: Offer) : number => {
-  if ((offerA.rating && offerB.rating) && (offerA.rating <= offerB.rating)){
-    return 1;
-  }
-  else {
-    return -1;
-  }
-};
+const sortByRating = (offerA: Offer, offerB: Offer) : number => offerB.rating - offerA.rating ;
+
 
 const getSortedOffers = (sortOption: string, offers: Offers): Offers => {
   switch (sortOption) {

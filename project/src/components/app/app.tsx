@@ -56,7 +56,7 @@ function App(): JSX.Element {
         element = {<NotFoundScreen/>}
       />
       <Route
-        path = '*'
+        path = {AppRoute.Other}
         element = {<NotFoundScreen/>}
       />
     </Routes>
