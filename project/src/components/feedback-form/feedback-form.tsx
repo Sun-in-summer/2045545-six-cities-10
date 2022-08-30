@@ -37,7 +37,7 @@ function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
 
   const onSubmit = useCallback((reviewData: FeedbackReview) => {
     dispatch(sendReviewAction(reviewData));
-    // setFormData({...formData, review: '', rating: null});
+
   },[dispatch]);
 
 
@@ -58,7 +58,7 @@ function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
         comment: review,
         date: new Date().toISOString(),
       });
-      // setFormData({review: '', rating: null});
+
     }
   },[hotelId, onSubmit, rating, review]);
 
