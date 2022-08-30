@@ -21,6 +21,6 @@ export const getSelectedOfferLoadingStatus = (state: State): boolean => state[Na
 export const getErrorLoadingStatus = (state: State): boolean => state[NameSpace.Data].isErrorLoading;
 
 export const getActiveCardId = (state: State): number | undefined=> state[NameSpace.Data].activeCardId;
-export const getReviewSendingStatus = (state: State) : boolean => state[NameSpace.Data].isSendingReviewError;
+export const getReviewSendingStatus = (state: State) : boolean => state[NameSpace.Data].isReviewSent;
 
 

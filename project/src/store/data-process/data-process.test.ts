@@ -106,7 +106,7 @@ describe('Reducer: data-process', () => {
   describe ('sendReviewAction' , () =>{
     it ('should return reviews if sendReviewAction is fulfilled', ()=>{
       expect(dataProcess.reducer(state, {type: sendReviewAction.fulfilled.type, payload: mockReviews}))
-        .toEqual({...state, isReviewSent: false, reviews: mockReviews });
+        .toEqual({...state, isReviewSent: true, reviews: mockReviews });
     }
     );
     it ('should return isReviewSent is false  if sendReviewAction is rejected', ()=>
@@ -114,7 +114,7 @@ describe('Reducer: data-process', () => {
         .toEqual({...state, isReviewSent: false}));
     it ('should return isReviewsLoaded is true  if sendReviewAction is pending', ()=>
       expect(dataProcess.reducer(state, {type: sendReviewAction.pending.type}))
-        .toEqual({...state, isReviewSent: true}));
+        .toEqual({...state, isReviewSent: false}));
   });
 
   describe('fetchSelectedOfferAction', () =>{

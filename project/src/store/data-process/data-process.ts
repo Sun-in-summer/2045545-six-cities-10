@@ -79,7 +79,7 @@ export const dataProcess = createSlice({
         state.isFavoriteOffersLoading = false;
       })
       .addCase(fetchReviewsAction.pending, (state)=> {
-        state.isReviewsLoaded = true;
+        state.isReviewsLoaded = false;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action)=> {
         state.reviews = action.payload;
@@ -93,7 +93,8 @@ export const dataProcess = createSlice({
       })
       .addCase(sendReviewAction.fulfilled, (state, action)=> {
         state.reviews = action.payload;
-        state.isReviewSent = false;
+        state.isReviewSent = true;
+
       })
       .addCase(sendReviewAction.rejected, (state, )=> {
         state.isReviewSent = false;

@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import NearByOffers from '../../components/near-by-offers/near-by-offers';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearByOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
+import { fetchNearByOffersAction, fetchReviewsAction, fetchSelectedOfferAction } from '../../store/api-actions';
 import OfferHost from '../../components/offer-host/offer-host';
 import { memo, useEffect} from 'react';
 import { getErrorLoadingStatus, getSelectedOfferData } from '../../store/data-process/selector';
@@ -36,6 +36,7 @@ function OfferScreen(): JSX.Element {
     if(!selectedOffer || selectedOffer.id !== Number(id)) {
       dispatch(fetchSelectedOfferAction(id as string));
       dispatch(fetchNearByOffersAction(id as string));
+      dispatch(fetchReviewsAction(id as string));
     }
     dispatch(setActiveCardId(Number(id)));
   }, [dispatch, id, selectedOffer]);
@@ -114,8 +115,8 @@ function OfferScreen(): JSX.Element {
               <OfferGoods goods= {goods}/>
               <OfferHost />
               <section className="property__reviews reviews">
-                <FeedbacksList />
-                {authorizationStatus === AuthorizationStatus.Auth && <FeedbackForm />}
+                <FeedbacksList id ={id}/>
+                {authorizationStatus === AuthorizationStatus.Auth && <FeedbackForm id ={id} />}
               </section>
             </div>
           </div>

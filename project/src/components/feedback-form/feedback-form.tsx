@@ -1,35 +1,43 @@
 import {ChangeEvent, FormEvent, memo, useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewsAction, sendReviewAction } from '../../store/api-actions';
+import { sendReviewAction } from '../../store/api-actions';
 import FeedbackRating from '../feedback-rating/feedback-rating';
 import {FeedbackReview} from '../../types/reviews';
-import { useParams } from 'react-router-dom';
 import {MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH} from '../../const';
 import { getReviewSendingStatus } from '../../store/data-process/selector';
 
+type FeedbackFormProps ={
+  id: string | undefined,
+}
 
-function FeedbackForm(): JSX.Element {
+
+function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
   const [formData, setFormData] = useState({
     rating: null,
     review: '',
   });
   const dispatch = useAppDispatch();
-  const isReviewSendingError = useAppSelector(getReviewSendingStatus);
+  const isReviewSent = useAppSelector(getReviewSendingStatus);
+
+  useEffect(() => {
+    if (isReviewSent) {
+      setFormData({
+        review: '',
+        rating: null,
+      });
+    }
+  }, [isReviewSent]);
+
 
   const {rating, review} = formData;
-  const {id} = useParams();
-  const hotelId = id;
 
-  // useEffect (()=> {
-  //   if(isReviewSendingError)
-  // })
+  const hotelId = id;
 
 
   const onSubmit = useCallback((reviewData: FeedbackReview) => {
     dispatch(sendReviewAction(reviewData));
-    setFormData({...formData, review: '', rating: null});
-    dispatch(fetchReviewsAction(id));
-  },[dispatch, formData, id]);
+    // setFormData({...formData, review: '', rating: null});
+  },[dispatch]);
 
 
   const fieldChangeHandle = useCallback((event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) : void => {

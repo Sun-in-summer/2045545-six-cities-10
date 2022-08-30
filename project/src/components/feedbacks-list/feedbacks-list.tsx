@@ -1,26 +1,18 @@
-import { Fragment, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchReviewsAction } from '../../store/api-actions';
-import { getReviewsData, getReviewsLoadingStatus } from '../../store/data-process/selector';
+import { Fragment } from 'react';
+import { useAppSelector } from '../../hooks';
+import { getReviewsData } from '../../store/data-process/selector';
 import Feedback from '../feedback/feedback';
 import {sortReviews} from '../../utils/utils';
 
+type FeedbackListProps ={
+  id: string | undefined
+}
 
-function FeedbacksList(): JSX.Element {
+
+function FeedbacksList({id}: FeedbackListProps): JSX.Element {
 
   const reviews = useAppSelector(getReviewsData);
-  const isReviewsLoaded = useAppSelector(getReviewsLoadingStatus);
-  const {id} = useParams();
-  const dispatch = useAppDispatch();
   const sortedReviews = sortReviews(reviews);
-
-
-  useEffect(() => {
-    if (!isReviewsLoaded && (reviews.length === 0 || reviews[0].id )) {
-      dispatch(fetchReviewsAction(id as string));
-    }
-  }, [dispatch, id, isReviewsLoaded, reviews, reviews.length]);
 
 
   return (
