@@ -197,10 +197,9 @@ export const logoutAction = createAsyncThunk<void, undefined, {
       await api.delete(APIRoute.Logout);
       dropToken();
     }
-    catch {
+    catch (err) {
       toast.warn('Unable to logout, please try later');
     }
-    throw new Error();
   },
 );
 
