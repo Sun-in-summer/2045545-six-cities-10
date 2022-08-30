@@ -6,6 +6,7 @@ import {FeedbackReview} from '../../types/reviews';
 import {MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH} from '../../const';
 import { getReviewSendingStatus } from '../../store/data-process/selector';
 
+
 type FeedbackFormProps ={
   id: string | undefined,
 }
@@ -19,15 +20,24 @@ function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
   const dispatch = useAppDispatch();
 
 
-
   const {rating, review} = formData;
 
   const hotelId = id;
+  const isReviewSent = useAppSelector(getReviewSendingStatus);
+
+  useEffect(() => {
+    if (isReviewSent) {
+      setFormData({
+        review: '',
+        rating: null
+      });
+    }
+  }, [isReviewSent]);
 
 
   const onSubmit = useCallback((reviewData: FeedbackReview) => {
     dispatch(sendReviewAction(reviewData));
-    setFormData({...formData, review: '', rating: null});
+    // setFormData({...formData, review: '', rating: null});
   },[dispatch]);
 
 
@@ -48,7 +58,7 @@ function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
         comment: review,
         date: new Date().toISOString(),
       });
-      setFormData({review: '', rating: null});
+      // setFormData({review: '', rating: null});
     }
   },[hotelId, onSubmit, rating, review]);
 
