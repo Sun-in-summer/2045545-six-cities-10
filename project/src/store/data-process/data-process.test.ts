@@ -112,7 +112,7 @@ describe('Reducer: data-process', () => {
     it ('should return isReviewSent is false  if sendReviewAction is rejected', ()=>
       expect(dataProcess.reducer(state, {type: sendReviewAction.rejected.type}))
         .toEqual({...state, isReviewSent: false}));
-    it ('should return isReviewsLoaded is true  if sendReviewAction is pending', ()=>
+    it ('should return isReviewsSent is false  if sendReviewAction is pending', ()=>
       expect(dataProcess.reducer(state, {type: sendReviewAction.pending.type}))
         .toEqual({...state, isReviewSent: false}));
   });

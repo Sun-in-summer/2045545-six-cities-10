@@ -17,16 +17,7 @@ function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
     review: '',
   });
   const dispatch = useAppDispatch();
-  const isReviewSent = useAppSelector(getReviewSendingStatus);
 
-  useEffect(() => {
-    if (isReviewSent) {
-      setFormData({
-        review: '',
-        rating: null,
-      });
-    }
-  }, [isReviewSent]);
 
 
   const {rating, review} = formData;
@@ -36,7 +27,7 @@ function FeedbackForm({id} : FeedbackFormProps): JSX.Element {
 
   const onSubmit = useCallback((reviewData: FeedbackReview) => {
     dispatch(sendReviewAction(reviewData));
-    // setFormData({...formData, review: '', rating: null});
+    setFormData({...formData, review: '', rating: null});
   },[dispatch]);
 
 

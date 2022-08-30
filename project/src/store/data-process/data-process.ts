@@ -89,7 +89,7 @@ export const dataProcess = createSlice({
         state.isReviewsLoaded = false;
       })
       .addCase(sendReviewAction.pending, (state)=> {
-        state.isReviewSent = true;
+        state.isReviewSent = false;
       })
       .addCase(sendReviewAction.fulfilled, (state, action)=> {
         state.reviews = action.payload;
