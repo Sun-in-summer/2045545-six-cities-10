@@ -10,8 +10,7 @@ function MainBlock(): JSX.Element {
   const selectedCityOffers = useSelectedCityOffers();
 
   return (
-
-    <main className={`page__main page__main--index ${selectedCityOffers ? '' : 'page__main--index--empty'}`}>
+    <main className={`page__main page__main--index ${ selectedCityOffers?.length !== 0 ? '' : 'page__main--index-empty'}`}>
       <h1 className="visually-hidden">Cities</h1>
       < CitiesList />
       <div className="cities">
